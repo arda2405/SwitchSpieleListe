@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Switch Spiele Auswahl</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; background: #fff; color: #111; font-size: 16px; }
+
+header { background: #111; color: #fff; text-align: center; padding: 14px 12px 10px; }
+header h1 { font-size: 19px; font-weight: bold; }
+header p { font-size: 12px; margin-top: 4px; color: #ccc; }
+
+.tabs { display: flex; border-bottom: 3px solid #111; background: #eee; }
+.tab-btn { flex: 1; padding: 13px 6px; font-size: 14px; font-weight: bold; border: none; background: #ddd; color: #555; cursor: pointer; border-right: 2px solid #bbb; }
+.tab-btn:last-child { border-right: none; }
+.tab-btn.active { background: #111; color: #fff; }
+
+.status-bar { padding: 10px 14px; background: #f5f5f5; border-bottom: 2px solid #ddd; }
+.status-text { font-size: 14px; font-weight: bold; margin-bottom: 6px; }
+.progress-wrap { width: 100%; background: #ddd; height: 20px; border-radius: 10px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 10px; transition: width 0.3s, background 0.3s; min-width: 0; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 14px; border-bottom: 1px solid #eee; font-size: 12px; background: #fafafa; }
+.legend-item { display: flex; align-items: center; gap: 5px; }
+.legend-dot { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+
+.category-header { background: #111; color: #fff; padding: 8px 14px; font-size: 12px; font-weight: bold; letter-spacing: 0.5px; text-transform: uppercase; }
+
+.game-row { display: flex; align-items: center; padding: 10px 14px; border-bottom: 1px solid #eee; gap: 11px; cursor: pointer; transition: background 0.1s; user-select: none; -webkit-tap-highlight-color: transparent; }
+.game-row:active { background: #f0f0f0; }
+.game-row.locked { background: #f4f8ff; cursor: default; }
+
+.game-checkbox { width: 28px; height: 28px; flex-shrink: 0; border: 2px solid #999; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 17px; background: #fff; transition: all 0.15s; }
+.game-row.checked .game-checkbox { background: #22aa44; border-color: #22aa44; color: #fff; }
+.game-row.locked .game-checkbox { background: #2255cc; border-color: #2255cc; color: #fff; }
+
+.game-info { flex: 1; min-width: 0; }
+.game-name { font-size: 14px; font-weight: bold; line-height: 1.3; }
+.game-meta { font-size: 11px; color: #666; margin-top: 2px; display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+
+.tag { display: inline-block; padding: 2px 6px; border-radius: 8px; font-size: 10px; font-weight: bold; white-space: nowrap; }
+.tag-must  { background: #2255cc; color: #fff; }
+.tag-yes   { background: #22aa44; color: #fff; }
+.tag-maybe { background: #ff9900; color: #fff; }
+.tag-skip  { background: #cc2222; color: #fff; }
+
+.game-size { font-size: 13px; font-weight: bold; color: #111; white-space: nowrap; min-width: 48px; text-align: right; }
+.game-row.over-limit .game-name { color: #cc2222; }
+.game-row.over-limit .game-size { color: #cc2222; }
+
+.warning-banner { background: #fff3cd; border: 2px solid #ff9900; color: #7a4800; padding: 10px 14px; font-size: 13px; font-weight: bold; display: none; }
+.warning-banner.visible { display: block; }
+
+.export-section { padding: 14px; border-top: 2px solid #111; background: #f5f5f5; }
+.export-section h3 { font-size: 14px; margin-bottom: 10px; }
+.export-box { background: #fff; border: 2px solid #ddd; border-radius: 6px; padding: 11px; font-size: 12px; line-height: 1.8; white-space: pre-wrap; word-break: break-word; min-height: 60px; color: #111; }
+.btn { display: block; width: 100%; margin-top: 9px; padding: 13px; font-size: 15px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; }
+.btn:active { opacity: 0.8; }
+.btn-copy  { background: #111; color: #fff; }
+.btn-reset { background: #ddd; color: #111; margin-top: 8px; }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+#toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #111; color: #fff; padding: 10px 20px; border-radius: 20px; font-size: 15px; font-weight: bold; z-index: 9999; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🎮 Nintendo Switch — Spiele Auswahl</h1>
+  <p>Einfach antippen was du willst · Speicher wird automatisch berechnet</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('tab128')">💾 128 GB Karte<br><small style="font-weight:normal;font-size:11px;">87 GB nutzbar</small></button>
+  <button class="tab-btn" onclick="switchTab('tab256')">💾 256 GB Karte<br><small style="font-weight:normal;font-size:11px;">200 GB nutzbar (+30€)</small></button>
+</div>
+
+<!-- TAB 128 -->
+<div id="tab128" class="tab-content active">
+  <div class="status-bar">
+    <div class="status-text">📦 Belegt: <span id="used128">0</span> GB von 87 GB &nbsp;|&nbsp; Noch frei: <span id="free128">87</span> GB &nbsp;|&nbsp; <span id="count128">0</span> Spiele</div>
+    <div class="progress-wrap"><div class="progress-fill" id="prog128" style="width:0%;background:#22aa44;"></div></div>
+  </div>
+  <div class="warning-banner" id="warn128">⚠️ Zu voll! Bitte einige Spiele abwählen.</div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#2255cc"></div>Bereits drauf (Pflicht)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#22aa44"></div>Empfohlen</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ff9900"></div>Vielleicht</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#cc2222"></div>Weniger empfohlen</div>
+  </div>
+  <div id="games128"></div>
+  <div class="export-section">
+    <h3>📋 Deine Auswahl zum Verschicken:</h3>
+    <div class="export-box" id="export128">Noch nichts ausgewählt.</div>
+    <button class="btn btn-copy" onclick="copyExport('export128')">📋 Text kopieren</button>
+    <button class="btn btn-reset" onclick="resetTab('tab128')">🔄 Auswahl zurücksetzen</button>
+  </div>
+</div>
+
+<!-- TAB 256 -->
+<div id="tab256" class="tab-content">
+  <div class="status-bar">
+    <div class="status-text">📦 Belegt: <span id="used256">0</span> GB von 200 GB &nbsp;|&nbsp; Noch frei: <span id="free256">200</span> GB &nbsp;|&nbsp; <span id="count256">0</span> Spiele</div>
+    <div class="progress-wrap"><div class="progress-fill" id="prog256" style="width:0%;background:#22aa44;"></div></div>
+  </div>
+  <div class="warning-banner" id="warn256">⚠️ Zu voll! Bitte einige Spiele abwählen.</div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#2255cc"></div>Bereits drauf (Pflicht)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#22aa44"></div>Empfohlen</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ff9900"></div>Vielleicht</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#cc2222"></div>Weniger empfohlen</div>
+  </div>
+  <div id="games256"></div>
+  <div class="export-section">
+    <h3>📋 Deine Auswahl zum Verschicken:</h3>
+    <div class="export-box" id="export256">Noch nichts ausgewählt.</div>
+    <button class="btn btn-copy" onclick="copyExport('export256')">📋 Text kopieren</button>
+    <button class="btn btn-reset" onclick="resetTab('tab256')">🔄 Auswahl zurücksetzen</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const GAMES = [
+  // PFLICHT
+  { id:'mk8',    name:'Mario Kart 8 Deluxe',               gb:6.8,  tag:'must', locked:true,  note:'Bereits drauf' },
+  { id:'smw',    name:'Super Mario Bros. Wonder',           gb:7.4,  tag:'must', locked:true,  note:'Bereits drauf' },
+  { id:'smo',    name:'Super Mario Odyssee',                gb:5.3,  tag:'must', locked:true,  note:'Bereits drauf' },
+  { id:'smp',    name:'Super Mario Party',                  gb:2.9,  tag:'must', locked:true,  note:'Bereits drauf' },
+  { id:'mc',     name:'Minecraft',                          gb:1.6,  tag:'must', locked:true,  note:'Bereits drauf' },
+
+  // EMPFOHLEN — Mario & Nintendo
+  { id:'smg2',   name:'Super Mario Galaxy 2',               gb:3.3,  tag:'yes',  locked:false, note:'Eines der besten Mario-Spiele aller Zeiten' },
+  { id:'sm3d',   name:'Super Mario 3D World + Bowser\'s Fury', gb:2.9, tag:'yes', locked:false, note:'Zwei Spiele in einem, super für Kinder' },
+  { id:'smj',    name:'Super Mario Party Jamboree',          gb:5.4,  tag:'yes',  locked:false, note:'Größtes Mario Party ever, 110+ Minispiele' },
+  { id:'mps',    name:'Mario Party Superstars',              gb:2.9,  tag:'yes',  locked:false, note:'Klassische Boards, perfekt für Familie' },
+  { id:'ssbu',   name:'Super Smash Bros. Ultimate',          gb:13.6, tag:'yes',  locked:false, note:'80+ Kämpfer, zeitloser Klassiker' },
+  { id:'nss',    name:'Nintendo Switch Sports',              gb:3.5,  tag:'yes',  locked:false, note:'Bowling, Tennis, Golf usw. — für alle Altersgruppen' },
+  { id:'lm3',    name:'Luigi\'s Mansion 3',                  gb:6.2,  tag:'yes',  locked:false, note:'Witzig, gruselig-niedlich, super für Kinder' },
+  { id:'kirby',  name:'Kirby and the Forgotten Land',        gb:5.8,  tag:'yes',  locked:false, note:'Perfekt für Kinder, bunt und einfach zu spielen' },
+  { id:'krtd',   name:'Kirby\'s Return to Dream Land Deluxe', gb:5.1, tag:'yes',  locked:false, note:'4-Spieler Koop, ideal für Familie' },
+  { id:'acnh',   name:'Animal Crossing: New Horizons',       gb:6.9,  tag:'yes',  locked:false, note:'Entspannend, kreativ, Dauerbrenner' },
+  { id:'spl3',   name:'Splatoon 3',                          gb:6.1,  tag:'yes',  locked:false, note:'Bunter Online-Shooter, sehr beliebt bei Kindern' },
+  { id:'pikachu',name:'Pokémon: Lets Go Pikachu',            gb:4.2,  tag:'yes',  locked:false, note:'Einfachster Pokémon-Einstieg, perfekt für Anfänger' },
+  { id:'poksv',  name:'Pokémon Scarlet / Violet',            gb:6.4,  tag:'yes',  locked:false, note:'Neuestes Pokémon, Open World, sehr beliebt' },
+  { id:'zelda',  name:'Zelda: Breath of the Wild',           gb:14.4, tag:'yes',  locked:false, note:'Mega-Abenteuer, einer der besten Spiele überhaupt' },
+  { id:'zeldatotk', name:'Zelda: Tears of the Kingdom',      gb:16.3, tag:'yes',  locked:false, note:'Noch größer als BotW, riesige Welt' },
+  { id:'dbsz',   name:'Dragon Ball: Sparking! Zero',         gb:6.9,  tag:'yes',  locked:false, note:'Bestes DB-Kampfspiel, riesiger Roster' },
+  { id:'dbfz',   name:'Dragon Ball FighterZ',                gb:6.2,  tag:'yes',  locked:false, note:'Bestes 2D-Kampfspiel der Reihe' },
+
+  // EMPFOHLEN — Weitere gute Spiele
+  { id:'mkrrabb',name:'Mario + Rabbids: Sparks of Hope',     gb:8.1,  tag:'yes',  locked:false, note:'Lustiges Strategie-Abenteuer, familienfreundlich' },
+  { id:'yoshicraft', name:'Yoshi\'s Crafted World',          gb:5.2,  tag:'yes',  locked:false, note:'Wunderschön, perfekt für kleine Kinder' },
+  { id:'toadette',name:'Captain Toad: Treasure Tracker',     gb:1.9,  tag:'yes',  locked:false, note:'Klein aber fein, Rätsel-Abenteuer' },
+  { id:'nsm',    name:'New Super Mario Bros. U Deluxe',       gb:2.5,  tag:'yes',  locked:false, note:'Klassisches 2D-Mario, bis zu 4 Spieler' },
+  { id:'mario3d',name:'Super Mario 3D All-Stars',            gb:5.6,  tag:'yes',  locked:false, note:'Mario 64 + Sunshine + Galaxy in einem' },
+  { id:'luigim2',name:'Luigi\'s Mansion 2 HD',               gb:3.3,  tag:'yes',  locked:false, note:'Guter Vorgänger zu Teil 3' },
+  { id:'pokdiam',name:'Pokémon Strahlender Diamant',         gb:6.2,  tag:'yes',  locked:false, note:'Remake des Klassikers, viele mögen es mehr als S/V' },
+
+  // VIELLEICHT
+  { id:'dbzk',   name:'Dragon Ball Z: Kakarot',              gb:16.5, tag:'maybe', locked:false, note:'Großes Story-RPG — braucht viel Platz' },
+  { id:'sdbh',   name:'Super Dragon Ball Heroes',            gb:7.1,  tag:'maybe', locked:false, note:'Nur für echte DB-Fans' },
+  { id:'mua3',   name:'Marvel Ultimate Alliance 3',          gb:13.2, tag:'maybe', locked:false, note:'Guter Koop mit Superhelden' },
+  { id:'naruto4',name:'Naruto: Ultimate Ninja Storm 4',      gb:13.2, tag:'maybe', locked:false, note:'Bestes Naruto-Kampfspiel' },
+  { id:'narutocoll', name:'Naruto: UNS Collection (1-3)',    gb:17.7, tag:'maybe', locked:false, note:'Drei Spiele in einem — sehr groß' },
+  { id:'dkc',    name:'Donkey Kong Country: Tropical Freeze', gb:6.6,  tag:'maybe', locked:false, note:'Tolles Jump & Run, etwas schwerer' },
+  { id:'fe3h',   name:'Fire Emblem: Three Houses',           gb:9.2,  tag:'maybe', locked:false, note:'Tiefes Strategie-RPG, eher für Erwachsene' },
+  { id:'witcher3',name:'The Witcher 3: Wild Hunt',           gb:30.0, tag:'maybe', locked:false, note:'Riesiges RPG — sehr groß, eher für Erwachsene' },
+  { id:'pokemons',name:'Pokémon Schwert / Schild',           gb:10.3, tag:'maybe', locked:false, note:'Älterer Pokémon-Teil, immer noch gut' },
+  { id:'ninjago', name:'LEGO Ninjago — Movie Videogame',     gb:7.5,  tag:'maybe', locked:false, note:'Für Kinder die LEGO mögen' },
+  { id:'legocity',name:'LEGO City Undercover',               gb:8.7,  tag:'maybe', locked:false, note:'Offene LEGO-Welt für Kinder' },
+  { id:'rayman', name:'Rayman Legends: Definitive Edition',  gb:2.9,  tag:'maybe', locked:false, note:'Spaßiges 2D-Plattformer, guter Koop' },
+  { id:'crash',  name:'Crash Bandicoot N. Sane Trilogy',     gb:5.2,  tag:'maybe', locked:false, note:'3 Klassiker in einem' },
+  { id:'spyro',  name:'Spyro Reignited Trilogy',             gb:6.6,  tag:'maybe', locked:false, note:'3 Klassiker in einem, bunt und für Kinder' },
+
+  // WENIGER EMPFOHLEN
+  { id:'dbb',    name:'Dragon Ball: The Breakers',           gb:3.0,  tag:'skip', locked:false, note:'Kaum Spieler mehr online' },
+  { id:'sf',     name:'Sonic Forces',                        gb:6.5,  tag:'skip', locked:false, note:'Schwächstes Sonic-Spiel' },
+  { id:'ps',     name:'Princess Peach: Showtime',            gb:4.5,  tag:'skip', locked:false, note:'Sehr kurz und zu einfach' },
+  { id:'ct2',    name:'Captain Tsubasa 2',                   gb:3.0,  tag:'skip', locked:false, note:'Sehr nischig' },
+  { id:'bat',    name:'Batman Arkham (Collection)',           gb:10.0, tag:'skip', locked:false, note:'Switch-Port schlecht optimiert' },
+  { id:'ddr',    name:'Double Dragon Revive',                gb:4.0,  tag:'skip', locked:false, note:'Nischentitel' },
+  { id:'term',   name:'Terminator',                          gb:3.0,  tag:'skip', locked:false, note:'Sehr schwacher Titel' },
+  { id:'dcpets', name:'DC League of Super Pets',             gb:7.0,  tag:'skip', locked:false, note:'Zu simpel, schnell langweilig' },
+  { id:'turtle', name:'TMNT (Turtles)',                      gb:3.0,  tag:'skip', locked:false, note:'Kurz, kein Dauerbrenner' },
+  { id:'fnf',    name:'Fast & Furious: Spy Racers',          gb:3.0,  tag:'skip', locked:false, note:'Schlechtes Spiel' },
+  { id:'fc26',   name:'FC 26',                               gb:30.9, tag:'skip', locked:false, note:'Switch-Version weit hinter PS5/PC — sehr groß' },
+  { id:'hs',     name:'Horse Club Adventures',               gb:3.0,  tag:'skip', locked:false, note:'Nur für sehr kleine Kinder' },
+  { id:'pawp',   name:'Paw Patrol',                          gb:3.0,  tag:'skip', locked:false, note:'Nur für sehr kleine Kinder' },
+  { id:'sponge', name:'SpongeBob: The Cosmic Shake',         gb:7.5,  tag:'skip', locked:false, note:'Für Kinder okay, sonst skip' },
+  { id:'every',  name:'Everybody 1-2 Switch!',               gb:3.5,  tag:'skip', locked:false, note:'Deutlich schlechter als das Original' },
+  { id:'ct2b',   name:'Star Fox (Switch)',                   gb:3.0,  tag:'skip', locked:false, note:'Zu wenig Inhalt' },
+];
+
+const LIMITS = { tab128: 87, tab256: 200 };
+const CAT_LABELS = {
+  must:  '🔵 Bereits installiert — Pflicht',
+  yes:   '🟢 Empfohlen — Top Spiele',
+  maybe: '🟠 Vielleicht — Überleg es dir',
+  skip:  '🔴 Weniger empfohlen',
+};
+const TAG_LABELS = { must:'PFLICHT', yes:'EMPFOHLEN', maybe:'VIELLEICHT', skip:'SKIP' };
+
+const state = {
+  tab128: new Set(GAMES.filter(g => g.locked).map(g => g.id)),
+  tab256: new Set(GAMES.filter(g => g.locked).map(g => g.id)),
+};
+
+function buildGameList(tabId) {
+  const suffix = tabId.replace('tab','');
+  const container = document.getElementById('games' + suffix);
+  container.innerHTML = '';
+  let lastTag = null;
+  GAMES.forEach(game => {
+    if (game.tag !== lastTag) {
+      lastTag = game.tag;
+      const hdr = document.createElement('div');
+      hdr.className = 'category-header';
+      hdr.textContent = CAT_LABELS[game.tag];
+      container.appendChild(hdr);
+    }
+    const checked = state[tabId].has(game.id);
+    const row = document.createElement('div');
+    row.className = 'game-row' + (game.locked ? ' locked' : '') + (checked ? ' checked' : '');
+    row.id = tabId + '-row-' + game.id;
+    row.innerHTML = `
+      <div class="game-checkbox">${checked ? '✓' : ''}</div>
+      <div class="game-info">
+        <div class="game-name">${game.name}</div>
+        <div class="game-meta">
+          <span class="tag tag-${game.tag}">${TAG_LABELS[game.tag]}</span>
+          <span>${game.note}</span>
+        </div>
+      </div>
+      <div class="game-size">${game.gb} GB</div>`;
+    if (!game.locked) row.addEventListener('click', () => toggleGame(tabId, game.id));
+    container.appendChild(row);
+  });
+}
+
+function toggleGame(tabId, gameId) {
+  state[tabId].has(gameId) ? state[tabId].delete(gameId) : state[tabId].add(gameId);
+  updateUI(tabId);
+}
+
+function getUsedGB(tabId) {
+  let t = 0;
+  state[tabId].forEach(id => { const g = GAMES.find(x => x.id === id); if (g) t += g.gb; });
+  return Math.round(t * 10) / 10;
+}
+
+function updateUI(tabId) {
+  const suffix = tabId.replace('tab','');
+  const limit = LIMITS[tabId];
+  const used = getUsedGB(tabId);
+  const free = Math.max(0, Math.round((limit - used) * 10) / 10);
+  const pct = Math.min(100, (used / limit) * 100);
+  const over = used > limit;
+
+  document.getElementById('used' + suffix).textContent = used;
+  document.getElementById('free' + suffix).textContent = free;
+  document.getElementById('count' + suffix).textContent = state[tabId].size;
+
+  const bar = document.getElementById('prog' + suffix);
+  bar.style.width = pct + '%';
+  bar.style.background = over ? '#cc2222' : pct > 85 ? '#ff9900' : '#22aa44';
+  document.getElementById('warn' + suffix).classList.toggle('visible', over);
+
+  GAMES.forEach(game => {
+    const row = document.getElementById(tabId + '-row-' + game.id);
+    if (!row) return;
+    const checked = state[tabId].has(game.id);
+    row.classList.toggle('checked', checked);
+    row.querySelector('.game-checkbox').textContent = checked ? '✓' : '';
+    if (!checked && !game.locked) {
+      row.classList.toggle('over-limit', !over && (used + game.gb) > limit);
+    } else {
+      row.classList.remove('over-limit');
+    }
+  });
+
+  updateExport(tabId, suffix, used, limit);
+}
+
+function updateExport(tabId, suffix, used, limit) {
+  const box = document.getElementById('export' + suffix);
+  const selected = GAMES.filter(g => state[tabId].has(g.id));
+  if (selected.length === 0) { box.textContent = 'Noch nichts ausgewählt.'; return; }
+  const must = selected.filter(g => g.tag === 'must');
+  const rest = selected.filter(g => g.tag !== 'must');
+  let txt = '🎮 Nintendo Switch Spiele Auswahl\n';
+  txt += '━━━━━━━━━━━━━━━━━━━━━━\n';
+  txt += `💾 Karte: ${limit === 87 ? '128 GB' : '256 GB'} (${limit} GB nutzbar)\n`;
+  txt += `📦 Belegt: ${used} GB von ${limit} GB\n`;
+  txt += `🕹️ Anzahl Spiele: ${selected.length}\n`;
+  txt += '━━━━━━━━━━━━━━━━━━━━━━\n';
+  if (must.length > 0) {
+    txt += '\n✅ Bereits drauf (Pflicht):\n';
+    must.forEach(g => { txt += `  • ${g.name} — ${g.gb} GB\n`; });
+  }
+  if (rest.length > 0) {
+    txt += '\n🎯 Ausgewählte Spiele:\n';
+    rest.forEach(g => { txt += `  • ${g.name} — ${g.gb} GB\n`; });
+  }
+  txt += `\n💚 Noch frei: ${Math.max(0, Math.round((limit - used)*10)/10)} GB`;
+  box.textContent = txt;
+}
+
+function copyExport(boxId) {
+  const txt = document.getElementById(boxId).textContent;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(txt).then(() => showToast('✅ Kopiert!'));
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = txt; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    showToast('✅ Kopiert!');
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.style.opacity = '1';
+  setTimeout(() => { t.style.opacity = '0'; }, 2000);
+}
+
+function resetTab(tabId) {
+  state[tabId] = new Set(GAMES.filter(g => g.locked).map(g => g.id));
+  buildGameList(tabId); updateUI(tabId);
+}
+
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  document.querySelectorAll('.tab-btn')[tabId === 'tab128' ? 0 : 1].classList.add('active');
+}
+
+buildGameList('tab128'); buildGameList('tab256');
+updateUI('tab128'); updateUI('tab256');
+</script>
+</body>
+</html>
