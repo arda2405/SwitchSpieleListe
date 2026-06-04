@@ -2,55 +2,46 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Switch Spiele Auswahl</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: Arial, sans-serif; background: #fff; color: #111; font-size: 16px; }
+body { font-family: Arial, sans-serif; background: #fff; color: #111; font-size: 15px; }
 
 header { background: #111; color: #fff; text-align: center; padding: 14px 12px 10px; }
-header h1 { font-size: 19px; font-weight: bold; }
+header h1 { font-size: 18px; font-weight: bold; }
 header p { font-size: 12px; margin-top: 4px; color: #ccc; }
 
-.tabs { display: flex; border-bottom: 3px solid #111; background: #eee; }
-.tab-btn { flex: 1; padding: 13px 6px; font-size: 14px; font-weight: bold; border: none; background: #ddd; color: #555; cursor: pointer; border-right: 2px solid #bbb; }
+.tabs { display: flex; border-bottom: 3px solid #111; }
+.tab-btn { flex: 1; padding: 12px 6px; font-size: 13px; font-weight: bold; border: none; background: #ddd; color: #555; cursor: pointer; border-right: 2px solid #bbb; }
 .tab-btn:last-child { border-right: none; }
 .tab-btn.active { background: #111; color: #fff; }
 
 .status-bar { padding: 10px 14px; background: #f5f5f5; border-bottom: 2px solid #ddd; }
-.status-text { font-size: 14px; font-weight: bold; margin-bottom: 6px; }
-.progress-wrap { width: 100%; background: #ddd; height: 20px; border-radius: 10px; overflow: hidden; }
-.progress-fill { height: 100%; border-radius: 10px; transition: width 0.3s, background 0.3s; min-width: 0; }
+.status-text { font-size: 13px; font-weight: bold; margin-bottom: 6px; }
+.progress-wrap { width: 100%; background: #ddd; height: 18px; border-radius: 9px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 9px; transition: width 0.3s, background 0.3s; }
 
-.legend { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 14px; border-bottom: 1px solid #eee; font-size: 12px; background: #fafafa; }
-.legend-item { display: flex; align-items: center; gap: 5px; }
-.legend-dot { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
-
-.category-header { background: #111; color: #fff; padding: 8px 14px; font-size: 12px; font-weight: bold; letter-spacing: 0.5px; text-transform: uppercase; }
+.legend { display: flex; flex-wrap: wrap; gap: 7px; padding: 9px 14px; border-bottom: 1px solid #eee; font-size: 11px; background: #fafafa; }
+.legend-item { display: flex; align-items: center; gap: 4px; }
+.legend-dot { width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0; }
 
 .game-row { display: flex; align-items: center; padding: 10px 14px; border-bottom: 1px solid #eee; gap: 11px; cursor: pointer; transition: background 0.1s; user-select: none; -webkit-tap-highlight-color: transparent; }
 .game-row:active { background: #f0f0f0; }
-.game-row.locked { background: #f4f8ff; cursor: default; }
+.game-row.checked { background: #f0fff4; }
 
 .game-checkbox { width: 28px; height: 28px; flex-shrink: 0; border: 2px solid #999; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 17px; background: #fff; transition: all 0.15s; }
 .game-row.checked .game-checkbox { background: #22aa44; border-color: #22aa44; color: #fff; }
-.game-row.locked .game-checkbox { background: #2255cc; border-color: #2255cc; color: #fff; }
 
 .game-info { flex: 1; min-width: 0; }
 .game-name { font-size: 14px; font-weight: bold; line-height: 1.3; }
-.game-meta { font-size: 11px; color: #666; margin-top: 2px; display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
-
-.tag { display: inline-block; padding: 2px 6px; border-radius: 8px; font-size: 10px; font-weight: bold; white-space: nowrap; }
-.tag-must  { background: #2255cc; color: #fff; }
-.tag-yes   { background: #22aa44; color: #fff; }
-.tag-maybe { background: #ff9900; color: #fff; }
-.tag-skip  { background: #cc2222; color: #fff; }
+.game-note { font-size: 11px; color: #666; margin-top: 2px; }
 
 .game-size { font-size: 13px; font-weight: bold; color: #111; white-space: nowrap; min-width: 48px; text-align: right; }
 .game-row.over-limit .game-name { color: #cc2222; }
 .game-row.over-limit .game-size { color: #cc2222; }
 
-.warning-banner { background: #fff3cd; border: 2px solid #ff9900; color: #7a4800; padding: 10px 14px; font-size: 13px; font-weight: bold; display: none; }
+.warning-banner { background: #fff3cd; border: 2px solid #ff9900; color: #7a4800; padding: 9px 14px; font-size: 13px; font-weight: bold; display: none; }
 .warning-banner.visible { display: block; }
 
 .export-section { padding: 14px; border-top: 2px solid #111; background: #f5f5f5; }
@@ -68,7 +59,6 @@ header p { font-size: 12px; margin-top: 4px; color: #ccc; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* MODAL */
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
 .modal-overlay.visible { display: flex; }
 .modal { background: #fff; border-radius: 14px; padding: 28px 22px; max-width: 380px; width: 100%; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
@@ -77,14 +67,13 @@ header p { font-size: 12px; margin-top: 4px; color: #ccc; }
 .modal p { font-size: 14px; color: #444; line-height: 1.7; margin-bottom: 20px; }
 .modal-ok { background: #111; color: #fff; border: none; padding: 13px 36px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; width: 100%; }
 
-/* SPINNER */
 .spinner-overlay { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.88); z-index: 2000; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
 .spinner-overlay.visible { display: flex; }
 .spinner { width: 46px; height: 46px; border: 5px solid #ddd; border-top-color: #111; border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .spinner-text { font-size: 15px; font-weight: bold; color: #111; }
 
-#toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #111; color: #fff; padding: 10px 20px; border-radius: 20px; font-size: 15px; font-weight: bold; z-index: 9999; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+#toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #111; color: #fff; padding: 10px 20px; border-radius: 20px; font-size: 14px; font-weight: bold; z-index: 9999; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -95,22 +84,19 @@ header p { font-size: 12px; margin-top: 4px; color: #ccc; }
 </header>
 
 <div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('tab128')">💾 128 GB Karte<br><small style="font-weight:normal;font-size:11px;">87 GB nutzbar</small></button>
-  <button class="tab-btn" onclick="switchTab('tab256')">💾 256 GB Karte<br><small style="font-weight:normal;font-size:11px;">200 GB nutzbar (+30€)</small></button>
+  <button class="tab-btn active" onclick="switchTab('tab128')">💾 128 GB Karte<br><small style="font-size:10px;font-weight:normal;">87 GB nutzbar</small></button>
+  <button class="tab-btn" onclick="switchTab('tab256')">💾 256 GB Karte<br><small style="font-size:10px;font-weight:normal;">200 GB nutzbar (+30€)</small></button>
 </div>
 
-<!-- TAB 128 -->
 <div id="tab128" class="tab-content active">
   <div class="status-bar">
-    <div class="status-text">📦 Belegt: <span id="used128">0</span> GB von 87 GB &nbsp;|&nbsp; Noch frei: <span id="free128">87</span> GB &nbsp;|&nbsp; <span id="count128">0</span> Spiele</div>
+    <div class="status-text">📦 <span id="used128">0</span> / 87 GB &nbsp;|&nbsp; Frei: <span id="free128">87</span> GB &nbsp;|&nbsp; <span id="count128">0</span> Spiele ausgewählt</div>
     <div class="progress-wrap"><div class="progress-fill" id="prog128" style="width:0%;background:#22aa44;"></div></div>
   </div>
   <div class="warning-banner" id="warn128">⚠️ Zu voll! Bitte einige Spiele abwählen.</div>
   <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#2255cc"></div>Bereits drauf (Pflicht)</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#22aa44"></div>Empfohlen</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#ff9900"></div>Vielleicht</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#cc2222"></div>Weniger empfohlen</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#22aa44"></div>Ausgewählt</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#cc2222"></div>Würde nicht mehr passen</div>
   </div>
   <div id="games128"></div>
   <div class="export-section">
@@ -123,18 +109,15 @@ header p { font-size: 12px; margin-top: 4px; color: #ccc; }
   </div>
 </div>
 
-<!-- TAB 256 -->
 <div id="tab256" class="tab-content">
   <div class="status-bar">
-    <div class="status-text">📦 Belegt: <span id="used256">0</span> GB von 200 GB &nbsp;|&nbsp; Noch frei: <span id="free256">200</span> GB &nbsp;|&nbsp; <span id="count256">0</span> Spiele</div>
+    <div class="status-text">📦 <span id="used256">0</span> / 200 GB &nbsp;|&nbsp; Frei: <span id="free256">200</span> GB &nbsp;|&nbsp; <span id="count256">0</span> Spiele ausgewählt</div>
     <div class="progress-wrap"><div class="progress-fill" id="prog256" style="width:0%;background:#22aa44;"></div></div>
   </div>
   <div class="warning-banner" id="warn256">⚠️ Zu voll! Bitte einige Spiele abwählen.</div>
   <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#2255cc"></div>Bereits drauf (Pflicht)</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#22aa44"></div>Empfohlen</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#ff9900"></div>Vielleicht</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#cc2222"></div>Weniger empfohlen</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#22aa44"></div>Ausgewählt</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#cc2222"></div>Würde nicht mehr passen</div>
   </div>
   <div id="games256"></div>
   <div class="export-section">
@@ -147,7 +130,6 @@ header p { font-size: 12px; margin-top: 4px; color: #ccc; }
   </div>
 </div>
 
-<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-icon">🎉</div>
@@ -158,7 +140,6 @@ header p { font-size: 12px; margin-top: 4px; color: #ccc; }
   </div>
 </div>
 
-<!-- SPINNER -->
 <div class="spinner-overlay" id="spinnerOverlay">
   <div class="spinner"></div>
   <div class="spinner-text">Wird gesendet…</div>
@@ -169,110 +150,180 @@ header p { font-size: 12px; margin-top: 4px; color: #ccc; }
 <script>
 const FORMSPREE = "https://formspree.io/f/xvznoevy";
 
-const GAMES = [
-  { id:'mk8',    name:'Mario Kart 8 Deluxe',               gb:6.8,  tag:'must', locked:true,  note:'Bereits drauf' },
-  { id:'smw',    name:'Super Mario Bros. Wonder',           gb:7.4,  tag:'must', locked:true,  note:'Bereits drauf' },
-  { id:'smo',    name:'Super Mario Odyssee',                gb:5.3,  tag:'must', locked:true,  note:'Bereits drauf' },
-  { id:'smp',    name:'Super Mario Party',                  gb:2.9,  tag:'must', locked:true,  note:'Bereits drauf' },
-  { id:'mc',     name:'Minecraft',                          gb:1.6,  tag:'must', locked:true,  note:'Bereits drauf' },
-  { id:'smg2',   name:'Super Mario Galaxy 2',               gb:3.3,  tag:'yes',  locked:false, note:'Eines der besten Mario-Spiele aller Zeiten' },
-  { id:'sm3d',   name:"Super Mario 3D World + Bowser's Fury", gb:2.9, tag:'yes', locked:false, note:'Zwei Spiele in einem, super für Kinder' },
-  { id:'smj',    name:'Super Mario Party Jamboree',          gb:5.4,  tag:'yes',  locked:false, note:'Größtes Mario Party ever, 110+ Minispiele' },
-  { id:'mps',    name:'Mario Party Superstars',              gb:2.9,  tag:'yes',  locked:false, note:'Klassische Boards, perfekt für Familie' },
-  { id:'ssbu',   name:'Super Smash Bros. Ultimate',          gb:13.6, tag:'yes',  locked:false, note:'80+ Kämpfer, zeitloser Klassiker' },
-  { id:'nss',    name:'Nintendo Switch Sports',              gb:3.5,  tag:'yes',  locked:false, note:'Bowling, Tennis, Golf usw. — für alle Altersgruppen' },
-  { id:'lm3',    name:"Luigi's Mansion 3",                   gb:6.2,  tag:'yes',  locked:false, note:'Witzig, gruselig-niedlich, super für Kinder' },
-  { id:'kirby',  name:'Kirby and the Forgotten Land',        gb:5.8,  tag:'yes',  locked:false, note:'Perfekt für Kinder, bunt und einfach zu spielen' },
-  { id:'krtd',   name:"Kirby's Return to Dream Land Deluxe", gb:5.1,  tag:'yes',  locked:false, note:'4-Spieler Koop, ideal für Familie' },
-  { id:'acnh',   name:'Animal Crossing: New Horizons',       gb:6.9,  tag:'yes',  locked:false, note:'Entspannend, kreativ, Dauerbrenner' },
-  { id:'spl3',   name:'Splatoon 3',                          gb:6.1,  tag:'yes',  locked:false, note:'Bunter Online-Shooter, sehr beliebt bei Kindern' },
-  { id:'pikachu',name:"Pokémon: Let's Go Pikachu",           gb:4.2,  tag:'yes',  locked:false, note:'Einfachster Pokémon-Einstieg, perfekt für Anfänger' },
-  { id:'poksv',  name:'Pokémon Scarlet / Violet',            gb:6.4,  tag:'yes',  locked:false, note:'Neuestes Pokémon, Open World, sehr beliebt' },
-  { id:'zelda',  name:'Zelda: Breath of the Wild',           gb:14.4, tag:'yes',  locked:false, note:'Mega-Abenteuer, einer der besten Spiele überhaupt' },
-  { id:'zeldatotk', name:'Zelda: Tears of the Kingdom',      gb:16.3, tag:'yes',  locked:false, note:'Noch größer als BotW, riesige Welt' },
-  { id:'dbsz',   name:'Dragon Ball: Sparking! Zero',         gb:6.9,  tag:'yes',  locked:false, note:'Bestes DB-Kampfspiel, riesiger Roster' },
-  { id:'dbfz',   name:'Dragon Ball FighterZ',                gb:6.2,  tag:'yes',  locked:false, note:'Bestes 2D-Kampfspiel der Reihe' },
-  { id:'mkrrabb',name:"Mario + Rabbids: Sparks of Hope",     gb:8.1,  tag:'yes',  locked:false, note:'Lustiges Strategie-Abenteuer, familienfreundlich' },
-  { id:'yoshicraft', name:"Yoshi's Crafted World",           gb:5.2,  tag:'yes',  locked:false, note:'Wunderschön, perfekt für kleine Kinder' },
-  { id:'toadette',name:'Captain Toad: Treasure Tracker',     gb:1.9,  tag:'yes',  locked:false, note:'Klein aber fein, Rätsel-Abenteuer' },
-  { id:'nsm',    name:'New Super Mario Bros. U Deluxe',       gb:2.5,  tag:'yes',  locked:false, note:'Klassisches 2D-Mario, bis zu 4 Spieler' },
-  { id:'mario3d',name:'Super Mario 3D All-Stars',            gb:5.6,  tag:'yes',  locked:false, note:'Mario 64 + Sunshine + Galaxy in einem' },
-  { id:'luigim2',name:"Luigi's Mansion 2 HD",                gb:3.3,  tag:'yes',  locked:false, note:'Guter Vorgänger zu Teil 3' },
-  { id:'pokdiam',name:'Pokémon Strahlender Diamant',         gb:6.2,  tag:'yes',  locked:false, note:'Remake des Klassikers, viele mögen es mehr als S/V' },
-  { id:'dbzk',   name:'Dragon Ball Z: Kakarot',              gb:16.5, tag:'maybe', locked:false, note:'Großes Story-RPG — braucht viel Platz' },
-  { id:'sdbh',   name:'Super Dragon Ball Heroes',            gb:7.1,  tag:'maybe', locked:false, note:'Nur für echte DB-Fans' },
-  { id:'mua3',   name:'Marvel Ultimate Alliance 3',          gb:13.2, tag:'maybe', locked:false, note:'Guter Koop mit Superhelden' },
-  { id:'naruto4',name:'Naruto: Ultimate Ninja Storm 4',      gb:13.2, tag:'maybe', locked:false, note:'Bestes Naruto-Kampfspiel' },
-  { id:'narutocoll', name:'Naruto: UNS Collection (1-3)',    gb:17.7, tag:'maybe', locked:false, note:'Drei Spiele in einem — sehr groß' },
-  { id:'dkc',    name:'Donkey Kong Country: Tropical Freeze', gb:6.6, tag:'maybe', locked:false, note:'Tolles Jump & Run, etwas schwerer' },
-  { id:'fe3h',   name:'Fire Emblem: Three Houses',           gb:9.2,  tag:'maybe', locked:false, note:'Tiefes Strategie-RPG, eher für Erwachsene' },
-  { id:'witcher3',name:'The Witcher 3: Wild Hunt',           gb:30.0, tag:'maybe', locked:false, note:'Riesiges RPG — sehr groß, eher für Erwachsene' },
-  { id:'pokemons',name:'Pokémon Schwert / Schild',           gb:10.3, tag:'maybe', locked:false, note:'Älterer Pokémon-Teil, immer noch gut' },
-  { id:'ninjago', name:'LEGO Ninjago — Movie Videogame',     gb:7.5,  tag:'maybe', locked:false, note:'Für Kinder die LEGO mögen' },
-  { id:'legocity',name:'LEGO City Undercover',               gb:8.7,  tag:'maybe', locked:false, note:'Offene LEGO-Welt für Kinder' },
-  { id:'rayman', name:'Rayman Legends: Definitive Edition',  gb:2.9,  tag:'maybe', locked:false, note:'Spaßiges 2D-Plattformer, guter Koop' },
-  { id:'crash',  name:'Crash Bandicoot N. Sane Trilogy',     gb:5.2,  tag:'maybe', locked:false, note:'3 Klassiker in einem' },
-  { id:'spyro',  name:'Spyro Reignited Trilogy',             gb:6.6,  tag:'maybe', locked:false, note:'3 Klassiker in einem, bunt und für Kinder' },
-  { id:'dbb',    name:'Dragon Ball: The Breakers',           gb:3.0,  tag:'skip', locked:false, note:'Kaum Spieler mehr online' },
-  { id:'sf',     name:'Sonic Forces',                        gb:6.5,  tag:'skip', locked:false, note:'Schwächstes Sonic-Spiel' },
-  { id:'ps',     name:'Princess Peach: Showtime',            gb:4.5,  tag:'skip', locked:false, note:'Sehr kurz und zu einfach' },
-  { id:'ct2',    name:'Captain Tsubasa 2',                   gb:3.0,  tag:'skip', locked:false, note:'Sehr nischig' },
-  { id:'bat',    name:'Batman Arkham (Collection)',           gb:10.0, tag:'skip', locked:false, note:'Switch-Port schlecht optimiert' },
-  { id:'ddr',    name:'Double Dragon Revive',                gb:4.0,  tag:'skip', locked:false, note:'Nischentitel' },
-  { id:'term',   name:'Terminator',                          gb:3.0,  tag:'skip', locked:false, note:'Sehr schwacher Titel' },
-  { id:'dcpets', name:'DC League of Super Pets',             gb:7.0,  tag:'skip', locked:false, note:'Zu simpel, schnell langweilig' },
-  { id:'turtle', name:'TMNT (Turtles)',                      gb:3.0,  tag:'skip', locked:false, note:'Kurz, kein Dauerbrenner' },
-  { id:'fnf',    name:'Fast & Furious: Spy Racers',          gb:3.0,  tag:'skip', locked:false, note:'Schlechtes Spiel' },
-  { id:'fc26',   name:'FC 26',                               gb:30.9, tag:'skip', locked:false, note:'Switch-Version weit hinter PS5/PC — sehr groß' },
-  { id:'hs',     name:'Horse Club Adventures',               gb:3.0,  tag:'skip', locked:false, note:'Nur für sehr kleine Kinder' },
-  { id:'pawp',   name:'Paw Patrol',                          gb:3.0,  tag:'skip', locked:false, note:'Nur für sehr kleine Kinder' },
-  { id:'sponge', name:'SpongeBob: The Cosmic Shake',         gb:7.5,  tag:'skip', locked:false, note:'Für Kinder okay, sonst skip' },
-  { id:'every',  name:'Everybody 1-2 Switch!',               gb:3.5,  tag:'skip', locked:false, note:'Deutlich schlechter als das Original' },
-  { id:'ct2b',   name:'Star Fox (Switch)',                   gb:3.0,  tag:'skip', locked:false, note:'Zu wenig Inhalt' },
+// ── SPIELELISTE ──────────────────────────────────────────────────────────────
+// Top 10 kommen immer zuerst (fest), danach kommt der Rest in fester Zufallsreihenfolge
+// note = kurze, verständliche Erklärung was das Spiel ist
+
+const TOP10 = [
+  { id:'mk8',       name:'Mario Kart 8 Deluxe',                  gb:6.8,  note:'Autorennen mit Mario-Figuren — Spaß für die ganze Familie, bis zu 4 Spieler gleichzeitig' },
+  { id:'smw',       name:'Super Mario Bros. Wonder',              gb:7.4,  note:'Das neueste Mario-Abenteuer — bunt, kreativ und für jeden geeignet' },
+  { id:'smo',       name:'Super Mario Odyssee',                   gb:5.3,  note:'Mario reist durch viele verschiedene Welten — eines der beliebtesten Spiele überhaupt' },
+  { id:'ssbu',      name:'Super Smash Bros. Ultimate',            gb:13.6, note:'Kämpfspiel mit über 80 berühmten Spielfiguren — ideal für Gruppen und Familien' },
+  { id:'smp',       name:'Super Mario Party',                     gb:2.9,  note:'Brettspiel-Spaß mit Minispielen — perfekt wenn mehrere Personen gleichzeitig spielen wollen' },
+  { id:'mc',        name:'Minecraft',                             gb:1.6,  note:'Baue und erforsche eine unbegrenzte Welt aus Blöcken — für Kinder und Erwachsene gleichermaßen' },
+  { id:'zelda',     name:'Zelda: Breath of the Wild',             gb:14.4, note:'Großes Abenteuer-Spiel in einer riesigen offenen Welt — gilt als eines der besten Spiele aller Zeiten' },
+  { id:'acnh',      name:'Animal Crossing: New Horizons',         gb:6.9,  note:'Du baust deine eigene Insel auf, sammelst Dinge und triffst Tiere — sehr entspannend' },
+  { id:'poksv',     name:'Pokémon Scarlet / Violet',              gb:6.4,  note:'Fange und trainiere Pokémon in einer offenen Welt — das neueste große Pokémon-Spiel' },
+  { id:'smj',       name:'Super Mario Party Jamboree',            gb:5.4,  note:'Die neueste Version von Mario Party mit über 110 Minispielen — noch mehr Inhalt als der Vorgänger' },
 ];
 
+const REST = [
+  // Mario & Nintendo Familie
+  { id:'smg2',      name:'Super Mario Galaxy 2',                  gb:3.3,  note:'Mario fliegt durch das Weltall — sehr beliebt und von vielen als Meisterwerk angesehen' },
+  { id:'sm3d',      name:"Super Mario 3D World + Bowser's Fury",  gb:2.9,  note:'Zwei Spiele in einem — klassisches Mario-Abenteuer mit Koop-Modus für bis zu 4 Spieler' },
+  { id:'mps',       name:'Mario Party Superstars',                gb:2.9,  note:'Ältere Mario Party Spielbretter neu aufgelegt — wer den Vorgänger kennt wird sich sofort zuhause fühlen' },
+  { id:'mario3d',   name:'Super Mario 3D All-Stars',              gb:5.6,  note:'Drei ältere Mario-Spiele in einem Paket: Mario 64, Sunshine und Galaxy' },
+  { id:'nsm',       name:'New Super Mario Bros. U Deluxe',        gb:2.5,  note:'Klassisches 2D-Mario zum Nebeneinanderlaufen — funktioniert gut zu viert' },
+  { id:'nss',       name:'Nintendo Switch Sports',                gb:3.5,  note:'Bewegungsspiele wie Bowling, Tennis und Fußball — man steht auf und macht die Bewegungen selbst' },
+  { id:'lm3',       name:"Luigi's Mansion 3",                     gb:6.2,  note:'Luigi fängt Geister in einem Hotel — witzig und abenteuerlich, auch für Kinder geeignet' },
+  { id:'luigim2',   name:"Luigi's Mansion 2 HD",                  gb:3.3,  note:'Der Vorgänger zu Teil 3 — gleiche Idee, etwas kleinere Spielwelt' },
+  { id:'kirby',     name:'Kirby and the Forgotten Land',          gb:5.8,  note:'Niedlicher pinker Charakter der durch eine verlassene Stadt hüpft — sehr einsteigerfreundlich' },
+  { id:'krtd',      name:"Kirby's Return to Dream Land Deluxe",   gb:5.1,  note:'Kirby-Abenteuer das man zu viert gleichzeitig spielen kann — gut für Familien' },
+  { id:'yoshicraft',name:"Yoshi's Crafted World",                 gb:5.2,  note:'Ein grüner Dinosaurier in einer Welt aus Pappe und Bastelmaterial — sehr kindgerecht' },
+  { id:'toadette',  name:'Captain Toad: Treasure Tracker',        gb:1.9,  note:'Kleiner Pilz-Charakter löst Rätsel in winzigen Welten — entspannt und für alle Altersgruppen' },
+  { id:'mkrrabb',   name:"Mario + Rabbids: Sparks of Hope",       gb:8.1,  note:'Mario-Figuren kämpfen gemeinsam gegen witzige Hasen — einfache Strategie, für die ganze Familie' },
+
+  // Pokémon
+  { id:'pikachu',   name:"Pokémon: Let's Go Pikachu",             gb:4.2,  note:'Der einfachste Einstieg in die Pokémon-Welt — besonders gut für Kinder und Anfänger geeignet' },
+  { id:'pokdiam',   name:'Pokémon Strahlender Diamant',           gb:6.2,  note:'Neuauflage eines älteren Pokémon-Spiels — viele Fans mögen es sogar lieber als die neueren Teile' },
+  { id:'pokemons',  name:'Pokémon Schwert / Schild',              gb:10.3, note:'Pokémon in einer englisch angehauchten Welt — etwas älter, aber immer noch sehr beliebt' },
+
+  // Zelda
+  { id:'zeldatotk', name:'Zelda: Tears of the Kingdom',           gb:14.3, note:'Der Nachfolger zu Breath of the Wild — noch größer, mit der Möglichkeit eigene Maschinen zu bauen' },
+
+  // Dragon Ball
+  { id:'dbsz',      name:'Dragon Ball: Sparking! Zero',           gb:6.9,  note:'Kampfspiel mit allen Dragon Ball Charakteren — für Fans der Serie eine große Freude' },
+  { id:'dbfz',      name:'Dragon Ball FighterZ',                  gb:6.2,  note:'Schnelles 2D-Kampfspiel im Dragon Ball Universum — auch ohne Vorkenntnisse gut spielbar' },
+  { id:'dbzk',      name:'Dragon Ball Z: Kakarot',                gb:14.3, note:'Du spielst die Geschichte von Goku nach — eher ein Rollenspiel als ein Kampfspiel' },
+  { id:'sdbh',      name:'Super Dragon Ball Heroes',              gb:7.1,  note:'Kartenbasiertes Spiel mit vielen Dragon Ball Figuren — nur für echte Fans der Serie interessant' },
+
+  // Naruto
+  { id:'naruto4',   name:'Naruto: Ultimate Ninja Storm 4',        gb:13.2, note:'Kampfspiel mit Naruto-Charakteren — coole Spezialangriffe und gut aussehende Kämpfe' },
+  { id:'narutocoll',name:'Naruto: UNS Collection (1–3)',          gb:12.8, note:'Die ersten drei Naruto-Kampfspiele in einem Paket — viel Inhalt, etwas älter aber gut' },
+
+  // Online / Multiplayer
+  { id:'spl3',      name:'Splatoon 3',                            gb:6.1,  note:'Bunter Online-Shooter bei dem man Farbe schießt statt auf Menschen — sehr beliebt bei Jugendlichen' },
+  { id:'among',     name:'Among Us',                              gb:0.5,  note:'Mit Freunden oder Online herausfinden wer der Verräter ist — perfekt für Gruppen' },
+
+  // Koop & Party
+  { id:'uc2',       name:'Overcooked! 2',                         gb:1.8,  note:'Zusammen kochen in chaotischen Küchen — lustig aber auch stressig, besonders zu zweit oder viert' },
+  { id:'uch',       name:'Ultimate Chicken Horse',                gb:0.8,  note:'Ihr baut gemeinsam einen Hindernisparcours und versucht dann selbst durchzukommen — sehr witzig' },
+  { id:'goose',     name:'Untitled Goose Game',                   gb:0.9,  note:'Du spielst eine freche Gans die Dorfbewohner ärgert — kurz aber extrem unterhaltsam' },
+  { id:'itakes2',   name:'It Takes Two',                          gb:14.2, note:'Nur zu zweit spielbar — zwei Figuren müssen zusammenarbeiten und erleben dabei verrückte Abenteuer' },
+  { id:'jpp3',      name:'Jackbox Party Pack 3',                  gb:1.5,  note:'Mehrere Partyspiele in einem — andere Spieler können per Handy mitmachen ohne Extra-Controller' },
+  { id:'jpp7',      name:'Jackbox Party Pack 7',                  gb:2.3,  note:'Neuere Version der Jackbox-Partyspiele — ähnlich wie oben, mit anderen Spielen' },
+  { id:'moving',    name:'Moving Out',                            gb:2.1,  note:'Möbel schleppen und aus Häusern werfen zu viert — chaotischer Spaß ähnlich wie Overcooked' },
+  { id:'tools',     name:'Tools Up!',                             gb:1.2,  note:'Zusammen eine Wohnung renovieren gegen die Zeit — macht zu zweit oder viert viel Spaß' },
+  { id:'lovers',    name:'Lovers in a Dangerous Spacetime',       gb:1.1,  note:'Gemeinsam ein Raumschiff steuern und Feinde abwehren — für 2 Spieler besonders schön' },
+
+  // Indie Klassiker
+  { id:'hades',     name:'Hades',                                 gb:5.6,  note:'Kämpfe dich als Sohn des Todesgottes durch die Unterwelt — eines der meistgelobten Indie-Spiele' },
+  { id:'celeste',   name:'Celeste',                               gb:1.6,  note:'Schwieriges aber faires Sprungspiel mit einer bewegenden Geschichte — sehr gelobt' },
+  { id:'hollow',    name:'Hollow Knight',                         gb:3.5,  note:'Erkundungsspiel in einer riesigen Welt unter der Erde — sehr atmosphärisch und tiefgründig' },
+  { id:'undertale', name:'Undertale',                             gb:0.2,  note:'Rollenspiel in dem du Gegner auch besiegen kannst ohne zu kämpfen — besondere Geschichte' },
+  { id:'stardew',   name:'Stardew Valley',                        gb:0.9,  note:'Baue eine Farm auf, pflanze Gemüse und lerne die Dorfbewohner kennen — sehr entspannend' },
+  { id:'cuphead',   name:'Cuphead',                               gb:3.4,  note:'Sehr schwieriges Spiel im Stil alter Trickfilme aus den 1930ern — schöne Optik, hoher Schwierigkeitsgrad' },
+  { id:'ori1',      name:'Ori and the Blind Forest',              gb:3.7,  note:'Wunderschönes Sprungspiel in einem magischen Wald — emotional und grafisch beeindruckend' },
+  { id:'katana0',   name:'Katana ZERO',                           gb:0.5,  note:'Schnelles Action-Spiel als Samurai — coole Atmosphäre, kurz aber intensiv' },
+  { id:'dead',      name:'Dead Cells',                            gb:0.9,  note:'Kämpfe durch immer neue zufällig generierte Levels — macht sehr süchtig' },
+  { id:'moonlighter',name:'Moonlighter',                          gb:1.0,  note:'Tagsüber Laden betreiben, nachts in Dungeons kämpfen — gute Mischung aus zwei Genres' },
+
+  // Action / Abenteuer
+  { id:'mhrise',    name:'Monster Hunter Rise',                   gb:8.7,  note:'Jage riesige Monster in einer japanisch angehauchten Welt — auch zu viert online spielbar' },
+  { id:'dkc',       name:'Donkey Kong Country: Tropical Freeze',  gb:6.6,  note:'Klassisches Sprung- und Laufspiel mit dem großen Gorilla — etwas schwieriger aber sehr beliebt' },
+  { id:'mua3',      name:'Marvel Ultimate Alliance 3',            gb:13.2, note:'Bis zu 4 Spieler kämpfen gemeinsam als Superhelden wie Spider-Man oder Iron Man' },
+  { id:'bat',       name:'Batman Arkham Collection',              gb:10.0, note:'Drei Batman-Spiele in einem — schleichen, kämpfen und die Stadt erkunden' },
+  { id:'crash',     name:'Crash Bandicoot N. Sane Trilogy',       gb:5.2,  note:'Drei ältere Spiele mit dem orangenen Beuteltier — neuaufgelegt und gut erhalten' },
+  { id:'spyro',     name:'Spyro Reignited Trilogy',               gb:6.6,  note:'Drei Spiele mit dem kleinen lila Drachen — bunt und für alle Altersgruppen geeignet' },
+  { id:'sonic',     name:'Sonic Mania',                           gb:0.5,  note:'Schnelles 2D-Springen mit dem blauen Igel im alten Stil — für Fans der originalen Sonic-Spiele' },
+  { id:'fe3h',      name:'Fire Emblem: Three Houses',             gb:9.2,  note:'Strategiespiel in dem du eine Schulklasse in einer Fantasywelt leitest — viel Text, eher für Erwachsene' },
+  { id:'xenoblade', name:'Xenoblade Chronicles 3',                gb:12.5, note:'Großes Rollenspiel mit einer langen Geschichte und riesiger Welt — hauptsächlich für Einzelspieler' },
+  { id:'fe3hopes',  name:'Fire Emblem Warriors: Three Hopes',     gb:13.4, note:'Actionreicher Ableger von Fire Emblem — du kämpfst gegen hunderte Gegner gleichzeitig' },
+
+  // Kinder & Familie
+  { id:'pikmn4',    name:'Pikmin 4',                              gb:7.8,  note:'Du befiehlst kleine Pflanzenwesen und löst Rätsel — entspannt, farbenfroh und für Kinder sehr geeignet' },
+  { id:'luigi3',    name:'Paw Patrol: The Movie - Adventure City Calls', gb:3.0, note:'Spiel zur bekannten Kinderserie — für kleinere Kinder gedacht' },
+  { id:'lego',      name:'LEGO City Undercover',                  gb:8.7,  note:'Offene Lego-Stadt erkunden als Polizist — viele Witze, gut für Kinder und Eltern gemeinsam' },
+  { id:'lego2',     name:'LEGO Jurassic World',                   gb:7.5,  note:'Alle vier Jurassic Park Filme als Lego-Spiel — witzig und auch für Kinder gut geeignet' },
+  { id:'lego3',     name:'LEGO Marvel Super Heroes 2',            gb:6.4,  note:'Marvel-Superhelden aus Lego — offene Welt und viele spielbare Figuren' },
+  { id:'kirbystar', name:'Kirby Star Allies',                     gb:5.2,  note:'Kirby-Abenteuer mit bis zu 4 Spielern — sehr einfach und für kleine Kinder geeignet' },
+  { id:'animal2',   name:'Story of Seasons: Pioneers of Olive Town', gb:4.4, note:'Ähnlich wie Stardew Valley — Bauernhof aufbauen und mit Dorfbewohnern reden' },
+  { id:'yoshi2',    name:'Yoshi's Woolly World',                  gb:1.8,  note:'Yoshi hüpft durch eine Welt aus Wolle — sehr niedlich und für Kinder gut geeignet' },
+
+  // Sport & Rennspiele
+  { id:'f1',        name:'F1 2023',                               gb:8.5,  note:'Offizielles Formel-1-Spiel — realistische Rennen auf echten Strecken' },
+  { id:'nba2k',     name:'NBA 2K24',                              gb:12.3, note:'Basketball-Simulation mit echten Teams und Spielern — für Sportfans' },
+  { id:'tennis',    name:'Mario Tennis Aces',                     gb:3.4,  note:'Tennis mit Mario-Figuren — gut für 2 Spieler gegeneinander' },
+  { id:'golf',      name:'Mario Golf: Super Rush',                gb:5.7,  note:'Golf mit Mario-Figuren — mehrere Spielmodi auch für mehrere Spieler gleichzeitig' },
+  { id:'soccer',    name:'Captain Tsubasa: Rise of New Champions', gb:8.9, note:'Fußball im Manga-Stil — übertriebene Schüsse und Tricks, für Anime-Fans' },
+  { id:'rings',     name:'Ring Fit Adventure',                    gb:2.8,  note:'Sport und Abenteuer kombiniert — du machst echte Übungen um voranzukommen' },
+
+  // Shooter & Action
+  { id:'splaon1',   name:'Splatoon 2',                            gb:6.5,  note:'Ältere Version des Farbenschießers — ähnlich wie Teil 3 aber mit anderen Karten' },
+  { id:'doom',      name:'DOOM Eternal',                          gb:14.9, note:'Sehr schneller und blutiger Ego-Shooter — nichts für Kinder, aber technisch beeindruckend' },
+  { id:'wolfnew',   name:'Wolfenstein II: The New Colossus',      gb:14.1, note:'Ego-Shooter mit einer Geschichte im Zweiten Weltkrieg — für Erwachsene' },
+  { id:'borde3',    name:'Borderlands 3',                         gb:13.4, note:'Verrückter Shooter mit Rollenspielelementen — auch zu viert online spielbar' },
+
+  // Entspannt & Kreativ
+  { id:'disney',    name:'Disney Dreamlight Valley',              gb:9.0,  note:'Baue ein Dorf mit Disney-Figuren auf — ähnlich wie Animal Crossing' },
+  { id:'overcooked',name:'Overcooked! All You Can Eat',           gb:4.3,  note:'Alle Overcooked-Spiele in einem — chaotisches Kochen in der Gruppe' },
+  { id:'harvest',   name:'Harvest Moon: Light of Hope',           gb:1.5,  note:'Klassisches Bauernhof-Spiel — einfacher als Stardew Valley, gut zum Entspannen' },
+  { id:'valhalla',  name:'Assassin\'s Creed: The Ezio Collection',gb:14.0, note:'Drei ältere Assassin\'s Creed-Spiele im alten Italien — viel Geschichte und Erkundung' },
+
+  // Sonstige gute Spiele
+  { id:'street6',   name:'Street Fighter 6',                      gb:7.7,  note:'Klassisches Kampfspiel mit vielen Charakteren — leicht zu lernen, schwer zu meistern' },
+  { id:'mortal',    name:'Mortal Kombat 11',                      gb:13.4, note:'Bekanntes Kampfspiel — sehr blutig, nur für Erwachsene geeignet' },
+  { id:'dragon',    name:'Dragon Quest XI S',                     gb:14.2, note:'Großes japanisches Rollenspiel mit einer langen Geschichte — für geduldige Einzelspieler' },
+  { id:'witcher',   name:'The Witcher 3: Wild Hunt',              gb:13.5, note:'Riesiges Abenteuer-Rollenspiel mit einer tiefen Geschichte — nur für Erwachsene empfohlen' },
+  { id:'darksouls', name:'Dark Souls Remastered',                 gb:4.2,  note:'Sehr schwieriges Abenteuer-Spiel — bekannt dafür dass man viel stirbt und es trotzdem weitermacht' },
+  { id:'octopath',  name:'Octopath Traveler',                     gb:2.3,  note:'Rollenspiel mit acht verschiedenen Geschichten — schöner Stil der alte und neue Grafik kombiniert' },
+  { id:'three',     name:'Ori and the Will of the Wisps',         gb:4.3,  note:'Nachfolger zum ersten Ori — noch schöner und größer als der Vorgänger' },
+  { id:'subnaut',   name:'Subnautica',                            gb:5.2,  note:'Überlebe unter Wasser auf einem fremden Planeten — erkunde das Meer und baue Stützpunkte' },
+  { id:'gris',      name:'GRIS',                                  gb:0.4,  note:'Wunderschönes künstlerisches Spiel mit wenig Text — eher wie ein spielbares Gemälde' },
+  { id:'journey',   name:'Journey to the Savage Planet',          gb:2.8,  note:'Erkunde einen fremden Planeten und entdecke merkwürdige Lebewesen — auch zu zweit spielbar' },
+  { id:'moving2',   name:'Unravel Two',                           gb:1.3,  note:'Zwei Wollfiguren müssen zusammenarbeiten — sehr schön anzusehen und gut zu zweit spielbar' },
+  { id:'ninjashodown',name:'9 Monkeys of Shaolin',                gb:1.4,  note:'Kung-Fu-Spiel im japanischen Stil — einfach und gut zu zweit spielbar' },
+  { id:'spiritf',   name:'Spiritfarer',                           gb:2.2,  note:'Du bist eine Art Fährenfrau für Geister — ruhig, emotional und sehr besonders' },
+  { id:'okami',     name:'Okami HD',                              gb:5.1,  note:'Japanisches Abenteuer als weißer Wolf-Gott — gilt als Meisterwerk, sehr einzigartig' },
+  { id:'nier',      name:'NieR: Automata The End of YoRHa Edition', gb:12.9, note:'Actionspiel mit Robotern in einer postapokalyptischen Welt — tiefe Geschichte für Erwachsene' },
+  { id:'persona5',  name:'Persona 5 Royal',                       gb:11.8, note:'Japanisches Rollenspiel in dem Schüler tagsüber zur Schule gehen und nachts Monster bekämpfen' },
+  { id:'turtles',   name:'Teenage Mutant Ninja Turtles: Shredder\'s Revenge', gb:3.0, note:'Die Ninja Turtles kämpfen gemeinsam durch Streets — gut zu viert spielbar' },
+  { id:'shovel',    name:'Shovel Knight: Treasure Trove',         gb:0.8,  note:'Mehrere Spiele mit dem Schaufelritter — Retro-Stil, sehr gut gemacht' },
+  { id:'binding',   name:'The Binding of Isaac: Afterbirth+',     gb:0.8,  note:'Dunkles Spiel in dem man durch Keller kämpft — jedes Mal anders durch Zufall' },
+  { id:'ff12',      name:'Final Fantasy XII: The Zodiac Age',     gb:12.9, note:'Älteres Final Fantasy in einer Fantasywelt — langes Rollenspiel für geduldige Spieler' },
+  { id:'bendy',     name:'Bendy and the Ink Machine',             gb:3.4,  note:'Gruseliges Rätselspiel im Stil alter Cartoons — für Kinder ab ca. 12 Jahren geeignet' },
+  { id:'superhot',  name:'SUPERHOT',                              gb:1.8,  note:'Zeit bewegt sich nur wenn du dich bewegst — sehr cleveres Konzept, kurz aber einzigartig' },
+  { id:'tt',        name:'Taiko no Tatsujin: Drum\'n\'Fun!',      gb:6.9,  note:'Japanisches Trommelspiel zu bekannten Liedern — macht auch ohne Vorkenntnisse Spaß' },
+];
+
+// Kombiniere: Top10 + Rest (Rest bleibt in fester Reihenfolge — hier als bewusstes "Random" einmalig festgelegt)
+// Die Reihenfolge im REST-Array ist die feste Anzeigereihenfolge
+const GAMES = [...TOP10, ...REST];
+
 const LIMITS = { tab128: 87, tab256: 200 };
-const CAT_LABELS = {
-  must:  '🔵 Bereits installiert — Pflicht',
-  yes:   '🟢 Empfohlen — Top Spiele',
-  maybe: '🟠 Vielleicht — Überleg es dir',
-  skip:  '🔴 Weniger empfohlen',
-};
-const TAG_LABELS = { must:'PFLICHT', yes:'EMPFOHLEN', maybe:'VIELLEICHT', skip:'SKIP' };
 
 const state = {
-  tab128: new Set(GAMES.filter(g => g.locked).map(g => g.id)),
-  tab256: new Set(GAMES.filter(g => g.locked).map(g => g.id)),
+  tab128: new Set(),
+  tab256: new Set(),
 };
 
 function buildGameList(tabId) {
   const suffix = tabId.replace('tab','');
   const container = document.getElementById('games' + suffix);
   container.innerHTML = '';
-  let lastTag = null;
   GAMES.forEach(game => {
-    if (game.tag !== lastTag) {
-      lastTag = game.tag;
-      const hdr = document.createElement('div');
-      hdr.className = 'category-header';
-      hdr.textContent = CAT_LABELS[game.tag];
-      container.appendChild(hdr);
-    }
     const checked = state[tabId].has(game.id);
     const row = document.createElement('div');
-    row.className = 'game-row' + (game.locked ? ' locked' : '') + (checked ? ' checked' : '');
+    row.className = 'game-row' + (checked ? ' checked' : '');
     row.id = tabId + '-row-' + game.id;
     row.innerHTML = `
       <div class="game-checkbox">${checked ? '✓' : ''}</div>
       <div class="game-info">
         <div class="game-name">${game.name}</div>
-        <div class="game-meta">
-          <span class="tag tag-${game.tag}">${TAG_LABELS[game.tag]}</span>
-          <span>${game.note}</span>
-        </div>
+        <div class="game-note">${game.note}</div>
       </div>
       <div class="game-size">${game.gb} GB</div>`;
-    if (!game.locked) row.addEventListener('click', () => toggleGame(tabId, game.id));
+    row.addEventListener('click', () => toggleGame(tabId, game.id));
     container.appendChild(row);
   });
 }
@@ -290,18 +341,18 @@ function getUsedGB(tabId) {
 
 function updateUI(tabId) {
   const suffix = tabId.replace('tab','');
-  const limit = LIMITS[tabId];
-  const used = getUsedGB(tabId);
-  const free = Math.max(0, Math.round((limit - used) * 10) / 10);
-  const pct = Math.min(100, (used / limit) * 100);
-  const over = used > limit;
+  const limit  = LIMITS[tabId];
+  const used   = getUsedGB(tabId);
+  const free   = Math.max(0, Math.round((limit - used) * 10) / 10);
+  const pct    = Math.min(100, (used / limit) * 100);
+  const over   = used > limit;
 
-  document.getElementById('used' + suffix).textContent = used;
-  document.getElementById('free' + suffix).textContent = free;
+  document.getElementById('used' + suffix).textContent  = used;
+  document.getElementById('free' + suffix).textContent  = free;
   document.getElementById('count' + suffix).textContent = state[tabId].size;
 
   const bar = document.getElementById('prog' + suffix);
-  bar.style.width = pct + '%';
+  bar.style.width      = pct + '%';
   bar.style.background = over ? '#cc2222' : pct > 85 ? '#ff9900' : '#22aa44';
   document.getElementById('warn' + suffix).classList.toggle('visible', over);
 
@@ -311,7 +362,7 @@ function updateUI(tabId) {
     const checked = state[tabId].has(game.id);
     row.classList.toggle('checked', checked);
     row.querySelector('.game-checkbox').textContent = checked ? '✓' : '';
-    if (!checked && !game.locked) {
+    if (!checked) {
       row.classList.toggle('over-limit', !over && (used + game.gb) > limit);
     } else {
       row.classList.remove('over-limit');
@@ -322,25 +373,18 @@ function updateUI(tabId) {
 }
 
 function updateExport(tabId, suffix, used, limit) {
-  const box = document.getElementById('export' + suffix);
+  const box      = document.getElementById('export' + suffix);
   const selected = GAMES.filter(g => state[tabId].has(g.id));
-  if (selected.length === 0) { box.textContent = 'Noch nichts ausgewählt.'; return; }
-  const must = selected.filter(g => g.tag === 'must');
-  const rest = selected.filter(g => g.tag !== 'must');
+  if (!selected.length) { box.textContent = 'Noch nichts ausgewählt.'; return; }
+
   let txt = '🎮 Nintendo Switch Spiele Auswahl\n';
   txt += '━━━━━━━━━━━━━━━━━━━━━━\n';
   txt += `💾 Karte: ${limit === 87 ? '128 GB' : '256 GB'} (${limit} GB nutzbar)\n`;
   txt += `📦 Belegt: ${used} GB von ${limit} GB\n`;
   txt += `🕹️ Anzahl Spiele: ${selected.length}\n`;
-  txt += '━━━━━━━━━━━━━━━━━━━━━━\n';
-  if (must.length > 0) {
-    txt += '\n✅ Bereits drauf (Pflicht):\n';
-    must.forEach(g => { txt += `  • ${g.name} — ${g.gb} GB\n`; });
-  }
-  if (rest.length > 0) {
-    txt += '\n🎯 Ausgewählte Spiele:\n';
-    rest.forEach(g => { txt += `  • ${g.name} — ${g.gb} GB\n`; });
-  }
+  txt += '━━━━━━━━━━━━━━━━━━━━━━\n\n';
+  txt += '🎯 Ausgewählte Spiele:\n';
+  selected.forEach(g => { txt += `  • ${g.name} — ${g.gb} GB\n`; });
   txt += `\n💚 Noch frei: ${Math.max(0, Math.round((limit - used)*10)/10)} GB`;
   box.textContent = txt;
 }
@@ -358,29 +402,21 @@ function copyExport(boxId) {
 }
 
 async function submitOrder(tabId) {
-  const suffix = tabId.replace('tab','');
-  const nameEl = document.getElementById('name' + suffix);
-  const name = nameEl.value.trim();
-  if (!name) {
-    showToast('⚠️ Bitte erst deinen Namen eingeben!');
-    nameEl.focus();
-    return;
-  }
-  const exportBox = document.getElementById('export' + suffix);
-  const auswahl = exportBox.textContent;
-  if (auswahl === 'Noch nichts ausgewählt.') {
-    showToast('⚠️ Bitte erst Spiele auswählen!');
-    return;
-  }
+  const suffix  = tabId.replace('tab','');
+  const nameEl  = document.getElementById('name' + suffix);
+  const name    = nameEl.value.trim();
+  if (!name) { showToast('⚠️ Bitte erst deinen Namen eingeben!'); nameEl.focus(); return; }
+  const auswahl = document.getElementById('export' + suffix).textContent;
+  if (auswahl === 'Noch nichts ausgewählt.') { showToast('⚠️ Bitte erst Spiele auswählen!'); return; }
 
   document.getElementById('spinnerOverlay').classList.add('visible');
 
   const payload = new URLSearchParams({
-    name: name,
-    karte: tabId === 'tab128' ? '128 GB' : '256 GB',
-    geraet: navigator.userAgent.substring(0, 150),
+    name,
+    karte:    tabId === 'tab128' ? '128 GB' : '256 GB',
+    geraet:   navigator.userAgent.substring(0, 150),
     zeitpunkt: new Date().toLocaleString('de-DE'),
-    auswahl: auswahl,
+    auswahl,
   });
 
   try {
@@ -390,11 +426,8 @@ async function submitOrder(tabId) {
       body: payload.toString()
     });
     document.getElementById('spinnerOverlay').classList.remove('visible');
-    if (r.ok) {
-      document.getElementById('modalOverlay').classList.add('visible');
-    } else {
-      showToast('❌ Fehler beim Senden — bitte nochmal versuchen.');
-    }
+    if (r.ok) document.getElementById('modalOverlay').classList.add('visible');
+    else showToast('❌ Fehler beim Senden — bitte nochmal versuchen.');
   } catch {
     document.getElementById('spinnerOverlay').classList.remove('visible');
     showToast('❌ Keine Verbindung — bitte nochmal versuchen.');
@@ -408,7 +441,7 @@ function showToast(msg) {
 }
 
 function resetTab(tabId) {
-  state[tabId] = new Set(GAMES.filter(g => g.locked).map(g => g.id));
+  state[tabId] = new Set();
   buildGameList(tabId); updateUI(tabId);
 }
 
