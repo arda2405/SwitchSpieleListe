@@ -485,6 +485,18 @@ function resetTab(tabId) {
 }
 
 function switchTab(tabId) {
+  // When switching TO 256, carry over everything selected in 128
+  if (tabId === 'tab256') {
+    state['tab128'].forEach(id => state['tab256'].add(id));
+    buildGameList('tab256');
+    updateUI('tab256');
+  }
+  // When switching TO 128, carry over everything selected in 256
+  if (tabId === 'tab128') {
+    state['tab256'].forEach(id => state['tab128'].add(id));
+    buildGameList('tab128');
+    updateUI('tab128');
+  }
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
   document.getElementById(tabId).classList.add('active');
