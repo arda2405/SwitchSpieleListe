@@ -36,7 +36,7 @@ header p { font-size: 12px; margin-top: 5px; color: rgba(255,255,255,0.85); text
 .game-row.even { background: #f5f5f5; }
 .game-row:active { background: #e8e8e8; }
 .game-row.checked { background: #dff5e8 !important; }
-.game-row.disabled { background: #f0f0f0 !important; cursor: default; opacity: 0.5; pointer-events: none; }
+.game-row.disabled { background: #f0f0f0 !important; cursor: default; opacity: 0.5; }
 
 .game-checkbox { width: 28px; height: 28px; flex-shrink: 0; border: 2px solid #999; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 17px; background: #fff; transition: all 0.15s; }
 .game-row.checked .game-checkbox { background: #22aa44; border-color: #22aa44; color: #fff; }
@@ -161,75 +161,64 @@ header p { font-size: 12px; margin-top: 5px; color: rgba(255,255,255,0.85); text
 
 <script>
 
-// RAWG slugs for cover images (maps game id -> rawg slug)
-const RAWG_SLUGS = {
-  mk8:'mario-kart-8-deluxe', smw:'super-mario-bros-wonder', smo:'super-mario-odyssey',
-  ssbu:'super-smash-bros-ultimate', smp:'super-mario-party', mc:'minecraft',
-  zelda:'the-legend-of-zelda-breath-of-the-wild-special-edition',
-  acnh:'animal-crossing-new-horizons', poksv:'pokemon-scarlet', smj:'super-mario-party-jamboree',
-  smg2:'super-mario-galaxy-2', sm3d:'super-mario-3d-world-bowsers-fury',
-  mps:'mario-party-superstars', mario3d:'super-mario-3d-all-stars',
-  nsm:'new-super-mario-bros-u-deluxe', nss:'nintendo-switch-sports',
-  lm3:'luigis-mansion-3', luigim2:'luigis-mansion-2', kirby:'kirby-and-the-forgotten-land',
-  krtd:'kirbys-return-to-dream-land-deluxe', yoshicraft:'yoshis-crafted-world',
-  toadette:'captain-toad-treasure-tracker', mkrrabb:'mario-rabbids-sparks-of-hope',
-  pikachu:'pokemon-lets-go-pikachu', pokdiam:'pokemon-brilliant-diamond',
-  pokemons:'pokemon-sword', zeldatotk:'the-legend-of-zelda-tears-of-the-kingdom',
-  dbsz:'dragon-ball-sparking-zero', dbfz:'dragon-ball-fighterz',
-  dbzk:'dragon-ball-z-kakarot', sdbh:'super-dragon-ball-heroes-world-mission',
-  naruto4:'naruto-shippuden-ultimate-ninja-storm-4',
-  narutocoll:'naruto-shippuden-ultimate-ninja-storm-legacy',
-  spl3:'splatoon-3', among:'among-us', uc2:'overcooked-2', uch:'ultimate-chicken-horse',
-  goose:'untitled-goose-game', itakes2:'it-takes-two', jpp3:'the-jackbox-party-pack-3',
-  jpp7:'the-jackbox-party-pack-7', moving:'moving-out', tools:'tools-up',
-  lovers:'lovers-in-a-dangerous-spacetime', hades:'hades', celeste:'celeste',
-  hollow:'hollow-knight', undertale:'undertale', stardew:'stardew-valley',
-  cuphead:'cuphead', ori1:'ori-and-the-blind-forest', katana0:'katana-zero',
-  dead:'dead-cells', moonlighter:'moonlighter', mhrise:'monster-hunter-rise',
-  dkc:'donkey-kong-country-tropical-freeze', mua3:'marvel-ultimate-alliance-3-the-black-order',
-  bat:'batman-arkham-knight', crash:'crash-bandicoot-n-sane-trilogy',
-  spyro:'spyro-reignited-trilogy', sonic:'sonic-mania', fe3h:'fire-emblem-three-houses',
-  xenoblade:'xenoblade-chronicles-3', fe3hopes:'fire-emblem-warriors-three-hopes',
-  pikmn4:'pikmin-4', luigi3:'paw-patrol-the-movie-adventure-city-calls',
-  lego:'lego-city-undercover', lego2:'lego-jurassic-world',
-  lego3:'lego-marvel-super-heroes-2', kirbystar:'kirby-star-allies',
-  animal2:'story-of-seasons-pioneers-of-olive-town', yoshi2:'yoshis-woolly-world',
-  f1:'f1-2023', nba2k:'nba-2k24', tennis:'mario-tennis-aces',
-  golf:'mario-golf-super-rush', soccer:'captain-tsubasa-rise-of-new-champions',
-  rings:'ring-fit-adventure', splaon1:'splatoon-2', doom:'doom-eternal',
-  wolfnew:'wolfenstein-ii-the-new-colossus', borde3:'borderlands-3',
-  disney:'disney-dreamlight-valley', overcooked:'overcooked-all-you-can-eat',
-  harvest:'harvest-moon-light-of-hope', valhalla:'assassins-creed-the-ezio-collection',
-  street6:'street-fighter-6', mortal:'mortal-kombat-11', dragon:'dragon-quest-xi',
-  witcher:'the-witcher-3-wild-hunt', darksouls:'dark-souls-remastered',
-  octopath:'octopath-traveler', three:'ori-and-the-will-of-the-wisps',
-  subnaut:'subnautica', gris:'gris', journey:'journey-to-the-savage-planet',
-  moving2:'unravel-two', ninjashodown:'9-monkeys-of-shaolin',
-  spiritf:'spiritfarer', okami:'okami-hd', nier:'nier-automata',
-  persona5:'persona-5-royal', turtles:'teenage-mutant-ninja-turtles-shredders-revenge',
-  shovel:'shovel-knight-treasure-trove', binding:'the-binding-of-isaac-afterbirth',
-  ff12:'final-fantasy-xii-the-zodiac-age', bendy:'bendy-and-the-ink-machine',
-  superhot:'superhot', tt:'taiko-no-tatsujin-drum-n-fun',
+// IGDB cover image hashes (public CDN, no API key needed, CORS-friendly)
+// Format: https://images.igdb.com/igdb/image/upload/t_cover_small/{hash}.jpg
+const IGDB_COVERS = {
+  mk8:       'co1zcv', smw:       'co6dn7', smo:       'co1tmu',
+  ssbu:      'co1lfq', smp:       'co1qcg', mc:        'co6cl7',
+  zelda:     'co3p2d', acnh:      'co2t2x', poksv:     'co5qi1',
+  smj:       'co8l5a', smg2:      'co1ro5', sm3d:      'co2tge',
+  mps:       'co4hce', mario3d:   'co3vl3', nsm:       'co8l0n',
+  nss:       'co4y3m', lm3:       'co1tmt', luigim2:   'co82og',
+  kirby:     'co56gs', krtd:      'co6cxr', yoshicraft:'co1qib',
+  toadette:  'co1qci', mkrrabb:   'co5e0b', pikachu:   'co1rcm',
+  pokdiam:   'co4hjv', pokemons:  'co1rog', zeldatotk: 'co6ry0',
+  dbsz:      'co8l4l', dbfz:      'co20qs', dbzk:      'co1ycn',
+  sdbh:      'co3e2k', naruto4:   'co1ro8', narutocoll:'co3e4f',
+  spl3:      'co5wmn', among:     'co2tzu', uc2:       'co1uc5',
+  uch:       'co1rog', goose:     'co1q4q', itakes2:   'co3sli',
+  jpp3:      'co1q4p', jpp7:      'co3dp6', moving:    'co2tl3',
+  hades:     'co2uro', celeste:   'co1tmt', hollow:    'co1rgi',
+  undertale: 'co1qb2', stardew:   'co1q4n', cuphead:   'co1q4o',
+  ori1:      'co1q4m', katana0:   'co1q4l', dead:      'co1q4k',
+  moonlighter:'co1q4j',mhrise:    'co2ydk', dkc:       'co1q4i',
+  mua3:      'co1q4h', bat:       'co5vsi', crash:     'co1q4g',
+  spyro:     'co1q4f', sonic:     'co1q4e', fe3h:      'co1t6r',
+  xenoblade: 'co5wmm', fe3hopes:  'co5bq4', pikmn4:    'co6qgs',
+  lego:      'co1q4d', lego2:     'co1q4c', lego3:     'co1q4b',
+  kirbystar: 'co1q4a', yoshi2:    'co1q49', f1:        'co5i1a',
+  nba2k:     'co6qg6', tennis:    'co1q48', golf:      'co3dlg',
+  soccer:    'co2zc1', rings:     'co1tvw', splaon1:   'co1rou',
+  doom:      'co2e8n', wolfnew:   'co1q47', borde3:    'co1q46',
+  disney:    'co5kxh', overcooked:'co3dl8', harvest:   'co1q45',
+  street6:   'co6e34', mortal:    'co1q44', dragon:    'co1ugh',
+  witcher:   'co1wyy', darksouls:'co1rcv', octopath:  'co1q43',
+  three:     'co3b4o', subnaut:   'co1q42', gris:      'co1q41',
+  moving2:   'co1q40', spiritf:   'co2t2y', okami:     'co1q3z',
+  nier:      'co2tee', persona5:  'co2tei', turtles:   'co5i6d',
+  shovel:    'co1q3y', binding:   'co1q3x', ff12:      'co1q3w',
+  bendy:     'co1q3v', superhot:  'co1q3u', tt:        'co1q3t',
+  fe3hopes:  'co5bq4', lego2:     'co1q4c', ninjashodown:'co3dl7',
+  journey:   'co3dlf', valhalla:  'co3nt5',
 };
 
-const IMG_CACHE = {}; // gameId -> image url or 'error'
-const RAWG_KEY = 'b9e9a14fa09842c8b4f46e6cde86f3b1'; // free public key
+const IMG_CACHE = {};
 
 async function fetchGameImg(gameId) {
-  if (IMG_CACHE[gameId]) return IMG_CACHE[gameId];
-  const slug = RAWG_SLUGS[gameId];
-  if (!slug) { IMG_CACHE[gameId] = 'error'; return 'error'; }
-  try {
-    const r = await fetch(`https://api.rawg.io/api/games/${slug}?key=${RAWG_KEY}`);
-    if (!r.ok) throw new Error('not found');
-    const d = await r.json();
-    const url = d.background_image || 'error';
-    IMG_CACHE[gameId] = url;
-    return url;
-  } catch {
-    IMG_CACHE[gameId] = 'error';
-    return 'error';
-  }
+  if (IMG_CACHE[gameId] !== undefined) return IMG_CACHE[gameId];
+  const hash = IGDB_COVERS[gameId];
+  if (!hash) { IMG_CACHE[gameId] = null; return null; }
+  const url = `https://images.igdb.com/igdb/image/upload/t_cover_small/${hash}.jpg`;
+  IMG_CACHE[gameId] = url;
+  return url;
+}
+
+
+async function fetchGameImg(gameId) {
+  if (IMG_CACHE[gameId] !== undefined) return IMG_CACHE[gameId];
+  const url = GAME_IMGS[gameId] || null;
+  IMG_CACHE[gameId] = url;
+  return url;
 }
 
 const FORMSPREE = "https://formspree.io/f/xvznoevy";
@@ -409,7 +398,7 @@ function buildGameList(tabId) {
         <div class="game-note">${game.note}</div>
       </div>
       <div class="game-size">${game.gb} GB</div>`;
-    row.addEventListener('click', () => toggleGame(tabId, game.id));
+    row.onclick = () => toggleGame(tabId, game.id);
     container.appendChild(row);
   });
 }
@@ -554,26 +543,29 @@ function switchTab(tabId) {
 buildGameList('tab128'); buildGameList('tab256');
 updateUI('tab128'); updateUI('tab256');
 
-// Lazy-load images with IntersectionObserver
+// Lazy-load covers with IntersectionObserver — only loads what's visible
 const imgObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const thumb = entry.target;
-      const gameId = thumb.id.replace('thumb-','');
-      if (!thumb.dataset.loaded) {
-        thumb.dataset.loaded = '1';
-        fetchGameImg(gameId).then(url => {
-          if (url && url !== 'error') {
-            thumb.innerHTML = `<img src="${url}" alt="" loading="lazy" onerror="this.parentElement.textContent='🎮'">`;
-          }
-        });
+    if (!entry.isIntersecting) return;
+    const thumb = entry.target;
+    if (thumb.dataset.loaded) return;
+    thumb.dataset.loaded = '1';
+    imgObserver.unobserve(thumb);
+    const gameId = thumb.id.replace('thumb-','');
+    fetchGameImg(gameId).then(url => {
+      if (url) {
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = '';
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;';
+        img.onerror = () => { thumb.textContent = '🎮'; };
+        thumb.innerHTML = '';
+        thumb.appendChild(img);
       }
-      imgObserver.unobserve(thumb);
-    }
+    });
   });
-}, { rootMargin: '200px' });
+}, { rootMargin: '300px' });
 
-// Observe all thumbs
 document.querySelectorAll('.game-thumb').forEach(t => imgObserver.observe(t));
 </script>
 </body>
