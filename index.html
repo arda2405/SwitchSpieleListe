@@ -161,65 +161,9 @@ header p { font-size: 12px; margin-top: 5px; color: rgba(255,255,255,0.85); text
 
 <script>
 
-// IGDB cover image hashes (public CDN, no API key needed, CORS-friendly)
-// Format: https://images.igdb.com/igdb/image/upload/t_cover_small/{hash}.jpg
-const IGDB_COVERS = {
-  mk8:       'co1zcv', smw:       'co6dn7', smo:       'co1tmu',
-  ssbu:      'co1lfq', smp:       'co1qcg', mc:        'co6cl7',
-  zelda:     'co3p2d', acnh:      'co2t2x', poksv:     'co5qi1',
-  smj:       'co8l5a', smg2:      'co1ro5', sm3d:      'co2tge',
-  mps:       'co4hce', mario3d:   'co3vl3', nsm:       'co8l0n',
-  nss:       'co4y3m', lm3:       'co1tmt', luigim2:   'co82og',
-  kirby:     'co56gs', krtd:      'co6cxr', yoshicraft:'co1qib',
-  toadette:  'co1qci', mkrrabb:   'co5e0b', pikachu:   'co1rcm',
-  pokdiam:   'co4hjv', pokemons:  'co1rog', zeldatotk: 'co6ry0',
-  dbsz:      'co8l4l', dbfz:      'co20qs', dbzk:      'co1ycn',
-  sdbh:      'co3e2k', naruto4:   'co1ro8', narutocoll:'co3e4f',
-  spl3:      'co5wmn', among:     'co2tzu', uc2:       'co1uc5',
-  uch:       'co1rog', goose:     'co1q4q', itakes2:   'co3sli',
-  jpp3:      'co1q4p', jpp7:      'co3dp6', moving:    'co2tl3',
-  hades:     'co2uro', celeste:   'co1tmt', hollow:    'co1rgi',
-  undertale: 'co1qb2', stardew:   'co1q4n', cuphead:   'co1q4o',
-  ori1:      'co1q4m', katana0:   'co1q4l', dead:      'co1q4k',
-  moonlighter:'co1q4j',mhrise:    'co2ydk', dkc:       'co1q4i',
-  mua3:      'co1q4h', bat:       'co5vsi', crash:     'co1q4g',
-  spyro:     'co1q4f', sonic:     'co1q4e', fe3h:      'co1t6r',
-  xenoblade: 'co5wmm', fe3hopes:  'co5bq4', pikmn4:    'co6qgs',
-  lego:      'co1q4d', lego2:     'co1q4c', lego3:     'co1q4b',
-  kirbystar: 'co1q4a', yoshi2:    'co1q49', f1:        'co5i1a',
-  nba2k:     'co6qg6', tennis:    'co1q48', golf:      'co3dlg',
-  soccer:    'co2zc1', rings:     'co1tvw', splaon1:   'co1rou',
-  doom:      'co2e8n', wolfnew:   'co1q47', borde3:    'co1q46',
-  disney:    'co5kxh', overcooked:'co3dl8', harvest:   'co1q45',
-  street6:   'co6e34', mortal:    'co1q44', dragon:    'co1ugh',
-  witcher:   'co1wyy', darksouls:'co1rcv', octopath:  'co1q43',
-  three:     'co3b4o', subnaut:   'co1q42', gris:      'co1q41',
-  moving2:   'co1q40', spiritf:   'co2t2y', okami:     'co1q3z',
-  nier:      'co2tee', persona5:  'co2tei', turtles:   'co5i6d',
-  shovel:    'co1q3y', binding:   'co1q3x', ff12:      'co1q3w',
-  bendy:     'co1q3v', superhot:  'co1q3u', tt:        'co1q3t',
-  fe3hopes:  'co5bq4', lego2:     'co1q4c', ninjashodown:'co3dl7',
-  journey:   'co3dlf', valhalla:  'co3nt5',
-};
-
+// Game cover images — filled in by Dev Tool export
+const GAME_IMGS = {"mk8": "https://amiibo.life/assets/games/eshop_icons/switch/mario-kart-8-deluxe-72a15ae05af6d5ba9fe88df1fe308a26a1acc6a188eef34dcf33db543f38b07c.png", "smw": "https://amiibo.life/assets/games/eshop_icons/switch/super-mario-bros-wonder-aed41f0717a547b2f87573546ae5002cd25bf9f096fe6b33c0756e1bd22809e8.png", "smo": "https://amiibo.life/assets/games/eshop_icons/switch/super-mario-odyssey-3150b6cea89514729d0450e80bc9c515cec5893fa0ae885b9ad55137dd795ea3.png", "ssbu": "https://amiibo.life/assets/games/eshop_icons/switch/super-smash-bros-ultimate-fdfb292ae971525aa6d65e626d269c2d70fe155df1c5e0b567f25bdfbe3a8028.png", "smp": "https://amiibo.life/assets/games/eshop_icons/switch/super-mario-party-09a3d5282fe6d864b28bf8c87b797625ea12429399f758a630e83f9f8eda15bf.png", "mc": "https://item4gamer.com/wp-content/uploads/2023/03/MINECRAFT-ICON_.webp", "zelda": "https://amiibo.life/assets/games/eshop_icons/switch/the-legend-of-zelda-breath-of-the-wild-7d2d0eb308e06f13afc957a63bfc27054d59255aa02f027dd5e4bee1bb21314d.png", "acnh": "https://amiibo.life/assets/games/eshop_icons/switch/animal-crossing-new-horizons-33848609fe8a72351f3bef76512e3c5bddd2ae091d3360e426abdffcf07f5dba.png", "poksv": "https://www.speedrun.com/static/game/j1lqx5j6/cover.jpg?v=3d55407", "smj": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfxpCl_hloi1pPwZ-nlzyt674CbTw_PcNxLg&s", "smg2": "https://mario.wiki.gallery/images/thumb/9/9f/SMG2SwitchIcon.jpg/256px-SMG2SwitchIcon.jpg", "sm3d": "https://www.speedrun.com/static/game/pdvzywv6/cover.png?v=f8a2b84", "mps": "https://assets-prd.ignimgs.com/2024/04/10/mario-party-superstars-button-1623830045279-1712710472205.jpg?crop=1%3A1&width=256&format=jpg&auto=webp&quality=80", "mario3d": "https://sm.ign.com/t/ign_ap/cover/s/super-mari/super-mario-3d-all-stars_1vv2.128.jpg", "nsm": "https://www.speedrun.com/static/game/76rxy346/cover.jpg?v=1b07c95", "nss": "https://helios-i.mashable.com/imagery/articles/07GkJ0j7EEpLestdjcCBEbP/images-1.fill.size_256x256.v1722961126.png", "lm3": "https://assets-prd.ignimgs.com/2024/04/10/luigis-mansion-3-button-fin-1641602466276-1712710469614.jpg?crop=1%3A1&width=256&format=jpg&auto=webp&quality=80", "luigim2": "https://sm.ign.com/t/ign_nordic/cover/l/luigis-man/luigis-mansion-dark-moon-switch_67dk.128.jpg", "kirby": "https://assets-prd.ignimgs.com/2024/04/10/kirby-and-the-forgotten-land-button-fin-1632513789460-1712710430482.jpg?crop=1%3A1&width=256&format=jpg&auto=webp&quality=80", "krtd": "https://sm.ign.com/t/ign_ap/cover/k/kirbys-ret/kirbys-return-to-dream-land-deluxe_jvbv.128.jpg", "yoshicraft": "https://amiibo.life/assets/games/eshop_icons/switch/yoshi-s-crafted-world-70149d521b2cb8705c42e66aa88ac94a56bea025381edf64058dedd7fd588071.png", "toadette": "https://amiibo.life/assets/games/eshop_icons/switch/captain-toad-treasure-tracker-804c135ac00059478c2b273d4ae0acfe3047d43d77aa3145ac1906ddd5e056a7.png", "mkrrabb": "https://sm.ign.com/t/ign_ap/cover/m/mario-rabb/mario-rabbids-sparks-of-hope_f2fw.128.jpg", "pikachu": "https://assets.nintendo.eu/image/upload/f_auto,c_limit,w_992,q_auto:low/MNS/NOE/70010000000446/SQ_NSwitch_PokemonLetsGoPikachu_enGB", "pokdiam": "https://www.speedrun.com/static/game/k6qw2706/cover.png?v=40416f7", "pokemons": "https://wikipedia.jakami.de/content/pokewiki_de_all_maxi_2021-03/I/Pok%C3%A9mon_Schild_Icon.png.webp", "zeldatotk": "https://sm.ign.com/t/ign_nordic/cover/t/the-legend/the-legend-of-zelda-tears-of-the-kingdom-nintendo-switch-2-e_6xfh.128.png", "dbsz": "https://sm.ign.com/t/ign_de/cover/d/dragon-bal/dragon-ball-sparking-zero_twut.128.jpg", "dbfz": "https://sm.ign.com/t/ign_ap/cover/d/dragon-bal/dragon-ball-fighterz_m3vn.128.jpg", "dbzk": "https://sm.ign.com/t/ign_es/game/d/dragon-bal/dragon-ball-project-z_vjcm.128.jpg", "sdbh": "https://sm.ign.com/t/ign_ap/cover/s/super-drag/super-dragon-ball-heroes-world-mission_nawc.128.jpg", "naruto4": "https://sm.ign.com/t/ign_ap/cover/n/naruto-shippuden-ultimate-ninja-storm-4/naruto-shippuden-ultimate-ninja-storm-4_dhsk.128.jpg", "narutocoll": "https://igm.gg/_next/image?url=https%3A%2F%2Fstorage.yandexcloud.net%2Figm-s3%2FPROD%2F202409%2F0f76b86c%2FNARUTO_Ultimate_Ninja_STORM_Trilogy_png.png&w=256&q=10", "spl3": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTAvEIDD74zJS8GndNdd7g2rhFacqf30nXqw&s", "uc2": "https://sm.ign.com/t/ign_nordic/cover/o/overcooked/overcooked-2_euj3.128.jpg", "uch": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaVgvq0DKa45U7n4HkMR2OtGSGaYgmO8yMCg&s", "goose": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYywbms2Hv_hXxOcC_PQobGSgEEX2g2Nv9oA&s", "itakes2": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR56vDHNwVSZEfovpH5Fk_lxEvf-Qov6SmFGA&s", "jpp3": "https://cdn.fastly.steamstatic.com/steamcommunity/public/images/apps/1755580/3cf08e6fc046c871b2f41615b82d53d0557de8be.jpg", "jpp7": "https://cdn.fastly.steamstatic.com/steamcommunity/public/images/apps/1755580/3cf08e6fc046c871b2f41615b82d53d0557de8be.jpg", "moving": "https://sm.ign.com/t/ign_ap/cover/m/moving-out/moving-out-2_j8mp.128.jpg", "tools": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGgiYIBbYv2GyVf2oa734bl2PFxvSggH_x3A&s", "lovers": "https://sm.ign.com/t/ign_in/cover/l/lovers-in-/lovers-in-a-dangerous-spacetime_7522.128.jpg", "hades": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTREUC8pN3NrG8rwaEgWbo30Xf6JGxndwZQDQ&s", "celeste": "https://tiermaker.com/images/chart/chart/top-juegos-258-juegos-yeah-wesomiu-uwu-381126/celestepng.png", "hollow": "https://sm.ign.com/t/ign_nordic/cover/h/hollow-kni/hollow-knight_wf7m.128.jpg", "undertale": "https://sm.ign.com/t/ign_in/cover/u/undertale/undertale_nq8g.128.jpg", "stardew": "https://sm.ign.com/t/ign_in/cover/s/stardew-va/stardew-valley_vdyw.128.jpg", "cuphead": "https://sm.ign.com/t/ign_nordic/cover/c/cuphead/cuphead_fbx5.128.jpg", "ori1": "https://sm.ign.com/t/ign_nl/cover/o/ori-and-th/ori-and-the-blind-forest-definitive-edition_e2fh.128.jpg", "katana0": "https://sm.ign.com/t/ign_ap/cover/k/katana-zer/katana-zero_syme.128.jpg", "dead": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKTiFNyJgj1tFfTQ9AP9PIzAlV1cHqZ-H4yA&s", "moonlighter": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9AYC8iIeRb1CCnBqMBcSymPw8IasEumIpOw&s", "mhrise": "https://amiibo.life/assets/games/eshop_icons/switch/monster-hunter-rise-b1b727abc76c3b8d8e03cbb5b49262a3f56e4a598537430345d016d341f43798.png", "dkc": "https://www.zoma.mg/34475-category_product_thumb/donkey-kong-country-switch.jpg", "mua3": "https://sm.ign.com/t/ign_br/cover/m/marvel-ult/marvel-ultimate-alliance-3-the-black-order_a3pf.128.jpg", "bat": "https://sm.ign.com/t/ign_nordic/cover/b/batman-ark/batman-arkham-trilogy_nvqw.128.jpg", "crash": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/3367fa99-0ba6-454c-b947-683f1a9f896d/ddv554i-b658fb8d-794b-431d-a223-cf0d542955c5.png", "spyro": "https://sm.ign.com/t/ign_nordic/cover/s/spyro-reig/spyro-reignited-trilogy_t9d2.128.jpg", "sonic": "https://sm.ign.com/t/ign_za/cover/s/sonic-mani/sonic-mania_wmu6.128.jpg", "fe3h": "https://amiibo.life/assets/games/eshop_icons/switch/fire-emblem-three-houses-efd506fdc443a3fe85ad4218a624bad836f903a225f920c1cc92091004133b98.png", "xenoblade": "https://sm.ign.com/t/ign_ap/cover/x/xenoblade-/xenoblade-chronicles-3_s7ft.128.jpg", "fe3hopes": "https://sm.ign.com/t/ign_nordic/cover/f/fire-emble/fire-emblem-warriors-three-hopes_1evq.128.jpg", "pikmn4": "https://sm.ign.com/t/ign_ap/cover/p/pikmin-4/pikmin-4_xdnk.128.jpg", "luigi3": "https://img1.evosis.org/javatar.php?type=game&record=5790&size=256", "lego": "https://images.morele.net/i256/12695671_0_i256.jpg", "lego2": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkB_OXkl_b85Y3ryaNRS2Co-SCkfmVg4aPfg&s", "lego3": "https://sm.ign.com/t/ign_mear/cover/l/lego-marve/lego-marvel-super-heroes-2_frjx.128.jpg", "kirbystar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc5CZXY5jY0Bh_Xpc0dmVoFK6hG8WnWzEcDw&s", "animal2": "https://cdn.auchan.fr/media/25dd9770-c937-4271-bf9f-6b54e8ec6618_256x256/B2CD/", "yoshi2": "https://sm.ign.com/t/ign_ap/cover/y/yoshis-wooly-world/yoshis-wooly-world_uh5s.128.jpg", "f1": "https://www.keyforsteam.de/wp-content/uploads/F1-2023-EDITIONS_1.png", "nba2k": "https://www.spriters-resource.com/media/assets/252/254782.png?updated=1755493781", "tennis": "https://assets-prd.ignimgs.com/2024/03/08/switch-mariotennisaces-1709899804266.jpeg?crop=1%3A1&width=256&format=jpg&auto=webp&quality=80", "golf": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCzFmc2M4w5gsNgrGrGn9us91GTbFUNINvZA&s", "soccer": "https://images.steamusercontent.com/ugc/18675072559858749/7CE0C34FA469C37A703AF9C3F04995AD68547298/?imw=128&imh=128&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true", "rings": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr6uDyIAazhZqDBEiB1_ZKqJj8414MEP1asA&s", "splaon1": "https://amiibo.life/assets/games/eshop_icons/switch/splatoon-2-727f75e995b53abc1667996cd3b98cbb02612240c670809401a88c1b84aad8f9.png", "doom": "https://i.imgur.com/p8bXill.png", "wolfnew": "https://sm.ign.com/t/ign_ap/cover/w/wolfenstei/wolfenstein-2-the-new-colossus_8x7z.128.jpg", "borde3": "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_1.5/c_scale,w_400/store/software/switch/70010000031761/dd3a887e71f07e929ed21e50112e15b43675f996c0b6c9a1e44870513fd5aa89", "disney": "https://images.cgames.de/images/gsgp/262/disney-dreamlight-valley-ml_6192964.jpg", "overcooked": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTwX8WIFqCE9PLFmzvP3xDNq4q5KOTfc6yDw&s", "harvest": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQuPbCt4w_VOD_uw3IfG9WKhmnh4qwiNovMw&s", "street6": "https://www.nintendo.com/eu/media/images/assets/nintendo_switch_2_games/streetfighter6/1x1_NSwitch2_StreetFIghter6_CMM_big.jpg", "mortal": "https://sm.ign.com/t/ign_ap/cover/m/mortal-kom/mortal-kombat-11_c3pp.128.jpg", "dragon": "https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/store/software/switch/70010000021451/f43df7d34be1b2a65c5cd1d14bd7c90737de956f06f2bb0a115a0cee5689481e", "witcher": "https://sm.ign.com/t/ign_nordic/cover/t/the-witche/the-witcher-3-wild-hunt_p6wz.128.jpg", "darksouls": "https://sm.ign.com/t/ign_pk/cover/d/dark-souls/dark-souls-remastered_nvan.128.jpg", "octopath": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQfN_zIvwpWe_OUZkpb5RS0F-WeDLxMsK7Ig&s", "three": "https://sm.ign.com/t/ign_in/cover/o/ori-and-th/ori-and-the-will-of-the-wisps_6gyx.128.jpg", "subnaut": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1a2ud-KdoZIKn5U7JhJbjI_9FqOMC4qAneg&s", "gris": "https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/store/software/switch/70010000014006/bc4e849ea0ca47cffd0437b56ee9a80fbaf917d49d867f8bbf93e7106e46c1a3", "journey": "https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/store/software/switch/70010000026368/5c65bfe3ea891280cfa6dc44ce1d3896233c2891df09055e68bf3f643ff6185c", "moving2": "https://assets-prd.ignimgs.com/2024/04/10/unravel-2-button-1528578887401-1712710348184.jpg?crop=1%3A1%2Csmart&width=256&format=jpg&auto=webp&quality=80", "ninjashodown": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8xkoli7PtwEWqAvoeHJggal3w20Z_rk6faw&s", "spiritf": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0SvgjxTLq0lm-f4hZeMX1L8VGkbX0JdArMw&s", "okami": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS6Wcfy6sA2PeRad-0LLFqksOTaF-CU3FVRA&s", "nier": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7cieF7V5uODT_6ZvBDwqHYfpknvQvYbqhw&s", "persona5": "https://assets-prd.ignimgs.com/2024/01/30/persona-5-royal-button-fin-1581716582492-result-1706579147188.jpg?crop=1%3A1%2Csmart&width=256&format=jpg&auto=webp&quality=80", "turtles": "https://cdn2.steamgriddb.com/icon/d940ee47ee04431e015f97d1f70aae88.ico", "shovel": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS80vVQpY02QxELUIHdbBwsREKtmzlMSnG_Tg&s", "binding": "https://gbatemp.net/attachments/issac-002-010021c000b6a000-jpg.237533/", "ff12": "https://sm.ign.com/t/ign_in/cover/f/final-fant/final-fantasy-xii-the-zodiac-age_523t.128.jpg", "bendy": "https://img1.evosis.org/javatar.php?type=game&record=13779&size=256", "superhot": "https://sm.ign.com/t/ign_in/cover/s/superhot/superhot_1w6a.128.jpg", "tt": "https://sm.ign.com/t/ign_ap/cover/t/taiko-no-t/taiko-no-tatsujin-drum-n-fun_v53g.128.jpg", "valhalla": "https://assets-prd.ignimgs.com/2024/04/10/unravel-2-button-1528578887401-1712710348184.jpg"};
 const IMG_CACHE = {};
-
-
-// ── INJECTED GAME IMAGES (from Dev Tool) ──
-const GAME_IMGS_CUSTOM = {
-  "mk8": "https://amiibo.life/assets/games/eshop_icons/switch/mario-kart-8-deluxe-72a15ae05af6d5ba9fe88df1fe308a26a1acc6a188eef34dcf33db543f38b07c.png"
-};
-async function fetchGameImg(gameId) {
-  if (IMG_CACHE[gameId] !== undefined) return IMG_CACHE[gameId];
-  const url = GAME_IMGS_CUSTOM[gameId] || null;
-  IMG_CACHE[gameId] = url;
-  return url;
-}
-  const url = `https://images.igdb.com/igdb/image/upload/t_cover_small/${hash}.jpg`;
-  IMG_CACHE[gameId] = url;
-  return url;
-}
-
 
 async function fetchGameImg(gameId) {
   if (IMG_CACHE[gameId] !== undefined) return IMG_CACHE[gameId];
@@ -227,6 +171,7 @@ async function fetchGameImg(gameId) {
   IMG_CACHE[gameId] = url;
   return url;
 }
+
 
 const FORMSPREE = "https://formspree.io/f/xvznoevy";
 
@@ -283,7 +228,6 @@ const REST = [
 
   // Online / Multiplayer
   { id:'spl3',      name:'Splatoon 3',                            gb:6.1,  note:'Bunter Online-Shooter bei dem man Farbe schießt statt auf Menschen — sehr beliebt bei Jugendlichen' },
-  { id:'among',     name:'Among Us',                              gb:0.5,  note:'Mit Freunden oder Online herausfinden wer der Verräter ist — perfekt für Gruppen' },
 
   // Koop & Party
   { id:'uc2',       name:'Overcooked! 2',                         gb:1.8,  note:'Zusammen kochen in chaotischen Küchen — lustig aber auch stressig, besonders zu zweit oder viert' },
