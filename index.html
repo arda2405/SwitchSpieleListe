@@ -204,10 +204,17 @@ const IGDB_COVERS = {
 
 const IMG_CACHE = {};
 
+
+// ── INJECTED GAME IMAGES (from Dev Tool) ──
+const GAME_IMGS_CUSTOM = {
+  "mk8": "https://amiibo.life/assets/games/eshop_icons/switch/mario-kart-8-deluxe-72a15ae05af6d5ba9fe88df1fe308a26a1acc6a188eef34dcf33db543f38b07c.png"
+};
 async function fetchGameImg(gameId) {
   if (IMG_CACHE[gameId] !== undefined) return IMG_CACHE[gameId];
-  const hash = IGDB_COVERS[gameId];
-  if (!hash) { IMG_CACHE[gameId] = null; return null; }
+  const url = GAME_IMGS_CUSTOM[gameId] || null;
+  IMG_CACHE[gameId] = url;
+  return url;
+}
   const url = `https://images.igdb.com/igdb/image/upload/t_cover_small/${hash}.jpg`;
   IMG_CACHE[gameId] = url;
   return url;
