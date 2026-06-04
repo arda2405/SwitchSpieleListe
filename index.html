@@ -501,20 +501,33 @@ function switchTab(tabId) {
   document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
   document.getElementById(tabId).classList.add('active');
   document.querySelectorAll('.tab-btn')[tabId === 'tab128' ? 0 : 1].classList.add('active');
+  // Re-observe thumbs in the newly active tab
+  observeAllThumbs();
 }
 
 buildGameList('tab128'); buildGameList('tab256');
 updateUI('tab128'); updateUI('tab256');
 
-// Lazy-load covers with IntersectionObserver — only loads what's visible
+// Lazy-load covers with IntersectionObserver
 const imgObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     const thumb = entry.target;
-    if (thumb.dataset.loaded) return;
-    thumb.dataset.loaded = '1';
     imgObserver.unobserve(thumb);
     const gameId = thumb.id.replace('thumb-','');
+    // Already cached — skip fetch
+    if (IMG_CACHE[gameId] !== undefined) {
+      if (IMG_CACHE[gameId] && thumb.textContent === '🎮') {
+        const img = document.createElement('img');
+        img.src = IMG_CACHE[gameId];
+        img.alt = '';
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;';
+        img.onerror = () => { thumb.textContent = '🎮'; };
+        thumb.innerHTML = '';
+        thumb.appendChild(img);
+      }
+      return;
+    }
     fetchGameImg(gameId).then(url => {
       if (url) {
         const img = document.createElement('img');
@@ -529,7 +542,10 @@ const imgObserver = new IntersectionObserver((entries) => {
   });
 }, { rootMargin: '300px' });
 
-document.querySelectorAll('.game-thumb').forEach(t => imgObserver.observe(t));
+function observeAllThumbs() {
+  document.querySelectorAll('.game-thumb').forEach(t => imgObserver.observe(t));
+}
+observeAllThumbs();
 </script>
 </body>
 </html>
