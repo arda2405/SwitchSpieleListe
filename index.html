@@ -423,7 +423,7 @@ function buildGameList(tabId) {
     row.id = tabId + '-row-' + game.id;
     row.innerHTML = `
       <div class="game-checkbox">${checked ? '✓' : ''}</div>
-      <div class="game-thumb" id="thumb-${tabId}-${game.id}">🎮</div>
+      <div class="game-thumb" id="thumb-${game.id}">🎮</div>
       <div class="game-info">
         <div class="game-name">${game.name}</div>
         <div class="game-note">${game.note}</div>
@@ -589,9 +589,7 @@ const imgObserver = new IntersectionObserver((entries) => {
     if (!entry.isIntersecting) return;
     const thumb = entry.target;
     imgObserver.unobserve(thumb);
-    const parts  = thumb.id.replace('thumb-','').split('-');
-    const tabId  = parts[0] + '-' + parts[1];
-    const gameId = parts.slice(2).join('-');
+    const gameId = thumb.id.replace('thumb-','');
     if (IMG_CACHE[gameId] !== undefined) {
       if (IMG_CACHE[gameId] && thumb.textContent === '🎮') {
         const img = document.createElement('img');
