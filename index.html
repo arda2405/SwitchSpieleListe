@@ -7,66 +7,48 @@
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: Arial, sans-serif; background: #e8e8e8; color: #111; font-size: 15px; }
-
 .page-wrap { max-width: 720px; margin: 0 auto; background: #fff; box-shadow: 0 0 30px rgba(0,0,0,0.15); min-height: 100vh; }
-
-header {
-  background: linear-gradient(135deg, #1a6ed8 50%, #cc2222 50%);
-  color: #fff; text-align: center; padding: 20px 12px 16px;
-  position: relative; overflow: hidden;
-}
+header { background: linear-gradient(135deg, #1a6ed8 50%, #cc2222 50%); color: #fff; text-align: center; padding: 20px 12px 16px; position: relative; overflow: hidden; }
 header h1 { font-size: 20px; font-weight: bold; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
 header p { font-size: 12px; margin-top: 5px; color: rgba(255,255,255,0.85); text-shadow: 0 1px 3px rgba(0,0,0,0.4); }
-
 .tabs { display: flex; border-bottom: 3px solid #111; }
 .tab-btn { flex: 1; padding: 12px 6px; font-size: 13px; font-weight: bold; border: none; background: #ddd; color: #555; cursor: pointer; border-right: 2px solid #bbb; }
 .tab-btn:last-child { border-right: none; }
 .tab-btn.active { background: #111; color: #fff; }
-
 .status-bar { padding: 10px 14px; background: #f5f5f5; border-bottom: 2px solid #ddd; }
 .status-text { font-size: 13px; font-weight: bold; margin-bottom: 6px; }
 .progress-wrap { width: 100%; background: #ddd; height: 18px; border-radius: 9px; overflow: hidden; }
 .progress-fill { height: 100%; border-radius: 9px; transition: width 0.3s, background 0.3s; }
-
 .legend { display: flex; flex-wrap: wrap; gap: 7px; padding: 9px 14px; border-bottom: 1px solid #eee; font-size: 11px; background: #fafafa; }
 .legend-item { display: flex; align-items: center; gap: 4px; }
 .legend-dot { width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0; }
-
 .game-row { display: flex; align-items: center; padding: 10px 14px; border-bottom: 1px solid #eee; gap: 11px; cursor: pointer; transition: background 0.1s; user-select: none; -webkit-tap-highlight-color: transparent; background: #fff; }
 .game-row.even { background: #f5f5f5; }
 .game-row:active { background: #e8e8e8; }
 .game-row.checked { background: #dff5e8 !important; }
 .game-row.disabled { background: #f0f0f0 !important; cursor: default; opacity: 0.5; }
-
 .game-checkbox { width: 28px; height: 28px; flex-shrink: 0; border: 2px solid #999; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 17px; background: #fff; transition: all 0.15s; }
 .game-row.checked .game-checkbox { background: #22aa44; border-color: #22aa44; color: #fff; }
-
 .game-thumb { width: 52px; height: 52px; border-radius: 8px; object-fit: cover; flex-shrink: 0; background: #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 24px; overflow: hidden; }
 .game-thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; display: block; }
 .game-info { flex: 1; min-width: 0; }
 .game-name { font-size: 14px; font-weight: bold; line-height: 1.3; }
 .game-note { font-size: 11px; color: #666; margin-top: 2px; }
-
 .game-size { font-size: 13px; font-weight: bold; color: #111; white-space: nowrap; min-width: 48px; text-align: right; }
-
 .warning-banner { background: #fff3cd; border: 2px solid #ff9900; color: #7a4800; padding: 9px 14px; font-size: 13px; font-weight: bold; display: none; }
 .warning-banner.visible { display: block; }
-
 .export-section { padding: 14px; border-top: 2px solid #111; background: #f5f5f5; }
 .export-section h3 { font-size: 14px; margin-bottom: 10px; }
 .export-box { background: #fff; border: 2px solid #ddd; border-radius: 6px; padding: 11px; font-size: 12px; line-height: 1.8; white-space: pre-wrap; word-break: break-word; min-height: 60px; color: #111; }
 .btn { display: block; width: 100%; margin-top: 9px; padding: 13px; font-size: 15px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; }
 .btn:active { opacity: 0.8; }
-.btn-copy   { background: #111; color: #fff; }
-.btn-reset  { background: #ddd; color: #111; margin-top: 8px; }
+.btn-copy { background: #111; color: #fff; }
+.btn-reset { background: #ddd; color: #111; margin-top: 8px; }
 .btn-fertig { background: #22aa44; color: #fff; font-size: 16px; margin-top: 14px; padding: 15px; }
-
 .name-input { width: 100%; padding: 11px; font-size: 15px; border: 2px solid #ddd; border-radius: 6px; margin-top: 12px; font-family: Arial; }
 .name-input:focus { outline: none; border-color: #111; }
-
 .tab-content { display: none; }
 .tab-content.active { display: block; }
-
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
 .modal-overlay.visible { display: flex; }
 .modal { background: #fff; border-radius: 14px; padding: 28px 22px; max-width: 380px; width: 100%; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
@@ -74,30 +56,25 @@ header p { font-size: 12px; margin-top: 5px; color: rgba(255,255,255,0.85); text
 .modal h2 { font-size: 22px; font-weight: bold; margin-bottom: 12px; }
 .modal p { font-size: 14px; color: #444; line-height: 1.7; margin-bottom: 20px; }
 .modal-ok { background: #111; color: #fff; border: none; padding: 13px 36px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; width: 100%; }
-
 .spinner-overlay { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.88); z-index: 2000; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
 .spinner-overlay.visible { display: flex; }
 .spinner { width: 46px; height: 46px; border: 5px solid #ddd; border-top-color: #111; border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .spinner-text { font-size: 15px; font-weight: bold; color: #111; }
-
 #toast { position: fixed; top: 0; left: 0; right: 0; background: #cc2222; color: #fff; padding: 14px 20px; font-size: 14px; font-weight: bold; z-index: 9999; opacity: 0; transition: opacity 0.3s; pointer-events: none; text-align: center; }
 #toast.success { background: #111; top: auto; bottom: 24px; left: 50%; right: auto; transform: translateX(-50%); border-radius: 20px; width: auto; padding: 10px 20px; }
 </style>
 </head>
 <body>
 <div class="page-wrap">
-
 <header>
   <h1>🎮 Nintendo Switch — Spiele Auswahl</h1>
   <p>Einfach antippen was du willst · Speicher wird automatisch berechnet</p>
 </header>
-
 <div class="tabs">
   <button class="tab-btn active" onclick="switchTab('tab128')">💾 128 GB Karte<br><small style="font-size:10px;font-weight:normal;">87 GB nutzbar</small></button>
   <button class="tab-btn" onclick="switchTab('tab256')">💾 256 GB Karte<br><small style="font-size:10px;font-weight:normal;">200 GB nutzbar (+30€)</small></button>
 </div>
-
 <div id="tab128" class="tab-content active">
   <div class="status-bar">
     <div class="status-text">📦 <span id="used128">0</span> / 87 GB &nbsp;|&nbsp; Frei: <span id="free128">87</span> GB &nbsp;|&nbsp; <span id="count128">0</span> Spiele ausgewählt</div>
@@ -118,7 +95,6 @@ header p { font-size: 12px; margin-top: 5px; color: rgba(255,255,255,0.85); text
     <button class="btn btn-fertig" onclick="submitOrder('tab128')">✅ Fertig — Auswahl absenden</button>
   </div>
 </div>
-
 <div id="tab256" class="tab-content">
   <div class="status-bar">
     <div class="status-text">📦 <span id="used256">0</span> / 200 GB &nbsp;|&nbsp; Frei: <span id="free256">200</span> GB &nbsp;|&nbsp; <span id="count256">0</span> Spiele ausgewählt</div>
@@ -139,278 +115,231 @@ header p { font-size: 12px; margin-top: 5px; color: rgba(255,255,255,0.85); text
     <button class="btn btn-fertig" onclick="submitOrder('tab256')">✅ Fertig — Auswahl absenden</button>
   </div>
 </div>
-
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-icon">🎉</div>
     <h2>Alles angekommen!</h2>
-    <p>Ich habe deine Spieleliste erhalten.<br><br>
-    Schreib mir bitte kurz eine Nachricht (WhatsApp o.ä.) dass du fertig bist, damit ich anfangen kann. 😊</p>
+    <p>Ich habe deine Spieleliste erhalten.<br><br>Schreib mir bitte kurz eine Nachricht (WhatsApp o.ä.) dass du fertig bist, damit ich anfangen kann. 😊</p>
     <button class="modal-ok" onclick="document.getElementById('modalOverlay').classList.remove('visible')">OK, mach ich!</button>
   </div>
 </div>
-
 <div class="spinner-overlay" id="spinnerOverlay">
   <div class="spinner"></div>
   <div class="spinner-text">Wird gesendet…</div>
 </div>
-
 <div id="toast"></div>
 </div>
-
 <script>
 const GAME_IMGS = {
-  "mk8":        "https://amiibo.life/assets/games/eshop_icons/switch/mario-kart-8-deluxe-72a15ae05af6d5ba9fe88df1fe308a26a1acc6a188eef34dcf33db543f38b07c.png",
-  "smw":        "https://amiibo.life/assets/games/eshop_icons/switch/super-mario-bros-wonder-aed41f0717a547b2f87573546ae5002cd25bf9f096fe6b33c0756e1bd22809e8.png",
-  "smo":        "https://amiibo.life/assets/games/eshop_icons/switch/super-mario-odyssey-3150b6cea89514729d0450e80bc9c515cec5893fa0ae885b9ad55137dd795ea3.png",
-  "ssbu":       "https://amiibo.life/assets/games/eshop_icons/switch/super-smash-bros-ultimate-fdfb292ae971525aa6d65e626d269c2d70fe155df1c5e0b567f25bdfbe3a8028.png",
-  "smp":        "https://amiibo.life/assets/games/eshop_icons/switch/super-mario-party-09a3d5282fe6d864b28bf8c87b797625ea12429399f758a630e83f9f8eda15bf.png",
-  "mc":         "https://item4gamer.com/wp-content/uploads/2023/03/MINECRAFT-ICON_.webp",
-  "zelda":      "https://amiibo.life/assets/games/eshop_icons/switch/the-legend-of-zelda-breath-of-the-wild-7d2d0eb308e06f13afc957a63bfc27054d59255aa02f027dd5e4bee1bb21314d.png",
-  "acnh":       "https://amiibo.life/assets/games/eshop_icons/switch/animal-crossing-new-horizons-33848609fe8a72351f3bef76512e3c5bddd2ae091d3360e426abdffcf07f5dba.png",
-  "poksv":      "https://www.speedrun.com/static/game/j1lqx5j6/cover.jpg?v=3d55407",
-  "smj":        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfxpCl_hloi1pPwZ-nlzyt674CbTw_PcNxLg&s",
-  "smg2":       "https://mario.wiki.gallery/images/thumb/9/9f/SMG2SwitchIcon.jpg/256px-SMG2SwitchIcon.jpg",
-  "sm3d":       "https://www.speedrun.com/static/game/pdvzywv6/cover.png?v=f8a2b84",
-  "mps":        "https://assets-prd.ignimgs.com/2024/04/10/mario-party-superstars-button-1623830045279-1712710472205.jpg?crop=1%3A1&width=256&format=jpg&auto=webp&quality=80",
-  "nsm":        "https://www.speedrun.com/static/game/76rxy346/cover.jpg?v=1b07c95",
-  "nss":        "https://helios-i.mashable.com/imagery/articles/07GkJ0j7EEpLestdjcCBEbP/images-1.fill.size_256x256.v1722961126.png",
-  "lm3":        "https://assets-prd.ignimgs.com/2024/04/10/luigis-mansion-3-button-fin-1641602466276-1712710469614.jpg?crop=1%3A1&width=256&format=jpg&auto=webp&quality=80",
-  "luigim2":    "https://sm.ign.com/t/ign_nordic/cover/l/luigis-man/luigis-mansion-dark-moon-switch_67dk.128.jpg",
-  "kirby":      "https://assets-prd.ignimgs.com/2024/04/10/kirby-and-the-forgotten-land-button-fin-1632513789460-1712710430482.jpg?crop=1%3A1&width=256&format=jpg&auto=webp&quality=80",
-  "krtd":       "https://sm.ign.com/t/ign_ap/cover/k/kirbys-ret/kirbys-return-to-dream-land-deluxe_jvbv.128.jpg",
-  "yoshicraft": "https://amiibo.life/assets/games/eshop_icons/switch/yoshi-s-crafted-world-70149d521b2cb8705c42e66aa88ac94a56bea025381edf64058dedd7fd588071.png",
-  "toadette":   "https://amiibo.life/assets/games/eshop_icons/switch/captain-toad-treasure-tracker-804c135ac00059478c2b273d4ae0acfe3047d43d77aa3145ac1906ddd5e056a7.png",
-  "mkrrabb":    "https://sm.ign.com/t/ign_ap/cover/m/mario-rabb/mario-rabbids-sparks-of-hope_f2fw.128.jpg",
-  "pikachu":    "https://assets.nintendo.eu/image/upload/f_auto,c_limit,w_992,q_auto:low/MNS/NOE/70010000000446/SQ_NSwitch_PokemonLetsGoPikachu_enGB",
-  "pokdiam":    "https://www.speedrun.com/static/game/k6qw2706/cover.png?v=40416f7",
-  "pokemons":   "https://wikipedia.jakami.de/content/pokewiki_de_all_maxi_2021-03/I/Pok%C3%A9mon_Schild_Icon.png.webp",
-  "zeldatotk":  "https://sm.ign.com/t/ign_nordic/cover/t/the-legend/the-legend-of-zelda-tears-of-the-kingdom-nintendo-switch-2-e_6xfh.128.png",
-  "dbsz":       "https://sm.ign.com/t/ign_de/cover/d/dragon-bal/dragon-ball-sparking-zero_twut.128.jpg",
-  "dbfz":       "https://sm.ign.com/t/ign_ap/cover/d/dragon-bal/dragon-ball-fighterz_m3vn.128.jpg",
-  "dbzk":       "https://sm.ign.com/t/ign_es/game/d/dragon-bal/dragon-ball-project-z_vjcm.128.jpg",
-  "naruto4":    "https://sm.ign.com/t/ign_ap/cover/n/naruto-shippuden-ultimate-ninja-storm-4/naruto-shippuden-ultimate-ninja-storm-4_dhsk.128.jpg",
-  "spl3":       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTAvEIDD74zJS8GndNdd7g2rhFacqf30nXqw&s",
-  "uc2":        "https://sm.ign.com/t/ign_nordic/cover/o/overcooked/overcooked-2_euj3.128.jpg",
-  "uch":        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaVgvq0DKa45U7n4HkMR2OtGSGaYgmO8yMCg&s",
-  "goose":      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYywbms2Hv_hXxOcC_PQobGSgEEX2g2Nv9oA&s",
-  "itakes2":    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR56vDHNwVSZEfovpH5Fk_lxEvf-Qov6SmFGA&s",
-  "jpp3":       "https://cdn.fastly.steamstatic.com/steamcommunity/public/images/apps/1755580/3cf08e6fc046c871b2f41615b82d53d0557de8be.jpg",
-  "jpp7":       "https://cdn.fastly.steamstatic.com/steamcommunity/public/images/apps/1755580/3cf08e6fc046c871b2f41615b82d53d0557de8be.jpg",
-  "moving":     "https://sm.ign.com/t/ign_ap/cover/m/moving-out/moving-out-2_j8mp.128.jpg",
-  "tools":      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGgiYIBbYv2GyVf2oa734bl2PFxvSggH_x3A&s",
-  "lovers":     "https://sm.ign.com/t/ign_in/cover/l/lovers-in-/lovers-in-a-dangerous-spacetime_7522.128.jpg",
-  "hades":      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTREUC8pN3NrG8rwaEgWbo30Xf6JGxndwZQDQ&s",
-  "celeste":    "https://tiermaker.com/images/chart/chart/top-juegos-258-juegos-yeah-wesomiu-uwu-381126/celestepng.png",
-  "hollow":     "https://sm.ign.com/t/ign_nordic/cover/h/hollow-kni/hollow-knight_wf7m.128.jpg",
-  "undertale":  "https://sm.ign.com/t/ign_in/cover/u/undertale/undertale_nq8g.128.jpg",
-  "stardew":    "https://sm.ign.com/t/ign_in/cover/s/stardew-va/stardew-valley_vdyw.128.jpg",
-  "cuphead":    "https://sm.ign.com/t/ign_nordic/cover/c/cuphead/cuphead_fbx5.128.jpg",
-  "ori1":       "https://sm.ign.com/t/ign_nl/cover/o/ori-and-th/ori-and-the-blind-forest-definitive-edition_e2fh.128.jpg",
-  "katana0":    "https://sm.ign.com/t/ign_ap/cover/k/katana-zer/katana-zero_syme.128.jpg",
-  "dead":       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKTiFNyJgj1tFfTQ9AP9PIzAlV1cHqZ-H4yA&s",
+  "mk8":"https://amiibo.life/assets/games/eshop_icons/switch/mario-kart-8-deluxe-72a15ae05af6d5ba9fe88df1fe308a26a1acc6a188eef34dcf33db543f38b07c.png",
+  "smw":"https://amiibo.life/assets/games/eshop_icons/switch/super-mario-bros-wonder-aed41f0717a547b2f87573546ae5002cd25bf9f096fe6b33c0756e1bd22809e8.png",
+  "smo":"https://amiibo.life/assets/games/eshop_icons/switch/super-mario-odyssey-3150b6cea89514729d0450e80bc9c515cec5893fa0ae885b9ad55137dd795ea3.png",
+  "ssbu":"https://amiibo.life/assets/games/eshop_icons/switch/super-smash-bros-ultimate-fdfb292ae971525aa6d65e626d269c2d70fe155df1c5e0b567f25bdfbe3a8028.png",
+  "smp":"https://amiibo.life/assets/games/eshop_icons/switch/super-mario-party-09a3d5282fe6d864b28bf8c87b797625ea12429399f758a630e83f9f8eda15bf.png",
+  "mc":"https://item4gamer.com/wp-content/uploads/2023/03/MINECRAFT-ICON_.webp",
+  "zelda":"https://amiibo.life/assets/games/eshop_icons/switch/the-legend-of-zelda-breath-of-the-wild-7d2d0eb308e06f13afc957a63bfc27054d59255aa02f027dd5e4bee1bb21314d.png",
+  "acnh":"https://amiibo.life/assets/games/eshop_icons/switch/animal-crossing-new-horizons-33848609fe8a72351f3bef76512e3c5bddd2ae091d3360e426abdffcf07f5dba.png",
+  "poksv":"https://www.speedrun.com/static/game/j1lqx5j6/cover.jpg?v=3d55407",
+  "smj":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfxpCl_hloi1pPwZ-nlzyt674CbTw_PcNxLg&s",
+  "smg2":"https://mario.wiki.gallery/images/thumb/9/9f/SMG2SwitchIcon.jpg/256px-SMG2SwitchIcon.jpg",
+  "sm3d":"https://www.speedrun.com/static/game/pdvzywv6/cover.png?v=f8a2b84",
+  "mps":"https://assets-prd.ignimgs.com/2024/04/10/mario-party-superstars-button-1623830045279-1712710472205.jpg?crop=1%3A1&width=256&format=jpg&auto=webp&quality=80",
+  "nsm":"https://www.speedrun.com/static/game/76rxy346/cover.jpg?v=1b07c95",
+  "nss":"https://helios-i.mashable.com/imagery/articles/07GkJ0j7EEpLestdjcCBEbP/images-1.fill.size_256x256.v1722961126.png",
+  "lm3":"https://assets-prd.ignimgs.com/2024/04/10/luigis-mansion-3-button-fin-1641602466276-1712710469614.jpg?crop=1%3A1&width=256&format=jpg&auto=webp&quality=80",
+  "luigim2":"https://sm.ign.com/t/ign_nordic/cover/l/luigis-man/luigis-mansion-dark-moon-switch_67dk.128.jpg",
+  "kirby":"https://assets-prd.ignimgs.com/2024/04/10/kirby-and-the-forgotten-land-button-fin-1632513789460-1712710430482.jpg?crop=1%3A1&width=256&format=jpg&auto=webp&quality=80",
+  "krtd":"https://sm.ign.com/t/ign_ap/cover/k/kirbys-ret/kirbys-return-to-dream-land-deluxe_jvbv.128.jpg",
+  "yoshicraft":"https://amiibo.life/assets/games/eshop_icons/switch/yoshi-s-crafted-world-70149d521b2cb8705c42e66aa88ac94a56bea025381edf64058dedd7fd588071.png",
+  "toadette":"https://amiibo.life/assets/games/eshop_icons/switch/captain-toad-treasure-tracker-804c135ac00059478c2b273d4ae0acfe3047d43d77aa3145ac1906ddd5e056a7.png",
+  "mkrrabb":"https://sm.ign.com/t/ign_ap/cover/m/mario-rabb/mario-rabbids-sparks-of-hope_f2fw.128.jpg",
+  "pikachu":"https://assets.nintendo.eu/image/upload/f_auto,c_limit,w_992,q_auto:low/MNS/NOE/70010000000446/SQ_NSwitch_PokemonLetsGoPikachu_enGB",
+  "pokdiam":"https://www.speedrun.com/static/game/k6qw2706/cover.png?v=40416f7",
+  "pokemons":"https://wikipedia.jakami.de/content/pokewiki_de_all_maxi_2021-03/I/Pok%C3%A9mon_Schild_Icon.png.webp",
+  "zeldatotk":"https://sm.ign.com/t/ign_nordic/cover/t/the-legend/the-legend-of-zelda-tears-of-the-kingdom-nintendo-switch-2-e_6xfh.128.png",
+  "dbsz":"https://sm.ign.com/t/ign_de/cover/d/dragon-bal/dragon-ball-sparking-zero_twut.128.jpg",
+  "dbfz":"https://sm.ign.com/t/ign_ap/cover/d/dragon-bal/dragon-ball-fighterz_m3vn.128.jpg",
+  "dbzk":"https://sm.ign.com/t/ign_es/game/d/dragon-bal/dragon-ball-project-z_vjcm.128.jpg",
+  "naruto4":"https://sm.ign.com/t/ign_ap/cover/n/naruto-shippuden-ultimate-ninja-storm-4/naruto-shippuden-ultimate-ninja-storm-4_dhsk.128.jpg",
+  "spl3":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTAvEIDD74zJS8GndNdd7g2rhFacqf30nXqw&s",
+  "uc2":"https://sm.ign.com/t/ign_nordic/cover/o/overcooked/overcooked-2_euj3.128.jpg",
+  "uch":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaVgvq0DKa45U7n4HkMR2OtGSGaYgmO8yMCg&s",
+  "goose":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYywbms2Hv_hXxOcC_PQobGSgEEX2g2Nv9oA&s",
+  "itakes2":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR56vDHNwVSZEfovpH5Fk_lxEvf-Qov6SmFGA&s",
+  "jpp3":"https://cdn.fastly.steamstatic.com/steamcommunity/public/images/apps/1755580/3cf08e6fc046c871b2f41615b82d53d0557de8be.jpg",
+  "jpp7":"https://cdn.fastly.steamstatic.com/steamcommunity/public/images/apps/1755580/3cf08e6fc046c871b2f41615b82d53d0557de8be.jpg",
+  "moving":"https://sm.ign.com/t/ign_ap/cover/m/moving-out/moving-out-2_j8mp.128.jpg",
+  "tools":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGgiYIBbYv2GyVf2oa734bl2PFxvSggH_x3A&s",
+  "lovers":"https://sm.ign.com/t/ign_in/cover/l/lovers-in-/lovers-in-a-dangerous-spacetime_7522.128.jpg",
+  "hades":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTREUC8pN3NrG8rwaEgWbo30Xf6JGxndwZQDQ&s",
+  "celeste":"https://tiermaker.com/images/chart/chart/top-juegos-258-juegos-yeah-wesomiu-uwu-381126/celestepng.png",
+  "hollow":"https://sm.ign.com/t/ign_nordic/cover/h/hollow-kni/hollow-knight_wf7m.128.jpg",
+  "undertale":"https://sm.ign.com/t/ign_in/cover/u/undertale/undertale_nq8g.128.jpg",
+  "stardew":"https://sm.ign.com/t/ign_in/cover/s/stardew-va/stardew-valley_vdyw.128.jpg",
+  "cuphead":"https://sm.ign.com/t/ign_nordic/cover/c/cuphead/cuphead_fbx5.128.jpg",
+  "ori1":"https://sm.ign.com/t/ign_nl/cover/o/ori-and-th/ori-and-the-blind-forest-definitive-edition_e2fh.128.jpg",
+  "katana0":"https://sm.ign.com/t/ign_ap/cover/k/katana-zer/katana-zero_syme.128.jpg",
+  "dead":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKTiFNyJgj1tFfTQ9AP9PIzAlV1cHqZ-H4yA&s",
   "moonlighter":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9AYC8iIeRb1CCnBqMBcSymPw8IasEumIpOw&s",
-  "mhrise":     "https://amiibo.life/assets/games/eshop_icons/switch/monster-hunter-rise-b1b727abc76c3b8d8e03cbb5b49262a3f56e4a598537430345d016d341f43798.png",
-  "dkc":        "https://www.zoma.mg/34475-category_product_thumb/donkey-kong-country-switch.jpg",
-  "mua3":       "https://sm.ign.com/t/ign_br/cover/m/marvel-ult/marvel-ultimate-alliance-3-the-black-order_a3pf.128.jpg",
-  "crash":      "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/3367fa99-0ba6-454c-b947-683f1a9f896d/ddv554i-b658fb8d-794b-431d-a223-cf0d542955c5.png",
-  "spyro":      "https://sm.ign.com/t/ign_nordic/cover/s/spyro-reig/spyro-reignited-trilogy_t9d2.128.jpg",
-  "sonic":      "https://sm.ign.com/t/ign_za/cover/s/sonic-mani/sonic-mania_wmu6.128.jpg",
-  "fe3h":       "https://amiibo.life/assets/games/eshop_icons/switch/fire-emblem-three-houses-efd506fdc443a3fe85ad4218a624bad836f903a225f920c1cc92091004133b98.png",
-  "xenoblade":  "https://sm.ign.com/t/ign_ap/cover/x/xenoblade-/xenoblade-chronicles-3_s7ft.128.jpg",
-  "pikmn4":     "https://sm.ign.com/t/ign_ap/cover/p/pikmin-4/pikmin-4_xdnk.128.jpg",
-  "luigi3":     "https://img1.evosis.org/javatar.php?type=game&record=5790&size=256",
-  "lego":       "https://images.morele.net/i256/12695671_0_i256.jpg",
-  "lego2":      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkB_OXkl_b85Y3ryaNRS2Co-SCkfmVg4aPfg&s",
-  "lego3":      "https://sm.ign.com/t/ign_mear/cover/l/lego-marve/lego-marvel-super-heroes-2_frjx.128.jpg",
-  "kirbystar":  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc5CZXY5jY0Bh_Xpc0dmVoFK6hG8WnWzEcDw&s",
-  "animal2":    "https://cdn.auchan.fr/media/25dd9770-c937-4271-bf9f-6b54e8ec6618_256x256/B2CD/",
-  "yoshi2":     "https://sm.ign.com/t/ign_ap/cover/y/yoshis-wooly-world/yoshis-wooly-world_uh5s.128.jpg",
-  "tennis":     "https://assets-prd.ignimgs.com/2024/03/08/switch-mariotennisaces-1709899804266.jpeg?crop=1%3A1&width=256&format=jpg&auto=webp&quality=80",
-  "golf":       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCzFmc2M4w5gsNgrGrGn9us91GTbFUNINvZA&s",
-  "rings":      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr6uDyIAazhZqDBEiB1_ZKqJj8414MEP1asA&s",
-  "splaon1":    "https://amiibo.life/assets/games/eshop_icons/switch/splatoon-2-727f75e995b53abc1667996cd3b98cbb02612240c670809401a88c1b84aad8f9.png",
-  "disney":     "https://images.cgames.de/images/gsgp/262/disney-dreamlight-valley-ml_6192964.jpg",
-  "overcooked": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTwX8WIFqCE9PLFmzvP3xDNq4q5KOTfc6yDw&s",
-  "harvest":    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQuPbCt4w_VOD_uw3IfG9WKhmnh4qwiNovMw&s",
-  "street6":    "https://www.nintendo.com/eu/media/images/assets/nintendo_switch_2_games/streetfighter6/1x1_NSwitch2_StreetFIghter6_CMM_big.jpg",
-  "dragon":     "https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/store/software/switch/70010000021451/f43df7d34be1b2a65c5cd1d14bd7c90737de956f06f2bb0a115a0cee5689481e",
-  "darksouls":  "https://sm.ign.com/t/ign_pk/cover/d/dark-souls/dark-souls-remastered_nvan.128.jpg",
-  "octopath":   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQfN_zIvwpWe_OUZkpb5RS0F-WeDLxMsK7Ig&s",
-  "three":      "https://sm.ign.com/t/ign_in/cover/o/ori-and-th/ori-and-the-will-of-the-wisps_6gyx.128.jpg",
-  "subnaut":    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1a2ud-KdoZIKn5U7JhJbjI_9FqOMC4qAneg&s",
-  "gris":       "https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/store/software/switch/70010000014006/bc4e849ea0ca47cffd0437b56ee9a80fbaf917d49d867f8bbf93e7106e46c1a3",
-  "journey":    "https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/store/software/switch/70010000026368/5c65bfe3ea891280cfa6dc44ce1d3896233c2891df09055e68bf3f643ff6185c",
-  "moving2":    "https://assets-prd.ignimgs.com/2024/04/10/unravel-2-button-1528578887401-1712710348184.jpg?crop=1%3A1%2Csmart&width=256&format=jpg&auto=webp&quality=80",
+  "mhrise":"https://amiibo.life/assets/games/eshop_icons/switch/monster-hunter-rise-b1b727abc76c3b8d8e03cbb5b49262a3f56e4a598537430345d016d341f43798.png",
+  "dkc":"https://www.zoma.mg/34475-category_product_thumb/donkey-kong-country-switch.jpg",
+  "mua3":"https://sm.ign.com/t/ign_br/cover/m/marvel-ult/marvel-ultimate-alliance-3-the-black-order_a3pf.128.jpg",
+  "crash":"https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/3367fa99-0ba6-454c-b947-683f1a9f896d/ddv554i-b658fb8d-794b-431d-a223-cf0d542955c5.png",
+  "spyro":"https://sm.ign.com/t/ign_nordic/cover/s/spyro-reig/spyro-reignited-trilogy_t9d2.128.jpg",
+  "sonic":"https://sm.ign.com/t/ign_za/cover/s/sonic-mani/sonic-mania_wmu6.128.jpg",
+  "fe3h":"https://amiibo.life/assets/games/eshop_icons/switch/fire-emblem-three-houses-efd506fdc443a3fe85ad4218a624bad836f903a225f920c1cc92091004133b98.png",
+  "xenoblade":"https://sm.ign.com/t/ign_ap/cover/x/xenoblade-/xenoblade-chronicles-3_s7ft.128.jpg",
+  "pikmn4":"https://sm.ign.com/t/ign_ap/cover/p/pikmin-4/pikmin-4_xdnk.128.jpg",
+  "luigi3":"https://img1.evosis.org/javatar.php?type=game&record=5790&size=256",
+  "lego":"https://images.morele.net/i256/12695671_0_i256.jpg",
+  "lego2":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkB_OXkl_b85Y3ryaNRS2Co-SCkfmVg4aPfg&s",
+  "lego3":"https://sm.ign.com/t/ign_mear/cover/l/lego-marve/lego-marvel-super-heroes-2_frjx.128.jpg",
+  "kirbystar":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc5CZXY5jY0Bh_Xpc0dmVoFK6hG8WnWzEcDw&s",
+  "animal2":"https://cdn.auchan.fr/media/25dd9770-c937-4271-bf9f-6b54e8ec6618_256x256/B2CD/",
+  "yoshi2":"https://sm.ign.com/t/ign_ap/cover/y/yoshis-wooly-world/yoshis-wooly-world_uh5s.128.jpg",
+  "tennis":"https://assets-prd.ignimgs.com/2024/03/08/switch-mariotennisaces-1709899804266.jpeg?crop=1%3A1&width=256&format=jpg&auto=webp&quality=80",
+  "golf":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCzFmc2M4w5gsNgrGrGn9us91GTbFUNINvZA&s",
+  "rings":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr6uDyIAazhZqDBEiB1_ZKqJj8414MEP1asA&s",
+  "splaon1":"https://amiibo.life/assets/games/eshop_icons/switch/splatoon-2-727f75e995b53abc1667996cd3b98cbb02612240c670809401a88c1b84aad8f9.png",
+  "disney":"https://images.cgames.de/images/gsgp/262/disney-dreamlight-valley-ml_6192964.jpg",
+  "overcooked":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTwX8WIFqCE9PLFmzvP3xDNq4q5KOTfc6yDw&s",
+  "harvest":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQuPbCt4w_VOD_uw3IfG9WKhmnh4qwiNovMw&s",
+  "street6":"https://www.nintendo.com/eu/media/images/assets/nintendo_switch_2_games/streetfighter6/1x1_NSwitch2_StreetFIghter6_CMM_big.jpg",
+  "dragon":"https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/store/software/switch/70010000021451/f43df7d34be1b2a65c5cd1d14bd7c90737de956f06f2bb0a115a0cee5689481e",
+  "darksouls":"https://sm.ign.com/t/ign_pk/cover/d/dark-souls/dark-souls-remastered_nvan.128.jpg",
+  "octopath":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQfN_zIvwpWe_OUZkpb5RS0F-WeDLxMsK7Ig&s",
+  "three":"https://sm.ign.com/t/ign_in/cover/o/ori-and-th/ori-and-the-will-of-the-wisps_6gyx.128.jpg",
+  "subnaut":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1a2ud-KdoZIKn5U7JhJbjI_9FqOMC4qAneg&s",
+  "gris":"https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/store/software/switch/70010000014006/bc4e849ea0ca47cffd0437b56ee9a80fbaf917d49d867f8bbf93e7106e46c1a3",
+  "journey":"https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/store/software/switch/70010000026368/5c65bfe3ea891280cfa6dc44ce1d3896233c2891df09055e68bf3f643ff6185c",
+  "moving2":"https://assets-prd.ignimgs.com/2024/04/10/unravel-2-button-1528578887401-1712710348184.jpg?crop=1%3A1%2Csmart&width=256&format=jpg&auto=webp&quality=80",
   "ninjashodown":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8xkoli7PtwEWqAvoeHJggal3w20Z_rk6faw&s",
-  "spiritf":    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0SvgjxTLq0lm-f4hZeMX1L8VGkbX0JdArMw&s",
-  "okami":      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS6Wcfy6sA2PeRad-0LLFqksOTaF-CU3FVRA&s",
-  "persona5":   "https://assets-prd.ignimgs.com/2024/01/30/persona-5-royal-button-fin-1581716582492-result-1706579147188.jpg?crop=1%3A1%2Csmart&width=256&format=jpg&auto=webp&quality=80",
-  "turtles":    "https://cdn2.steamgriddb.com/icon/d940ee47ee04431e015f97d1f70aae88.ico",
-  "shovel":     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS80vVQpY02QxELUIHdbBwsREKtmzlMSnG_Tg&s",
-  "binding":    "https://gbatemp.net/attachments/issac-002-010021c000b6a000-jpg.237533/",
-  "ff12":       "https://sm.ign.com/t/ign_in/cover/f/final-fant/final-fantasy-xii-the-zodiac-age_523t.128.jpg",
-  "bendy":      "https://img1.evosis.org/javatar.php?type=game&record=13779&size=256",
-  "superhot":   "https://sm.ign.com/t/ign_in/cover/s/superhot/superhot_1w6a.128.jpg",
-  "tt":         "https://sm.ign.com/t/ign_ap/cover/t/taiko-no-t/taiko-no-tatsujin-drum-n-fun_v53g.128.jpg",
-  "nier":       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7cieF7V5uODT_6ZvBDwqHYfpknvQvYbqhw&s",
-  "fe3hopes":   "https://sm.ign.com/t/ign_nordic/cover/f/fire-emble/fire-emblem-warriors-three-hopes_1evq.128.jpg",
-  "captain":    "https://assets.nintendo.eu/image/upload/f_auto,c_limit,w_992,q_auto:low/MNS/NOE/70010000044697/SQ_NSwitch_CaptainTsubasaRiseOfNewChampions_image1600w"
+  "spiritf":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0SvgjxTLq0lm-f4hZeMX1L8VGkbX0JdArMw&s",
+  "okami":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS6Wcfy6sA2PeRad-0LLFqksOTaF-CU3FVRA&s",
+  "persona5":"https://assets-prd.ignimgs.com/2024/01/30/persona-5-royal-button-fin-1581716582492-result-1706579147188.jpg?crop=1%3A1%2Csmart&width=256&format=jpg&auto=webp&quality=80",
+  "turtles":"https://cdn2.steamgriddb.com/icon/d940ee47ee04431e015f97d1f70aae88.ico",
+  "shovel":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS80vVQpY02QxELUIHdbBwsREKtmzlMSnG_Tg&s",
+  "binding":"https://gbatemp.net/attachments/issac-002-010021c000b6a000-jpg.237533/",
+  "ff12":"https://sm.ign.com/t/ign_in/cover/f/final-fant/final-fantasy-xii-the-zodiac-age_523t.128.jpg",
+  "bendy":"https://img1.evosis.org/javatar.php?type=game&record=13779&size=256",
+  "superhot":"https://sm.ign.com/t/ign_in/cover/s/superhot/superhot_1w6a.128.jpg",
+  "tt":"https://sm.ign.com/t/ign_ap/cover/t/taiko-no-t/taiko-no-tatsujin-drum-n-fun_v53g.128.jpg",
+  "nier":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7cieF7V5uODT_6ZvBDwqHYfpknvQvYbqhw&s",
+  "fe3hopes":"https://sm.ign.com/t/ign_nordic/cover/f/fire-emble/fire-emblem-warriors-three-hopes_1evq.128.jpg",
+  "captain":"https://assets.nintendo.eu/image/upload/f_auto,c_limit,w_992,q_auto:low/MNS/NOE/70010000044697/SQ_NSwitch_CaptainTsubasaRiseOfNewChampions_image1600w"
 };
-
 const IMG_CACHE = {};
-
 async function fetchGameImg(gameId) {
   if (IMG_CACHE[gameId] !== undefined) return IMG_CACHE[gameId];
   const url = GAME_IMGS[gameId] || null;
   IMG_CACHE[gameId] = url;
   return url;
 }
-
 const FORMSPREE = "https://formspree.io/f/xvznoevy";
-
-// ── SPIELELISTE ──────────────────────────────────────────────────────────────
-// Alle Spiele unter 15 GB, Größen recherchiert & verifiziert (Stand: Juni 2025)
-// Entfernte Spiele (>15 GB): Witcher 3 (28 GB), Wolfenstein II (22 GB),
-// DOOM Eternal (17.5 GB), Mortal Kombat 11 (22.5 GB), Borderlands 3 (23.5 GB),
-// NBA 2K24 (60 GB), Assassin's Creed Ezio (35 GB), Naruto Collection (17.6 GB),
-// Super Dragon Ball Heroes (>15 GB), Fire Emblem Warriors Three Hopes (13.4 GB → behalten)
-
+// Korrekturen Juni 2025: SSBU 16.6 GB (mit DLC), TotK 16.3 GB, Pikmin 4 10.7 GB
 const TOP10 = [
-  { id:'mk8',      name:'Mario Kart 8 Deluxe',             gb:6.8,  note:'Autorennen mit Mario-Figuren — Spaß für die ganze Familie, bis zu 4 Spieler gleichzeitig' },
-  { id:'smw',      name:'Super Mario Bros. Wonder',         gb:4.5,  note:'Das neueste Mario-Abenteuer — bunt, kreativ und für jeden geeignet' },
-  { id:'smo',      name:'Super Mario Odyssee',              gb:5.7,  note:'Mario reist durch viele verschiedene Welten — eines der beliebtesten Spiele überhaupt' },
-  { id:'ssbu',     name:'Super Smash Bros. Ultimate',       gb:13.6, note:'Kämpfspiel mit über 80 berühmten Spielfiguren — ideal für Gruppen und Familien' },
-  { id:'smp',      name:'Super Mario Party',                gb:2.9,  note:'Brettspiel-Spaß mit Minispielen — perfekt wenn mehrere Personen gleichzeitig spielen wollen' },
-  { id:'mc',       name:'Minecraft',                        gb:1.6,  note:'Baue und erforsche eine unbegrenzte Welt aus Blöcken — für Kinder und Erwachsene gleichermaßen' },
-  { id:'zelda',    name:'Zelda: Breath of the Wild',        gb:14.4, note:'Großes Abenteuer-Spiel in einer riesigen offenen Welt — gilt als eines der besten Spiele aller Zeiten' },
-  { id:'acnh',     name:'Animal Crossing: New Horizons',    gb:6.9,  note:'Du baust deine eigene Insel auf, sammelst Dinge und triffst Tiere — sehr entspannend' },
-  { id:'poksv',    name:'Pokémon Scarlet / Violet',         gb:6.4,  note:'Fange und trainiere Pokémon in einer offenen Welt — das neueste große Pokémon-Spiel' },
-  { id:'smj',      name:'Super Mario Party Jamboree',       gb:5.3,  note:'Die neueste Version von Mario Party mit über 110 Minispielen — noch mehr Inhalt als der Vorgänger' },
+  { id:'mk8',   name:'Mario Kart 8 Deluxe',          gb:6.8,  note:'Autorennen mit Mario-Figuren — Spaß für die ganze Familie, bis zu 4 Spieler gleichzeitig' },
+  { id:'smw',   name:'Super Mario Bros. Wonder',      gb:4.5,  note:'Das neueste Mario-Abenteuer — bunt, kreativ und für jeden geeignet' },
+  { id:'smo',   name:'Super Mario Odyssee',           gb:5.7,  note:'Mario reist durch viele verschiedene Welten — eines der beliebtesten Spiele überhaupt' },
+  { id:'ssbu',  name:'Super Smash Bros. Ultimate',    gb:16.6, note:'Kämpfspiel mit über 80 berühmten Spielfiguren — ideal für Gruppen und Familien' },
+  { id:'smp',   name:'Super Mario Party',             gb:2.9,  note:'Brettspiel-Spaß mit Minispielen — perfekt wenn mehrere Personen gleichzeitig spielen wollen' },
+  { id:'mc',    name:'Minecraft',                     gb:1.6,  note:'Baue und erforsche eine unbegrenzte Welt aus Blöcken — für Kinder und Erwachsene gleichermaßen' },
+  { id:'zelda', name:'Zelda: Breath of the Wild',     gb:14.4, note:'Großes Abenteuer-Spiel in einer riesigen offenen Welt — gilt als eines der besten Spiele aller Zeiten' },
+  { id:'acnh',  name:'Animal Crossing: New Horizons', gb:6.9,  note:'Du baust deine eigene Insel auf, sammelst Dinge und triffst Tiere — sehr entspannend' },
+  { id:'poksv', name:'Pokémon Scarlet / Violet',      gb:6.4,  note:'Fange und trainiere Pokémon in einer offenen Welt — das neueste große Pokémon-Spiel' },
+  { id:'smj',   name:'Super Mario Party Jamboree',    gb:5.3,  note:'Die neueste Version von Mario Party mit über 110 Minispielen — noch mehr Inhalt als der Vorgänger' },
 ];
-
 const REST = [
-  // Mario & Nintendo Familie
-  { id:'smg2',      name:'Super Mario Galaxy 1 + 2',                  gb:6.6,  note:'Zwei Mario-Spiele im Weltall — als Bundle auf Switch seit Oktober 2025, gilt als Meisterwerk' },
-  { id:'sm3d',      name:"Super Mario 3D World + Bowser's Fury",       gb:2.9,  note:'Zwei Spiele in einem — klassisches Mario-Abenteuer mit Koop-Modus für bis zu 4 Spieler' },
-  { id:'mps',       name:'Mario Party Superstars',                     gb:2.9,  note:'Ältere Mario Party Spielbretter neu aufgelegt — wer den Vorgänger kennt wird sich sofort zuhause fühlen' },
-  { id:'nsm',       name:'New Super Mario Bros. U Deluxe',             gb:2.5,  note:'Klassisches 2D-Mario zum Nebeneinanderlaufen — funktioniert gut zu viert' },
-  { id:'nss',       name:'Nintendo Switch Sports',                     gb:3.5,  note:'Bewegungsspiele wie Bowling, Tennis und Fußball — man steht auf und macht die Bewegungen selbst' },
-  { id:'lm3',       name:"Luigi's Mansion 3",                          gb:6.2,  note:'Luigi fängt Geister in einem Hotel — witzig und abenteuerlich, auch für Kinder geeignet' },
-  { id:'luigim2',   name:"Luigi's Mansion 2 HD",                       gb:3.3,  note:'Der Vorgänger zu Teil 3 — gleiche Idee, etwas kleinere Spielwelt' },
-  { id:'kirby',     name:'Kirby and the Forgotten Land',               gb:5.8,  note:'Niedlicher pinker Charakter der durch eine verlassene Stadt hüpft — sehr einsteigerfreundlich' },
-  { id:'krtd',      name:"Kirby's Return to Dream Land Deluxe",        gb:5.1,  note:'Kirby-Abenteuer das man zu viert gleichzeitig spielen kann — gut für Familien' },
-  { id:'yoshicraft',name:"Yoshi's Crafted World",                      gb:5.2,  note:'Ein grüner Dinosaurier in einer Welt aus Pappe und Bastelmaterial — sehr kindgerecht' },
-  { id:'toadette',  name:'Captain Toad: Treasure Tracker',             gb:1.9,  note:'Kleiner Pilz-Charakter löst Rätsel in winzigen Welten — entspannt und für alle Altersgruppen' },
-  { id:'mkrrabb',   name:"Mario + Rabbids: Sparks of Hope",            gb:8.1,  note:'Mario-Figuren kämpfen gemeinsam gegen witzige Hasen — einfache Strategie, für die ganze Familie' },
-
-  // Pokémon
-  { id:'pikachu',   name:"Pokémon: Let's Go Pikachu",                  gb:4.2,  note:'Der einfachste Einstieg in die Pokémon-Welt — besonders gut für Kinder und Anfänger geeignet' },
-  { id:'pokdiam',   name:'Pokémon Strahlender Diamant',                gb:6.2,  note:'Neuauflage eines älteren Pokémon-Spiels — viele Fans mögen es sogar lieber als die neueren Teile' },
-  { id:'pokemons',  name:'Pokémon Schwert / Schild',                   gb:10.3, note:'Pokémon in einer englisch angehauchten Welt — etwas älter, aber immer noch sehr beliebt' },
-
-  // Zelda
-  { id:'zeldatotk', name:'Zelda: Tears of the Kingdom',                gb:14.3, note:'Der Nachfolger zu Breath of the Wild — noch größer, mit der Möglichkeit eigene Maschinen zu bauen' },
-
-  // Dragon Ball
-  { id:'dbsz',      name:'Dragon Ball: Sparking! Zero',                gb:6.9,  note:'Kampfspiel mit allen Dragon Ball Charakteren — für Fans der Serie eine große Freude' },
-  { id:'dbfz',      name:'Dragon Ball FighterZ',                       gb:6.2,  note:'Schnelles 2D-Kampfspiel im Dragon Ball Universum — auch ohne Vorkenntnisse gut spielbar' },
-  { id:'dbzk',      name:'Dragon Ball Z: Kakarot',                     gb:14.3, note:'Du spielst die Geschichte von Goku nach — eher ein Rollenspiel als ein Kampfspiel' },
-
-  // Naruto
-  { id:'naruto4',   name:'Naruto: Ultimate Ninja Storm 4',             gb:13.2, note:'Kampfspiel mit Naruto-Charakteren — coole Spezialangriffe und gut aussehende Kämpfe' },
-
-  // Online / Multiplayer
-  { id:'spl3',      name:'Splatoon 3',                                 gb:6.0,  note:'Bunter Online-Shooter bei dem man Farbe schießt statt auf Menschen — sehr beliebt bei Jugendlichen' },
-
-  // Koop & Party
-  { id:'uc2',       name:'Overcooked! 2',                              gb:1.8,  note:'Zusammen kochen in chaotischen Küchen — lustig aber auch stressig, besonders zu zweit oder viert' },
-  { id:'uch',       name:'Ultimate Chicken Horse',                     gb:0.8,  note:'Ihr baut gemeinsam einen Hindernisparcours und versucht dann selbst durchzukommen — sehr witzig' },
-  { id:'goose',     name:'Untitled Goose Game',                        gb:0.9,  note:'Du spielst eine freche Gans die Dorfbewohner ärgert — kurz aber extrem unterhaltsam' },
-  { id:'itakes2',   name:'It Takes Two',                               gb:14.2, note:'Nur zu zweit spielbar — zwei Figuren müssen zusammenarbeiten und erleben dabei verrückte Abenteuer' },
-  { id:'jpp3',      name:'Jackbox Party Pack 3',                       gb:1.5,  note:'Mehrere Partyspiele in einem — andere Spieler können per Handy mitmachen ohne Extra-Controller' },
-  { id:'jpp7',      name:'Jackbox Party Pack 7',                       gb:2.3,  note:'Neuere Version der Jackbox-Partyspiele — ähnlich wie oben, mit anderen Spielen' },
-  { id:'moving',    name:'Moving Out',                                 gb:2.1,  note:'Möbel schleppen und aus Häusern werfen zu viert — chaotischer Spaß ähnlich wie Overcooked' },
-  { id:'tools',     name:'Tools Up!',                                  gb:1.2,  note:'Zusammen eine Wohnung renovieren gegen die Zeit — macht zu zweit oder viert viel Spaß' },
-  { id:'lovers',    name:'Lovers in a Dangerous Spacetime',            gb:1.1,  note:'Gemeinsam ein Raumschiff steuern und Feinde abwehren — für 2 Spieler besonders schön' },
-
-  // Indie Klassiker
-  { id:'hades',     name:'Hades',                                      gb:5.6,  note:'Kämpfe dich als Sohn des Todesgottes durch die Unterwelt — eines der meistgelobten Indie-Spiele' },
-  { id:'celeste',   name:'Celeste',                                    gb:1.6,  note:'Schwieriges aber faires Sprungspiel mit einer bewegenden Geschichte — sehr gelobt' },
-  { id:'hollow',    name:'Hollow Knight',                              gb:3.5,  note:'Erkundungsspiel in einer riesigen Welt unter der Erde — sehr atmosphärisch und tiefgründig' },
-  { id:'undertale', name:'Undertale',                                  gb:0.2,  note:'Rollenspiel in dem du Gegner auch besiegen kannst ohne zu kämpfen — besondere Geschichte' },
-  { id:'stardew',   name:'Stardew Valley',                             gb:0.9,  note:'Baue eine Farm auf, pflanze Gemüse und lerne die Dorfbewohner kennen — sehr entspannend' },
-  { id:'cuphead',   name:'Cuphead',                                    gb:3.4,  note:'Sehr schwieriges Spiel im Stil alter Trickfilme aus den 1930ern — schöne Optik, hoher Schwierigkeitsgrad' },
-  { id:'ori1',      name:'Ori and the Blind Forest',                   gb:3.7,  note:'Wunderschönes Sprungspiel in einem magischen Wald — emotional und grafisch beeindruckend' },
-  { id:'katana0',   name:'Katana ZERO',                                gb:0.5,  note:'Schnelles Action-Spiel als Samurai — coole Atmosphäre, kurz aber intensiv' },
-  { id:'dead',      name:'Dead Cells',                                 gb:0.9,  note:'Kämpfe durch immer neue zufällig generierte Levels — macht sehr süchtig' },
-  { id:'moonlighter',name:'Moonlighter',                               gb:1.0,  note:'Tagsüber Laden betreiben, nachts in Dungeons kämpfen — gute Mischung aus zwei Genres' },
-
-  // Action / Abenteuer
-  { id:'mhrise',    name:'Monster Hunter Rise',                        gb:8.7,  note:'Jage riesige Monster in einer japanisch angehauchten Welt — auch zu viert online spielbar' },
-  { id:'dkc',       name:'Donkey Kong Country: Tropical Freeze',       gb:6.6,  note:'Klassisches Sprung- und Laufspiel mit dem großen Gorilla — etwas schwieriger aber sehr beliebt' },
-  { id:'mua3',      name:'Marvel Ultimate Alliance 3',                 gb:13.2, note:'Bis zu 4 Spieler kämpfen gemeinsam als Superhelden wie Spider-Man oder Iron Man' },
-  { id:'crash',     name:'Crash Bandicoot N. Sane Trilogy',            gb:5.2,  note:'Drei ältere Spiele mit dem orangenen Beuteltier — neuaufgelegt und gut erhalten' },
-  { id:'spyro',     name:'Spyro Reignited Trilogy',                    gb:6.6,  note:'Drei Spiele mit dem kleinen lila Drachen — bunt und für alle Altersgruppen geeignet' },
-  { id:'sonic',     name:'Sonic Mania',                                gb:0.5,  note:'Schnelles 2D-Springen mit dem blauen Igel im alten Stil — für Fans der originalen Sonic-Spiele' },
-  { id:'fe3h',      name:'Fire Emblem: Three Houses',                  gb:9.2,  note:'Strategiespiel in dem du eine Schulklasse in einer Fantasywelt leitest — viel Text, eher für Erwachsene' },
-  { id:'xenoblade', name:'Xenoblade Chronicles 3',                     gb:15.0, note:'Großes Rollenspiel mit einer langen Geschichte und riesiger Welt — hauptsächlich für Einzelspieler' },
-  { id:'fe3hopes',  name:'Fire Emblem Warriors: Three Hopes',          gb:13.4, note:'Actionreicher Ableger von Fire Emblem — du kämpfst gegen hunderte Gegner gleichzeitig' },
-
-  // Kinder & Familie
-  { id:'pikmn4',    name:'Pikmin 4',                                   gb:10.4,  note:'Du befiehlst kleine Pflanzenwesen und löst Rätsel — entspannt, farbenfroh und für Kinder sehr geeignet' },
-  { id:'luigi3',    name:'Paw Patrol: The Movie - Adventure City Calls',gb:3.0, note:'Spiel zur bekannten Kinderserie — für kleinere Kinder gedacht' },
-  { id:'lego',      name:'LEGO City Undercover',                       gb:8.7,  note:'Offene Lego-Stadt erkunden als Polizist — viele Witze, gut für Kinder und Eltern gemeinsam' },
-  { id:'lego2',     name:'LEGO Jurassic World',                        gb:7.5,  note:'Alle vier Jurassic Park Filme als Lego-Spiel — witzig und auch für Kinder gut geeignet' },
-  { id:'lego3',     name:'LEGO Marvel Super Heroes 2',                 gb:6.4,  note:'Marvel-Superhelden aus Lego — offene Welt und viele spielbare Figuren' },
-  { id:'kirbystar', name:'Kirby Star Allies',                          gb:5.2,  note:'Kirby-Abenteuer mit bis zu 4 Spielern — sehr einfach und für kleine Kinder geeignet' },
-  { id:'animal2',   name:'Story of Seasons: Pioneers of Olive Town',   gb:4.4,  note:'Ähnlich wie Stardew Valley — Bauernhof aufbauen und mit Dorfbewohnern reden' },
-  { id:'yoshi2',    name:"Yoshi's Woolly World",                       gb:1.8,  note:'Yoshi hüpft durch eine Welt aus Wolle — sehr niedlich und für Kinder gut geeignet' },
-
-  // Sport & Rennspiele
-  { id:'tennis',    name:'Mario Tennis Aces',                          gb:1.9,  note:'Tennis mit Mario-Figuren — gut für 2 Spieler gegeneinander' },
-  { id:'golf',      name:'Mario Golf: Super Rush',                     gb:5.7,  note:'Golf mit Mario-Figuren — mehrere Spielmodi auch für mehrere Spieler gleichzeitig' },
-  { id:'captain',   name:'Captain Tsubasa: Rise of New Champions',     gb:11.9, note:'Fußball im Manga-Stil — übertriebene Schüsse und Tricks, für Anime-Fans' },
-  { id:'rings',     name:'Ring Fit Adventure',                         gb:2.8,  note:'Sport und Abenteuer kombiniert — du machst echte Übungen um voranzukommen' },
-
-  // Shooter
-  { id:'splaon1',   name:'Splatoon 2',                                 gb:6.5,  note:'Ältere Version des Farbenschießers — ähnlich wie Teil 3 aber mit anderen Karten' },
-
-  // Entspannt & Kreativ
-  { id:'disney',    name:'Disney Dreamlight Valley',                   gb:9.0,  note:'Baue ein Dorf mit Disney-Figuren auf — ähnlich wie Animal Crossing' },
-  { id:'overcooked',name:'Overcooked! All You Can Eat',                gb:4.3,  note:'Alle Overcooked-Spiele in einem — chaotisches Kochen in der Gruppe' },
-  { id:'harvest',   name:'Harvest Moon: Light of Hope',               gb:1.5,  note:'Klassisches Bauernhof-Spiel — einfacher als Stardew Valley, gut zum Entspannen' },
-
-  // Kampfspiele
-  { id:'street6',   name:'Street Fighter 6',                          gb:7.7,  note:'Klassisches Kampfspiel mit vielen Charakteren — leicht zu lernen, schwer zu meistern' },
-
-  // Sonstige
-  { id:'dragon',    name:'Dragon Quest XI S',                         gb:14.2, note:'Großes japanisches Rollenspiel mit einer langen Geschichte — für geduldige Einzelspieler' },
-  { id:'darksouls', name:'Dark Souls Remastered',                     gb:4.2,  note:'Sehr schwieriges Abenteuer-Spiel — bekannt dafür dass man viel stirbt und es trotzdem weitermacht' },
-  { id:'octopath',  name:'Octopath Traveler',                         gb:2.3,  note:'Rollenspiel mit acht verschiedenen Geschichten — schöner Stil der alte und neue Grafik kombiniert' },
-  { id:'three',     name:'Ori and the Will of the Wisps',             gb:4.3,  note:'Nachfolger zum ersten Ori — noch schöner und größer als der Vorgänger' },
-  { id:'subnaut',   name:'Subnautica',                                gb:5.2,  note:'Überlebe unter Wasser auf einem fremden Planeten — erkunde das Meer und baue Stützpunkte' },
-  { id:'gris',      name:'GRIS',                                      gb:0.4,  note:'Wunderschönes künstlerisches Spiel mit wenig Text — eher wie ein spielbares Gemälde' },
-  { id:'journey',   name:'Journey to the Savage Planet',              gb:2.8,  note:'Erkunde einen fremden Planeten und entdecke merkwürdige Lebewesen — auch zu zweit spielbar' },
-  { id:'moving2',   name:'Unravel Two',                               gb:1.3,  note:'Zwei Wollfiguren müssen zusammenarbeiten — sehr schön anzusehen und gut zu zweit spielbar' },
-  { id:'ninjashodown',name:'9 Monkeys of Shaolin',                   gb:1.4,  note:'Kung-Fu-Spiel im japanischen Stil — einfach und gut zu zweit spielbar' },
-  { id:'spiritf',   name:'Spiritfarer',                               gb:2.2,  note:'Du bist eine Art Fährenfrau für Geister — ruhig, emotional und sehr besonders' },
-  { id:'okami',     name:'Okami HD',                                  gb:9.1,  note:'Japanisches Abenteuer als weißer Wolf-Gott — gilt als Meisterwerk, sehr einzigartig' },
-  { id:'nier',      name:'NieR: Automata The End of YoRHa Edition',   gb:12.9, note:'Actionspiel mit Robotern in einer postapokalyptischen Welt — tiefe Geschichte für Erwachsene' },
-  { id:'persona5',  name:'Persona 5 Royal',                           gb:11.8, note:'Japanisches Rollenspiel in dem Schüler tagsüber zur Schule gehen und nachts Monster bekämpfen' },
-  { id:'turtles',   name:"Teenage Mutant Ninja Turtles: Shredder's Revenge",gb:3.0,note:'Die Ninja Turtles kämpfen gemeinsam durch Streets — gut zu viert spielbar' },
-  { id:'shovel',    name:'Shovel Knight: Treasure Trove',             gb:0.8,  note:'Mehrere Spiele mit dem Schaufelritter — Retro-Stil, sehr gut gemacht' },
-  { id:'binding',   name:'The Binding of Isaac: Afterbirth+',         gb:0.8,  note:'Dunkles Spiel in dem man durch Keller kämpft — jedes Mal anders durch Zufall' },
-  { id:'ff12',      name:'Final Fantasy XII: The Zodiac Age',         gb:12.9, note:'Älteres Final Fantasy in einer Fantasywelt — langes Rollenspiel für geduldige Spieler' },
-  { id:'bendy',     name:'Bendy and the Ink Machine',                 gb:3.4,  note:'Gruseliges Rätselspiel im Stil alter Cartoons — für Kinder ab ca. 12 Jahren geeignet' },
-  { id:'superhot',  name:'SUPERHOT',                                  gb:1.8,  note:'Zeit bewegt sich nur wenn du dich bewegst — sehr cleveres Konzept, kurz aber einzigartig' },
-  { id:'tt',        name:"Taiko no Tatsujin: Drum'n'Fun!",            gb:6.9,  note:'Japanisches Trommelspiel zu bekannten Liedern — macht auch ohne Vorkenntnisse Spaß' },
+  { id:'smg2',       name:'Super Mario Galaxy 1 + 2',                   gb:6.6,  note:'Zwei Mario-Spiele im Weltall — als Bundle auf Switch seit Oktober 2025, gilt als Meisterwerk' },
+  { id:'sm3d',       name:"Super Mario 3D World + Bowser's Fury",        gb:2.9,  note:'Zwei Spiele in einem — klassisches Mario-Abenteuer mit Koop-Modus für bis zu 4 Spieler' },
+  { id:'mps',        name:'Mario Party Superstars',                      gb:2.9,  note:'Ältere Mario Party Spielbretter neu aufgelegt — wer den Vorgänger kennt wird sich sofort zuhause fühlen' },
+  { id:'nsm',        name:'New Super Mario Bros. U Deluxe',              gb:2.5,  note:'Klassisches 2D-Mario zum Nebeneinanderlaufen — funktioniert gut zu viert' },
+  { id:'nss',        name:'Nintendo Switch Sports',                      gb:3.5,  note:'Bewegungsspiele wie Bowling, Tennis und Fußball — man steht auf und macht die Bewegungen selbst' },
+  { id:'lm3',        name:"Luigi's Mansion 3",                           gb:6.2,  note:'Luigi fängt Geister in einem Hotel — witzig und abenteuerlich, auch für Kinder geeignet' },
+  { id:'luigim2',    name:"Luigi's Mansion 2 HD",                        gb:3.3,  note:'Der Vorgänger zu Teil 3 — gleiche Idee, etwas kleinere Spielwelt' },
+  { id:'kirby',      name:'Kirby and the Forgotten Land',                gb:5.8,  note:'Niedlicher pinker Charakter der durch eine verlassene Stadt hüpft — sehr einsteigerfreundlich' },
+  { id:'krtd',       name:"Kirby's Return to Dream Land Deluxe",         gb:5.1,  note:'Kirby-Abenteuer das man zu viert gleichzeitig spielen kann — gut für Familien' },
+  { id:'yoshicraft', name:"Yoshi's Crafted World",                       gb:5.2,  note:'Ein grüner Dinosaurier in einer Welt aus Pappe und Bastelmaterial — sehr kindgerecht' },
+  { id:'toadette',   name:'Captain Toad: Treasure Tracker',              gb:1.9,  note:'Kleiner Pilz-Charakter löst Rätsel in winzigen Welten — entspannt und für alle Altersgruppen' },
+  { id:'mkrrabb',    name:"Mario + Rabbids: Sparks of Hope",             gb:8.1,  note:'Mario-Figuren kämpfen gemeinsam gegen witzige Hasen — einfache Strategie, für die ganze Familie' },
+  { id:'pikachu',    name:"Pokémon: Let's Go Pikachu",                   gb:4.2,  note:'Der einfachste Einstieg in die Pokémon-Welt — besonders gut für Kinder und Anfänger geeignet' },
+  { id:'pokdiam',    name:'Pokémon Strahlender Diamant',                 gb:6.2,  note:'Neuauflage eines älteren Pokémon-Spiels — viele Fans mögen es sogar lieber als die neueren Teile' },
+  { id:'pokemons',   name:'Pokémon Schwert / Schild',                    gb:10.3, note:'Pokémon in einer englisch angehauchten Welt — etwas älter, aber immer noch sehr beliebt' },
+  { id:'zeldatotk',  name:'Zelda: Tears of the Kingdom',                 gb:16.3, note:'Der Nachfolger zu Breath of the Wild — noch größer, mit der Möglichkeit eigene Maschinen zu bauen' },
+  { id:'dbsz',       name:'Dragon Ball: Sparking! Zero',                 gb:6.9,  note:'Kampfspiel mit allen Dragon Ball Charakteren — für Fans der Serie eine große Freude' },
+  { id:'dbfz',       name:'Dragon Ball FighterZ',                        gb:6.2,  note:'Schnelles 2D-Kampfspiel im Dragon Ball Universum — auch ohne Vorkenntnisse gut spielbar' },
+  { id:'dbzk',       name:'Dragon Ball Z: Kakarot',                      gb:14.3, note:'Du spielst die Geschichte von Goku nach — eher ein Rollenspiel als ein Kampfspiel' },
+  { id:'naruto4',    name:'Naruto: Ultimate Ninja Storm 4',              gb:13.2, note:'Kampfspiel mit Naruto-Charakteren — coole Spezialangriffe und gut aussehende Kämpfe' },
+  { id:'spl3',       name:'Splatoon 3',                                  gb:6.0,  note:'Bunter Online-Shooter bei dem man Farbe schießt statt auf Menschen — sehr beliebt bei Jugendlichen' },
+  { id:'uc2',        name:'Overcooked! 2',                               gb:1.8,  note:'Zusammen kochen in chaotischen Küchen — lustig aber auch stressig, besonders zu zweit oder viert' },
+  { id:'uch',        name:'Ultimate Chicken Horse',                      gb:0.8,  note:'Ihr baut gemeinsam einen Hindernisparcours und versucht dann selbst durchzukommen — sehr witzig' },
+  { id:'goose',      name:'Untitled Goose Game',                         gb:0.9,  note:'Du spielst eine freche Gans die Dorfbewohner ärgert — kurz aber extrem unterhaltsam' },
+  { id:'itakes2',    name:'It Takes Two',                                gb:14.2, note:'Nur zu zweit spielbar — zwei Figuren müssen zusammenarbeiten und erleben dabei verrückte Abenteuer' },
+  { id:'jpp3',       name:'Jackbox Party Pack 3',                        gb:1.5,  note:'Mehrere Partyspiele in einem — andere Spieler können per Handy mitmachen ohne Extra-Controller' },
+  { id:'jpp7',       name:'Jackbox Party Pack 7',                        gb:2.3,  note:'Neuere Version der Jackbox-Partyspiele — ähnlich wie oben, mit anderen Spielen' },
+  { id:'moving',     name:'Moving Out',                                  gb:2.1,  note:'Möbel schleppen und aus Häusern werfen zu viert — chaotischer Spaß ähnlich wie Overcooked' },
+  { id:'tools',      name:'Tools Up!',                                   gb:1.2,  note:'Zusammen eine Wohnung renovieren gegen die Zeit — macht zu zweit oder viert viel Spaß' },
+  { id:'lovers',     name:'Lovers in a Dangerous Spacetime',             gb:1.1,  note:'Gemeinsam ein Raumschiff steuern und Feinde abwehren — für 2 Spieler besonders schön' },
+  { id:'hades',      name:'Hades',                                       gb:5.6,  note:'Kämpfe dich als Sohn des Todesgottes durch die Unterwelt — eines der meistgelobten Indie-Spiele' },
+  { id:'celeste',    name:'Celeste',                                     gb:1.6,  note:'Schwieriges aber faires Sprungspiel mit einer bewegenden Geschichte — sehr gelobt' },
+  { id:'hollow',     name:'Hollow Knight',                               gb:3.5,  note:'Erkundungsspiel in einer riesigen Welt unter der Erde — sehr atmosphärisch und tiefgründig' },
+  { id:'undertale',  name:'Undertale',                                   gb:0.2,  note:'Rollenspiel in dem du Gegner auch besiegen kannst ohne zu kämpfen — besondere Geschichte' },
+  { id:'stardew',    name:'Stardew Valley',                              gb:0.9,  note:'Baue eine Farm auf, pflanze Gemüse und lerne die Dorfbewohner kennen — sehr entspannend' },
+  { id:'cuphead',    name:'Cuphead',                                     gb:3.4,  note:'Sehr schwieriges Spiel im Stil alter Trickfilme aus den 1930ern — schöne Optik, hoher Schwierigkeitsgrad' },
+  { id:'ori1',       name:'Ori and the Blind Forest',                    gb:3.7,  note:'Wunderschönes Sprungspiel in einem magischen Wald — emotional und grafisch beeindruckend' },
+  { id:'katana0',    name:'Katana ZERO',                                 gb:0.5,  note:'Schnelles Action-Spiel als Samurai — coole Atmosphäre, kurz aber intensiv' },
+  { id:'dead',       name:'Dead Cells',                                  gb:0.9,  note:'Kämpfe durch immer neue zufällig generierte Levels — macht sehr süchtig' },
+  { id:'moonlighter',name:'Moonlighter',                                 gb:1.0,  note:'Tagsüber Laden betreiben, nachts in Dungeons kämpfen — gute Mischung aus zwei Genres' },
+  { id:'mhrise',     name:'Monster Hunter Rise',                         gb:8.7,  note:'Jage riesige Monster in einer japanisch angehauchten Welt — auch zu viert online spielbar' },
+  { id:'dkc',        name:'Donkey Kong Country: Tropical Freeze',        gb:6.6,  note:'Klassisches Sprung- und Laufspiel mit dem großen Gorilla — etwas schwieriger aber sehr beliebt' },
+  { id:'mua3',       name:'Marvel Ultimate Alliance 3',                  gb:13.2, note:'Bis zu 4 Spieler kämpfen gemeinsam als Superhelden wie Spider-Man oder Iron Man' },
+  { id:'crash',      name:'Crash Bandicoot N. Sane Trilogy',             gb:5.2,  note:'Drei ältere Spiele mit dem orangenen Beuteltier — neuaufgelegt und gut erhalten' },
+  { id:'spyro',      name:'Spyro Reignited Trilogy',                     gb:6.6,  note:'Drei Spiele mit dem kleinen lila Drachen — bunt und für alle Altersgruppen geeignet' },
+  { id:'sonic',      name:'Sonic Mania',                                 gb:0.5,  note:'Schnelles 2D-Springen mit dem blauen Igel im alten Stil — für Fans der originalen Sonic-Spiele' },
+  { id:'fe3h',       name:'Fire Emblem: Three Houses',                   gb:9.2,  note:'Strategiespiel in dem du eine Schulklasse in einer Fantasywelt leitest — viel Text, eher für Erwachsene' },
+  { id:'xenoblade',  name:'Xenoblade Chronicles 3',                      gb:15.0, note:'Großes Rollenspiel mit einer langen Geschichte und riesiger Welt — hauptsächlich für Einzelspieler' },
+  { id:'fe3hopes',   name:'Fire Emblem Warriors: Three Hopes',           gb:13.4, note:'Actionreicher Ableger von Fire Emblem — du kämpfst gegen hunderte Gegner gleichzeitig' },
+  { id:'pikmn4',     name:'Pikmin 4',                                    gb:10.7, note:'Du befiehlst kleine Pflanzenwesen und löst Rätsel — entspannt, farbenfroh und für Kinder sehr geeignet' },
+  { id:'luigi3',     name:'Paw Patrol: The Movie - Adventure City Calls',gb:3.0,  note:'Spiel zur bekannten Kinderserie — für kleinere Kinder gedacht' },
+  { id:'lego',       name:'LEGO City Undercover',                        gb:8.7,  note:'Offene Lego-Stadt erkunden als Polizist — viele Witze, gut für Kinder und Eltern gemeinsam' },
+  { id:'lego2',      name:'LEGO Jurassic World',                         gb:7.5,  note:'Alle vier Jurassic Park Filme als Lego-Spiel — witzig und auch für Kinder gut geeignet' },
+  { id:'lego3',      name:'LEGO Marvel Super Heroes 2',                  gb:6.4,  note:'Marvel-Superhelden aus Lego — offene Welt und viele spielbare Figuren' },
+  { id:'kirbystar',  name:'Kirby Star Allies',                           gb:5.2,  note:'Kirby-Abenteuer mit bis zu 4 Spielern — sehr einfach und für kleine Kinder geeignet' },
+  { id:'animal2',    name:'Story of Seasons: Pioneers of Olive Town',    gb:4.4,  note:'Ähnlich wie Stardew Valley — Bauernhof aufbauen und mit Dorfbewohnern reden' },
+  { id:'yoshi2',     name:"Yoshi's Woolly World",                        gb:1.8,  note:'Yoshi hüpft durch eine Welt aus Wolle — sehr niedlich und für Kinder gut geeignet' },
+  { id:'tennis',     name:'Mario Tennis Aces',                           gb:1.9,  note:'Tennis mit Mario-Figuren — gut für 2 Spieler gegeneinander' },
+  { id:'golf',       name:'Mario Golf: Super Rush',                      gb:5.7,  note:'Golf mit Mario-Figuren — mehrere Spielmodi auch für mehrere Spieler gleichzeitig' },
+  { id:'captain',    name:'Captain Tsubasa: Rise of New Champions',      gb:11.9, note:'Fußball im Manga-Stil — übertriebene Schüsse und Tricks, für Anime-Fans' },
+  { id:'rings',      name:'Ring Fit Adventure',                          gb:2.8,  note:'Sport und Abenteuer kombiniert — du machst echte Übungen um voranzukommen' },
+  { id:'splaon1',    name:'Splatoon 2',                                  gb:6.5,  note:'Ältere Version des Farbenschießers — ähnlich wie Teil 3 aber mit anderen Karten' },
+  { id:'disney',     name:'Disney Dreamlight Valley',                    gb:9.0,  note:'Baue ein Dorf mit Disney-Figuren auf — ähnlich wie Animal Crossing' },
+  { id:'overcooked', name:'Overcooked! All You Can Eat',                 gb:4.3,  note:'Alle Overcooked-Spiele in einem — chaotisches Kochen in der Gruppe' },
+  { id:'harvest',    name:'Harvest Moon: Light of Hope',                 gb:1.5,  note:'Klassisches Bauernhof-Spiel — einfacher als Stardew Valley, gut zum Entspannen' },
+  { id:'street6',    name:'Street Fighter 6',                            gb:7.7,  note:'Klassisches Kampfspiel mit vielen Charakteren — leicht zu lernen, schwer zu meistern' },
+  { id:'dragon',     name:'Dragon Quest XI S',                           gb:14.2, note:'Großes japanisches Rollenspiel mit einer langen Geschichte — für geduldige Einzelspieler' },
+  { id:'darksouls',  name:'Dark Souls Remastered',                       gb:4.2,  note:'Sehr schwieriges Abenteuer-Spiel — bekannt dafür dass man viel stirbt und es trotzdem weitermacht' },
+  { id:'octopath',   name:'Octopath Traveler',                           gb:2.3,  note:'Rollenspiel mit acht verschiedenen Geschichten — schöner Stil der alte und neue Grafik kombiniert' },
+  { id:'three',      name:'Ori and the Will of the Wisps',               gb:4.3,  note:'Nachfolger zum ersten Ori — noch schöner und größer als der Vorgänger' },
+  { id:'subnaut',    name:'Subnautica',                                  gb:5.2,  note:'Überlebe unter Wasser auf einem fremden Planeten — erkunde das Meer und baue Stützpunkte' },
+  { id:'gris',       name:'GRIS',                                        gb:0.4,  note:'Wunderschönes künstlerisches Spiel mit wenig Text — eher wie ein spielbares Gemälde' },
+  { id:'journey',    name:'Journey to the Savage Planet',                gb:2.8,  note:'Erkunde einen fremden Planeten und entdecke merkwürdige Lebewesen — auch zu zweit spielbar' },
+  { id:'moving2',    name:'Unravel Two',                                 gb:1.3,  note:'Zwei Wollfiguren müssen zusammenarbeiten — sehr schön anzusehen und gut zu zweit spielbar' },
+  { id:'ninjashodown',name:'9 Monkeys of Shaolin',                       gb:1.4,  note:'Kung-Fu-Spiel im japanischen Stil — einfach und gut zu zweit spielbar' },
+  { id:'spiritf',    name:'Spiritfarer',                                 gb:2.2,  note:'Du bist eine Art Fährenfrau für Geister — ruhig, emotional und sehr besonders' },
+  { id:'okami',      name:'Okami HD',                                    gb:9.1,  note:'Japanisches Abenteuer als weißer Wolf-Gott — gilt als Meisterwerk, sehr einzigartig' },
+  { id:'nier',       name:'NieR: Automata The End of YoRHa Edition',     gb:12.9, note:'Actionspiel mit Robotern in einer postapokalyptischen Welt — tiefe Geschichte für Erwachsene' },
+  { id:'persona5',   name:'Persona 5 Royal',                             gb:11.8, note:'Japanisches Rollenspiel in dem Schüler tagsüber zur Schule gehen und nachts Monster bekämpfen' },
+  { id:'turtles',    name:"Teenage Mutant Ninja Turtles: Shredder's Revenge",gb:3.0,note:'Die Ninja Turtles kämpfen gemeinsam durch Streets — gut zu viert spielbar' },
+  { id:'shovel',     name:'Shovel Knight: Treasure Trove',               gb:0.8,  note:'Mehrere Spiele mit dem Schaufelritter — Retro-Stil, sehr gut gemacht' },
+  { id:'binding',    name:'The Binding of Isaac: Afterbirth+',           gb:0.8,  note:'Dunkles Spiel in dem man durch Keller kämpft — jedes Mal anders durch Zufall' },
+  { id:'ff12',       name:'Final Fantasy XII: The Zodiac Age',           gb:12.9, note:'Älteres Final Fantasy in einer Fantasywelt — langes Rollenspiel für geduldige Spieler' },
+  { id:'bendy',      name:'Bendy and the Ink Machine',                   gb:3.4,  note:'Gruseliges Rätselspiel im Stil alter Cartoons — für Kinder ab ca. 12 Jahren geeignet' },
+  { id:'superhot',   name:'SUPERHOT',                                    gb:1.8,  note:'Zeit bewegt sich nur wenn du dich bewegst — sehr cleveres Konzept, kurz aber einzigartig' },
+  { id:'tt',         name:"Taiko no Tatsujin: Drum'n'Fun!",              gb:6.9,  note:'Japanisches Trommelspiel zu bekannten Liedern — macht auch ohne Vorkenntnisse Spaß' },
 ];
-
 const GAMES = [...TOP10, ...REST];
 const LIMITS = { tab128: 87, tab256: 200 };
 const state = { tab128: new Set(), tab256: new Set() };
-
 function buildGameList(tabId) {
   const suffix = tabId.replace('tab','');
   const container = document.getElementById('games' + suffix);
@@ -421,54 +350,40 @@ function buildGameList(tabId) {
     const evenClass = idx % 2 === 1 ? ' even' : '';
     row.className = 'game-row' + evenClass + (checked ? ' checked' : '');
     row.id = tabId + '-row-' + game.id;
-    row.innerHTML = `
-      <div class="game-checkbox">${checked ? '✓' : ''}</div>
-      <div class="game-thumb" id="thumb-${game.id}">🎮</div>
-      <div class="game-info">
-        <div class="game-name">${game.name}</div>
-        <div class="game-note">${game.note}</div>
-      </div>
-      <div class="game-size">${game.gb} GB</div>`;
+    row.innerHTML = `<div class="game-checkbox">${checked ? '✓' : ''}</div><div class="game-thumb" id="thumb-${game.id}">🎮</div><div class="game-info"><div class="game-name">${game.name}</div><div class="game-note">${game.note}</div></div><div class="game-size">${game.gb} GB</div>`;
     row.onclick = () => toggleGame(tabId, game.id);
     container.appendChild(row);
   });
 }
-
 function toggleGame(tabId, gameId) {
   state[tabId].has(gameId) ? state[tabId].delete(gameId) : state[tabId].add(gameId);
   updateUI(tabId);
 }
-
 function getUsedGB(tabId) {
   let t = 0;
   state[tabId].forEach(id => { const g = GAMES.find(x => x.id === id); if (g) t += g.gb; });
   return Math.round(t * 10) / 10;
 }
-
 function updateUI(tabId) {
   const suffix = tabId.replace('tab','');
-  const limit  = LIMITS[tabId];
-  const used   = getUsedGB(tabId);
-  const free   = Math.max(0, Math.round((limit - used) * 10) / 10);
-  const pct    = Math.min(100, (used / limit) * 100);
-  const over   = used > limit;
-
-  document.getElementById('used' + suffix).textContent  = used;
-  document.getElementById('free' + suffix).textContent  = free;
+  const limit = LIMITS[tabId];
+  const used = getUsedGB(tabId);
+  const free = Math.max(0, Math.round((limit - used) * 10) / 10);
+  const pct = Math.min(100, (used / limit) * 100);
+  const over = used > limit;
+  document.getElementById('used' + suffix).textContent = used;
+  document.getElementById('free' + suffix).textContent = free;
   document.getElementById('count' + suffix).textContent = state[tabId].size;
-
   const bar = document.getElementById('prog' + suffix);
-  bar.style.width      = pct + '%';
+  bar.style.width = pct + '%';
   bar.style.background = over ? '#cc2222' : pct > 85 ? '#ff9900' : '#22aa44';
   document.getElementById('warn' + suffix).classList.toggle('visible', over);
-
   GAMES.forEach(game => {
     const row = document.getElementById(tabId + '-row-' + game.id);
     if (!row) return;
     const checked = state[tabId].has(game.id);
     row.classList.toggle('checked', checked);
     row.querySelector('.game-checkbox').textContent = checked ? '✓' : '';
-
     if (!checked && (used + game.gb) > limit) {
       row.classList.add('disabled');
       row.onclick = () => showFullToast();
@@ -477,15 +392,12 @@ function updateUI(tabId) {
       row.onclick = () => toggleGame(tabId, game.id);
     }
   });
-
   updateExport(tabId, suffix, used, limit);
 }
-
 function updateExport(tabId, suffix, used, limit) {
-  const box      = document.getElementById('export' + suffix);
+  const box = document.getElementById('export' + suffix);
   const selected = GAMES.filter(g => state[tabId].has(g.id));
   if (!selected.length) { box.textContent = 'Noch nichts ausgewählt.'; return; }
-
   let txt = '🎮 Nintendo Switch Spiele Auswahl\n';
   txt += '━━━━━━━━━━━━━━━━━━━━━━\n';
   txt += `💾 Karte: ${limit === 87 ? '128 GB' : '256 GB'} (${limit} GB nutzbar)\n`;
@@ -497,7 +409,6 @@ function updateExport(tabId, suffix, used, limit) {
   txt += `\n💚 Noch frei: ${Math.max(0, Math.round((limit - used)*10)/10)} GB`;
   box.textContent = txt;
 }
-
 function copyExport(boxId) {
   const txt = document.getElementById(boxId).textContent;
   if (navigator.clipboard) {
@@ -509,112 +420,67 @@ function copyExport(boxId) {
     showToast('✅ Kopiert!');
   }
 }
-
 async function submitOrder(tabId) {
-  const suffix  = tabId.replace('tab','');
-  const nameEl  = document.getElementById('name' + suffix);
-  const name    = nameEl.value.trim();
+  const suffix = tabId.replace('tab','');
+  const nameEl = document.getElementById('name' + suffix);
+  const name = nameEl.value.trim();
   if (!name) { showToast('⚠️ Bitte erst deinen Namen eingeben!'); nameEl.focus(); return; }
   const auswahl = document.getElementById('export' + suffix).textContent;
   if (auswahl === 'Noch nichts ausgewählt.') { showToast('⚠️ Bitte erst Spiele auswählen!'); return; }
-
   document.getElementById('spinnerOverlay').classList.add('visible');
-
-  const payload = new URLSearchParams({
-    name,
-    karte:    tabId === 'tab128' ? '128 GB' : '256 GB',
-    geraet:   navigator.userAgent.substring(0, 150),
-    zeitpunkt: new Date().toLocaleString('de-DE'),
-    auswahl,
-  });
-
+  const payload = new URLSearchParams({ name, karte: tabId === 'tab128' ? '128 GB' : '256 GB', geraet: navigator.userAgent.substring(0, 150), zeitpunkt: new Date().toLocaleString('de-DE'), auswahl });
   try {
-    const r = await fetch(FORMSPREE, {
-      method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: payload.toString()
-    });
+    const r = await fetch(FORMSPREE, { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded' }, body: payload.toString() });
     document.getElementById('spinnerOverlay').classList.remove('visible');
     if (r.ok) document.getElementById('modalOverlay').classList.add('visible');
     else showToast('❌ Fehler beim Senden — bitte nochmal versuchen.');
-  } catch {
-    document.getElementById('spinnerOverlay').classList.remove('visible');
-    showToast('❌ Keine Verbindung — bitte nochmal versuchen.');
-  }
+  } catch { document.getElementById('spinnerOverlay').classList.remove('visible'); showToast('❌ Keine Verbindung — bitte nochmal versuchen.'); }
 }
-
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.className = 'success';
-  t.textContent = msg; t.style.opacity = '1';
+  t.className = 'success'; t.textContent = msg; t.style.opacity = '1';
   setTimeout(() => { t.style.opacity = '0'; }, 2000);
 }
-
 function showFullToast() {
   const t = document.getElementById('toast');
-  t.className = '';
-  t.textContent = '🚫 Speicherkarte voll! Bitte wähle die größere 256 GB Karte oder wähle zuerst andere Spiele ab.';
-  t.style.opacity = '1';
+  t.className = ''; t.textContent = '🚫 Speicherkarte voll! Bitte wähle die größere 256 GB Karte oder wähle zuerst andere Spiele ab.'; t.style.opacity = '1';
   setTimeout(() => { t.style.opacity = '0'; }, 3000);
 }
-
-function resetTab(tabId) {
-  state[tabId] = new Set();
-  buildGameList(tabId); updateUI(tabId);
-}
-
+function resetTab(tabId) { state[tabId] = new Set(); buildGameList(tabId); updateUI(tabId); }
 function switchTab(tabId) {
-  if (tabId === 'tab256') {
-    state['tab128'].forEach(id => state['tab256'].add(id));
-    buildGameList('tab256');
-    updateUI('tab256');
-  }
-  if (tabId === 'tab128') {
-    state['tab256'].forEach(id => state['tab128'].add(id));
-    buildGameList('tab128');
-    updateUI('tab128');
-  }
+  if (tabId === 'tab256') { state['tab128'].forEach(id => state['tab256'].add(id)); buildGameList('tab256'); updateUI('tab256'); }
+  if (tabId === 'tab128') { state['tab256'].forEach(id => state['tab128'].add(id)); buildGameList('tab128'); updateUI('tab128'); }
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
   document.getElementById(tabId).classList.add('active');
   document.querySelectorAll('.tab-btn')[tabId === 'tab128' ? 0 : 1].classList.add('active');
   observeAllThumbs();
 }
-
 buildGameList('tab128'); buildGameList('tab256');
 updateUI('tab128'); updateUI('tab256');
-
 const imgObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
-    const thumb = entry.target;
-    imgObserver.unobserve(thumb);
+    const thumb = entry.target; imgObserver.unobserve(thumb);
     const gameId = thumb.id.replace('thumb-','');
     if (IMG_CACHE[gameId] !== undefined) {
       if (IMG_CACHE[gameId] && thumb.textContent === '🎮') {
-        const img = document.createElement('img');
-        img.src = IMG_CACHE[gameId]; img.alt = '';
+        const img = document.createElement('img'); img.src = IMG_CACHE[gameId]; img.alt = '';
         img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;';
-        img.onerror = () => { thumb.textContent = '🎮'; };
-        thumb.innerHTML = ''; thumb.appendChild(img);
+        img.onerror = () => { thumb.textContent = '🎮'; }; thumb.innerHTML = ''; thumb.appendChild(img);
       }
       return;
     }
     fetchGameImg(gameId).then(url => {
       if (url) {
-        const img = document.createElement('img');
-        img.src = url; img.alt = '';
+        const img = document.createElement('img'); img.src = url; img.alt = '';
         img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;';
-        img.onerror = () => { thumb.textContent = '🎮'; };
-        thumb.innerHTML = ''; thumb.appendChild(img);
+        img.onerror = () => { thumb.textContent = '🎮'; }; thumb.innerHTML = ''; thumb.appendChild(img);
       }
     });
   });
 }, { rootMargin: '300px' });
-
-function observeAllThumbs() {
-  document.querySelectorAll('.game-thumb').forEach(t => imgObserver.observe(t));
-}
+function observeAllThumbs() { document.querySelectorAll('.game-thumb').forEach(t => imgObserver.observe(t)); }
 observeAllThumbs();
 </script>
 </body>
