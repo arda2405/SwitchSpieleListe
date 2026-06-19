@@ -11,10 +11,6 @@ body { font-family: Arial, sans-serif; background: #e8e8e8; color: #111; font-si
 header { background: linear-gradient(135deg, #1a6ed8 50%, #cc2222 50%); color: #fff; text-align: center; padding: 20px 12px 16px; position: relative; overflow: hidden; }
 header h1 { font-size: 20px; font-weight: bold; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
 header p { font-size: 12px; margin-top: 5px; color: rgba(255,255,255,0.85); text-shadow: 0 1px 3px rgba(0,0,0,0.4); }
-.tabs { display: flex; border-bottom: 3px solid #111; }
-.tab-btn { flex: 1; padding: 12px 6px; font-size: 13px; font-weight: bold; border: none; background: #ddd; color: #555; cursor: pointer; border-right: 2px solid #bbb; }
-.tab-btn:last-child { border-right: none; }
-.tab-btn.active { background: #111; color: #fff; }
 .status-bar { padding: 10px 14px; background: #f5f5f5; border-bottom: 2px solid #ddd; }
 .status-text { font-size: 13px; font-weight: bold; margin-bottom: 6px; }
 .progress-wrap { width: 100%; background: #ddd; height: 18px; border-radius: 9px; overflow: hidden; }
@@ -71,10 +67,6 @@ header p { font-size: 12px; margin-top: 5px; color: rgba(255,255,255,0.85); text
   <h1>🎮 Nintendo Switch — Spiele Auswahl</h1>
   <p>Einfach antippen was du willst · Speicher wird automatisch berechnet</p>
 </header>
-<div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('tab128')">💾 128 GB Karte<br><small style="font-size:10px;font-weight:normal;">87 GB nutzbar</small></button>
-  <button class="tab-btn" onclick="switchTab('tab256')">💾 256 GB Karte<br><small style="font-size:10px;font-weight:normal;">200 GB nutzbar (+30€)</small></button>
-</div>
 <div id="tab128" class="tab-content active">
   <div class="status-bar">
     <div class="status-text">📦 <span id="used128">0</span> / 87 GB &nbsp;|&nbsp; Frei: <span id="free128">87</span> GB &nbsp;|&nbsp; <span id="count128">0</span> Spiele ausgewählt</div>
@@ -93,26 +85,6 @@ header p { font-size: 12px; margin-top: 5px; color: rgba(255,255,255,0.85); text
     <button class="btn btn-reset" onclick="resetTab('tab128')">🔄 Auswahl zurücksetzen</button>
     <input class="name-input" id="name128" type="text" placeholder="Dein Name" maxlength="60">
     <button class="btn btn-fertig" onclick="submitOrder('tab128')">✅ Fertig — Auswahl absenden</button>
-  </div>
-</div>
-<div id="tab256" class="tab-content">
-  <div class="status-bar">
-    <div class="status-text">📦 <span id="used256">0</span> / 200 GB &nbsp;|&nbsp; Frei: <span id="free256">200</span> GB &nbsp;|&nbsp; <span id="count256">0</span> Spiele ausgewählt</div>
-    <div class="progress-wrap"><div class="progress-fill" id="prog256" style="width:0%;background:#22aa44;"></div></div>
-  </div>
-  <div class="warning-banner" id="warn256">⚠️ Zu voll! Bitte einige Spiele abwählen.</div>
-  <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#22aa44"></div>Ausgewählt</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#aaa"></div>Zu groß für diese Karte</div>
-  </div>
-  <div id="games256"></div>
-  <div class="export-section">
-    <h3>📋 Deine Auswahl:</h3>
-    <div class="export-box" id="export256">Noch nichts ausgewählt.</div>
-    <button class="btn btn-copy" onclick="copyExport('export256')">📋 Text kopieren</button>
-    <button class="btn btn-reset" onclick="resetTab('tab256')">🔄 Auswahl zurücksetzen</button>
-    <input class="name-input" id="name256" type="text" placeholder="Dein Name" maxlength="60">
-    <button class="btn btn-fertig" onclick="submitOrder('tab256')">✅ Fertig — Auswahl absenden</button>
   </div>
 </div>
 <div class="modal-overlay" id="modalOverlay">
@@ -338,8 +310,8 @@ const REST = [
   { id:'tt',         name:"Taiko no Tatsujin: Drum'n'Fun!",              gb:6.9,  note:'Japanisches Trommelspiel zu bekannten Liedern — macht auch ohne Vorkenntnisse Spaß' },
 ];
 const GAMES = [...TOP10, ...REST];
-const LIMITS = { tab128: 87, tab256: 200 };
-const state = { tab128: new Set(), tab256: new Set() };
+const LIMITS = { tab128: 87 };
+const state = { tab128: new Set() };
 function buildGameList(tabId) {
   const suffix = tabId.replace('tab','');
   const container = document.getElementById('games' + suffix);
@@ -400,7 +372,7 @@ function updateExport(tabId, suffix, used, limit) {
   if (!selected.length) { box.textContent = 'Noch nichts ausgewählt.'; return; }
   let txt = '🎮 Nintendo Switch Spiele Auswahl\n';
   txt += '━━━━━━━━━━━━━━━━━━━━━━\n';
-  txt += `💾 Karte: ${limit === 87 ? '128 GB' : '256 GB'} (${limit} GB nutzbar)\n`;
+  txt += `💾 Karte: 128 GB (${limit} GB nutzbar)\n`;
   txt += `📦 Belegt: ${used} GB von ${limit} GB\n`;
   txt += `🕹️ Anzahl Spiele: ${selected.length}\n`;
   txt += '━━━━━━━━━━━━━━━━━━━━━━\n\n';
@@ -428,7 +400,7 @@ async function submitOrder(tabId) {
   const auswahl = document.getElementById('export' + suffix).textContent;
   if (auswahl === 'Noch nichts ausgewählt.') { showToast('⚠️ Bitte erst Spiele auswählen!'); return; }
   document.getElementById('spinnerOverlay').classList.add('visible');
-  const payload = new URLSearchParams({ name, karte: tabId === 'tab128' ? '128 GB' : '256 GB', geraet: navigator.userAgent.substring(0, 150), zeitpunkt: new Date().toLocaleString('de-DE'), auswahl });
+  const payload = new URLSearchParams({ name, karte: '128 GB', geraet: navigator.userAgent.substring(0, 150), zeitpunkt: new Date().toLocaleString('de-DE'), auswahl });
   try {
     const r = await fetch(FORMSPREE, { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded' }, body: payload.toString() });
     document.getElementById('spinnerOverlay').classList.remove('visible');
@@ -443,21 +415,12 @@ function showToast(msg) {
 }
 function showFullToast() {
   const t = document.getElementById('toast');
-  t.className = ''; t.textContent = '🚫 Speicherkarte voll! Bitte wähle die größere 256 GB Karte oder wähle zuerst andere Spiele ab.'; t.style.opacity = '1';
+  t.className = ''; t.textContent = '🚫 Speicherkarte voll! Bitte wähle zuerst andere Spiele ab.'; t.style.opacity = '1';
   setTimeout(() => { t.style.opacity = '0'; }, 3000);
 }
 function resetTab(tabId) { state[tabId] = new Set(); buildGameList(tabId); updateUI(tabId); }
-function switchTab(tabId) {
-  if (tabId === 'tab256') { state['tab128'].forEach(id => state['tab256'].add(id)); buildGameList('tab256'); updateUI('tab256'); }
-  if (tabId === 'tab128') { state['tab256'].forEach(id => state['tab128'].add(id)); buildGameList('tab128'); updateUI('tab128'); }
-  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-  document.getElementById(tabId).classList.add('active');
-  document.querySelectorAll('.tab-btn')[tabId === 'tab128' ? 0 : 1].classList.add('active');
-  observeAllThumbs();
-}
-buildGameList('tab128'); buildGameList('tab256');
-updateUI('tab128'); updateUI('tab256');
+buildGameList('tab128');
+updateUI('tab128');
 const imgObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
